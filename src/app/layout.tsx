@@ -1,0 +1,60 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { BackToTop } from "@/components/ui/BackToTop";
+import { ToastProvider } from "@/components/ui/Toast";
+import { CartProvider } from "@/hooks/useCart";
+import { WishlistProvider } from "@/hooks/useWishlist";
+import { CartSidebar } from "@/components/cart/CartSidebar";
+import { CookieBanner } from "@/components/ui/CookieBanner";
+import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
+import { TikTokPixel } from "@/components/tracking/TikTokPixel";
+import { MetaPixel } from "@/components/tracking/MetaPixel";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Enzyme Skincare — Professional Enzyme-Based Skincare",
+  description:
+    "Science-backed enzyme skincare that activates your skin's natural renewal. Dermatologist tested, cruelty-free.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">
+        <CartProvider>
+        <WishlistProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartSidebar />
+          <CookieBanner />
+          <BackToTop />
+          <ToastProvider />
+                </WishlistProvider>
+      </CartProvider>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
+        <TikTokPixel pixelId={process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID ?? ""} />
+        <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID ?? ""} />
+      </body>
+    </html>
+  );
+}
