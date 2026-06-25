@@ -5,15 +5,15 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const adminSession = request.cookies.get("admin_session");
 
-  // ALLOW login page through without checking session. No redirect loop.
-  if (pathname === "/admin/login") {
+  // Always allow login pages through
+  if (pathname === "/login" || pathname === "/admin/login") {
     return NextResponse.next();
   }
 
-  // Other admin routes: no session → redirect to login
+  // Other admin routes: no session → redirect
   if (pathname.startsWith("/admin")) {
     if (!adminSession?.value) {
-      return NextResponse.redirect(new URL("/admin/login", request.url));
+      return NextResponse.redirect(new URL("/login", request.url));
     }
   }
 
@@ -21,5 +21,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/login"],
 };
