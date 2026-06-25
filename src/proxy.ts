@@ -1,11 +1,17 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const adminSession = request.cookies.get("admin_session");
 
-  if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
+  // ALLOW login page through without checking session. No redirect loop.
+  if (pathname === "/admin/login") {
+    return NextResponse.next();
+  }
+
+  // Other admin routes: no session → redirect to login
+  if (pathname.startsWith("/admin")) {
     if (!adminSession?.value) {
       return NextResponse.redirect(new URL("/admin/login", request.url));
     }

@@ -1,46 +1,44 @@
 {
-    "name":  "enzyme-skincare",
-    "version":  "0.1.0",
-    "private":  true,
-    "scripts":  {
-                    "dev":  "next dev",
-                    "build":  "next build",
-                    "start":  "next start",
-                    "lint":  "eslint",
-                    "postinstall":  "npx prisma generate \u0026\u0026 npx prisma db push --accept-data-loss || true"
-                },
-    "dependencies":  {
-                         "@prisma/client":  "^5.4.0",
-                         "@stripe/stripe-js":  "^9.8.0",
-                         "@supabase/ssr":  "^0.12.0",
-                         "@supabase/supabase-js":  "^2.108.2",
-                         "@tailwindcss/forms":  "^0.5.11",
-                         "@tailwindcss/typography":  "^0.5.20",
-                         "@types/dompurify":  "^3.0.5",
-                         "clsx":  "^2.1.1",
-                         "cssnano":  "^8.0.2",
-                         "dompurify":  "^3.4.10",
-                         "next":  "16.2.9",
-                         "prisma":  "^5.4.0",
-                         "react":  "19.2.4",
-                         "react-compare-image":  "^3.5.17",
-                         "react-dom":  "19.2.4",
-                         "react-hot-toast":  "^2.6.0",
-                         "stripe":  "^22.2.1",
-                         "tailwind-merge":  "^3.6.0",
-                         "ts-node":  "^10.9.2"
-                     },
-    "devDependencies":  {
-                            "@tailwindcss/postcss":  "^4",
-                            "@types/node":  "^20",
-                            "@types/react":  "^19",
-                            "@types/react-dom":  "^19",
-                            "eslint":  "^9",
-                            "eslint-config-next":  "16.2.9",
-                            "tailwindcss":  "^4",
-                            "typescript":  "^5.9.3"
-                        },
-    "prisma":  {
-                   "seed":  "ts-node prisma/seed.ts"
-               }
+    "name": "enzyme-skincare",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "eslint",
+        "postinstall": "npx prisma generate && npx prisma db push --accept-data-loss || true"
+    },
+    "dependencies": {
+        "@prisma/client": "^5.4.0",
+        "@stripe/stripe-js": "^9.8.0",
+        "@tailwindcss/forms": "^0.5.11",
+        "@tailwindcss/typography": "^0.5.20",
+        "@types/dompurify": "^3.0.5",
+        "clsx": "^2.1.1",
+        "cssnano": "^8.0.2",
+        "dompurify": "^3.4.10",
+        "next": "16.2.9",
+        "prisma": "^5.4.0",
+        "react": "19.2.4",
+        "react-compare-image": "^3.5.17",
+        "react-dom": "19.2.4",
+        "react-hot-toast": "^2.6.0",
+        "stripe": "^22.2.1",
+        "tailwind-merge": "^3.6.0",
+        "ts-node": "^10.9.2"
+    },
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "16.2.9",
+        "tailwindcss": "^4",
+        "typescript": "^5.9.3"
+    },
+    "prisma": {
+        "seed": "ts-node prisma/seed.ts"
+    }
 }
