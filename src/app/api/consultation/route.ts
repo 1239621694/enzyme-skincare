@@ -1,4 +1,5 @@
 ﻿import { NextRequest, NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 import { sendConsultationConfirmation } from "@/lib/resend";
 
 export async function POST(req: NextRequest) {
