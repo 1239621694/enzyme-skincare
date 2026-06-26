@@ -1,6 +1,6 @@
 ﻿import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 import { createHash } from "crypto";
 import { ALL_PRODUCTS } from "@/lib/products";
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     });
     if (existing?.stripeSessionId) {
       try {
-        const session = await stripe.checkout.sessions.retrieve(existing.stripeSessionId);
+        const session = await getStripe().checkout.sessions.retrieve(existing.stripeSessionId);
         if (session.status === "open") return NextResponse.json({ url: session.url });
       } catch {}
     }
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
       : [{ shipping_rate_data: { type: "fixed_amount" as const, fixed_amount: { amount: 595, currency: "usd" }, display_name: "Standard Shipping", delivery_estimate: { minimum: { unit: "business_day" as const, value: 3 }, maximum: { unit: "business_day" as const, value: 5 } } } }];
 
     // Create Stripe Checkout Session
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       line_items: items.map((item: any) => ({
         price_data: {
