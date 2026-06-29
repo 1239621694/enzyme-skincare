@@ -9,8 +9,7 @@ const footerLinks = {
     { href: "/science", label: "The Science" },
   ],
   Learn: [
-    { href: "/blog", label: "Journal" },
-    { href: "/cases", label: "Case Studies" },
+        { href: "/cases", label: "Case Studies" },
     { href: "/faq", label: "FAQ" },
     { href: "/about", label: "Our Story" },
   ],

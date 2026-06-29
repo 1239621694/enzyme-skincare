@@ -2,6 +2,35 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentProvider {
+  XTRANSFER
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum AdminRole {
+  ADMIN
+  OPERATOR
+  VIEWER
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -64,11 +93,33 @@ model Order {
   cartFingerprint  String?  @map("cart_fingerprint")
   paymentIntentId  String?  @map("payment_intent_id")
   email            String?
+  customerEmail     String?  @map("customer_email")
+  customerName      String?  @map("customer_name")
+  customerPhone     String?  @map("customer_phone")
+  subtotal          Decimal? @db.Decimal(10, 2)
+  shippingFee       Decimal? @db.Decimal(10, 2) @map("shipping_fee")
+  tax               Decimal? @db.Decimal(10, 2)
+  currency          String   @default("USD")
+  shippingName      String?  @map("shipping_name")
+  shippingPhone     String?  @map("shipping_phone")
+  shippingAddress1  String?  @map("shipping_address1")
+  shippingAddress2  String?  @map("shipping_address2")
+  shippingCity      String?  @map("shipping_city")
+  shippingProvince  String?  @map("shipping_province")
+  shippingPostal    String?  @map("shipping_postal")
+  shippingCountry   String?  @map("shipping_country")
+  customerNote      String?  @map("customer_note")
+  adminNote         String?  @map("admin_note")
+  paidAt            DateTime? @map("paid_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
   statusHistory OrderStatusHistory[]
   createdAt        DateTime @default(now()) @map("created_at")
 
   items OrderItem[]
+  payments Payment[]
+  auditLogs OrderAuditLog[]
 
+  @@index([status, createdAt])
   @@map("orders")
 }
 
@@ -83,6 +134,45 @@ model OrderItem {
   product Product? @relation(fields: [productId], references: [id])
 
   @@map("order_items")
+}
+
+
+model Payment {
+  id               String          @id @default(uuid()) @db.Uuid
+  orderId          String          @map("order_id") @db.Uuid
+  provider         String          @default("XTRANSFER")
+  providerMetadata Json?           @map("provider_metadata")
+  amount           Decimal         @db.Decimal(10, 2)
+  currency         String          @default("USD")
+  status           String          @default("PENDING")
+  invoiceUrl       String?         @map("invoice_url")
+  confirmedBy      String?         @map("confirmed_by")
+  confirmedNote    String?         @map("confirmed_note")
+  completedAt      DateTime?       @map("completed_at")
+  createdAt        DateTime        @default(now()) @map("created_at")
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([status])
+  @@map("payments")
+}
+
+
+model OrderAuditLog {
+  id             String   @id @default(uuid()) @db.Uuid
+  orderId        String   @map("order_id") @db.Uuid
+  action         String
+  performedBy    String?  @map("performed_by")
+  previousStatus String?  @map("previous_status")
+  newStatus      String?  @map("new_status")
+  metadata       Json?
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+  @@map("order_audit_logs")
 }
 
 model CaseStudy {

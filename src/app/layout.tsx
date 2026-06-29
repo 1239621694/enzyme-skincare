@@ -12,6 +12,7 @@ import { CookieBanner } from "@/components/ui/CookieBanner";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import { TikTokPixel } from "@/components/tracking/TikTokPixel";
 import { MetaPixel } from "@/components/tracking/MetaPixel";
+import { ClarityAnalytics } from "@/components/tracking/ClarityAnalytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  verification: {
+    google: "YOUR_GOOGLE_SITE_VERIFICATION_CODE",
+  },
   title: "Enzyme Skincare — Professional Enzyme-Based Skincare",
   description:
     "Science-backed enzyme skincare that activates your skin's natural renewal. Dermatologist tested, cruelty-free.",
@@ -54,6 +58,7 @@ export default function RootLayout({
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
         <TikTokPixel pixelId={process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID ?? ""} />
         <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID ?? ""} />
+        <ClarityAnalytics projectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID ?? ""} />
       </body>
     </html>
   );
