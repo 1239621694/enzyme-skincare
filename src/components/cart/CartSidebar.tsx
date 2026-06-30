@@ -14,32 +14,32 @@ export function CartSidebar() {
     if (items.length === 0) return;
     setLoading(true);
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-      const res = await fetch("/api/orders/create", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: items.map((i) => ({ productId: i.productId, price: i.price, quantity: i.quantity })),
+          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
+          customerEmail: "guest@example.com",
+          customerName: "Guest",
+          shippingAddress: {
+            name: "Guest",
+            address1: "N/A",
+            city: "N/A",
+            province: "N/A",
+            postal: "000000",
+            country: "US",
+          },
         }),
-        signal: controller.signal,
       });
-      clearTimeout(timeoutId);
-
       const data = await res.json();
-      if (res.ok && data.xtransferUrl) {
+      if (res.ok && data.redirectUrl) {
         localStorage.setItem("lastOrder", JSON.stringify({ orderNumber: data.orderNumber, total: data.total }));
-        window.location.href = data.xtransferUrl;
+        window.location.href = data.redirectUrl;
       } else {
         alert("Order failed: " + (data.error || "Unknown error. Please try again."));
       }
     } catch (err: any) {
-      if (err.name === "AbortError") {
-        alert("Request timed out. The database may not be connected. Please run: npx prisma db push");
-      } else {
-        alert("Checkout error: " + (err.message || "Please try again."));
-      }
+      alert("Checkout error: " + (err.message || "Please try again."));
     } finally {
       setLoading(false);
     }
@@ -101,7 +101,7 @@ export function CartSidebar() {
             <button onClick={handleCheckout} disabled={loading} className="block w-full text-center px-6 py-3 rounded-full bg-primary-600 text-white text-lg font-semibold hover:bg-primary-700 transition-colors">{loading ? "Processing..." : "Proceed to Checkout"}</button>
             <div className="flex items-center justify-center gap-3 mt-3">
               <span className="text-xs text-neutral-500">Pay via:</span>
-              <span className="text-xs font-semibold text-neutral-500">Bank Transfer</span>
+              <span className="text-xs font-semibold text-neutral-500">XTransfer Bank Transfer</span>
             </div>
             <p className="text-xs text-neutral-500 text-center mt-2">⚡ No account needed · Guest checkout available</p>
             <button onClick={toggleCart} className="block w-full text-center text-sm text-neutral-500 hover:text-neutral-700 transition-colors">Continue Shopping</button>
