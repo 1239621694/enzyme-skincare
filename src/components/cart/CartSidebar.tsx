@@ -10,36 +10,19 @@ export function CartSidebar() {
   const { items, isOpen, itemCount, total, removeItem, updateQuantity, toggleCart } = useCartContext();
   const [loading, setLoading] = useState(false);
 
-    const handleCheckout = async () => {
+  const handleCheckout = async () => {
     if (items.length === 0) return;
     setLoading(true);
     try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
-          customerEmail: "guest@example.com",
-          customerName: "Guest",
-          shippingAddress: {
-            name: "Guest",
-            address1: "N/A",
-            city: "N/A",
-            province: "N/A",
-            postal: "000000",
-            country: "US",
-          },
-        }),
-      });
-      const data = await res.json();
-      if (res.ok && data.redirectUrl) {
-        localStorage.setItem("lastOrder", JSON.stringify({ orderNumber: data.orderNumber, total: data.total }));
-        window.location.href = data.redirectUrl;
+      // 直接跳转 XTransfer 付款链接
+      const xtransferUrl = process.env.NEXT_PUBLIC_XTRANSFER_URL;
+      if (xtransferUrl) {
+        window.open(xtransferUrl, "_blank");
       } else {
-        alert("Order failed: " + (data.error || "Unknown error. Please try again."));
+        alert("Payment link not configured. Please contact support.");
       }
-    } catch (err: any) {
-      alert("Checkout error: " + (err.message || "Please try again."));
+    } catch {
+      alert("Checkout error. Please try again.");
     } finally {
       setLoading(false);
     }
