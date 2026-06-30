@@ -129,6 +129,13 @@ model OrderItem {
   productId String? @map("product_id") @db.Uuid
   quantity  Int
   price     Decimal @db.Decimal(10, 2)
+  productName  String?  @map("product_name")
+  productSlug  String?  @map("product_slug")
+  productImage String?  @map("product_image")
+  variantId    String?  @map("variant_id")
+  variantName  String?  @map("variant_name")
+  unitPrice    Decimal? @db.Decimal(10, 2) @map("unit_price")
+  subtotal     Decimal? @db.Decimal(10, 2)
 
   order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product Product? @relation(fields: [productId], references: [id])

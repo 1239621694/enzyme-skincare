@@ -1,64 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
-export const dynamic = "force-dynamic";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendOrderConfirmationEmail } from "@/lib/email/orderEmails";
 
-export async function POST(req: NextRequest, { params }: { params: Promise<{ orderId: string }> }) {
+export async function POST(req: NextRequest) {
   try {
-    const { orderId } = await params;
-    const { trackingNumber, shippingCompany } = await req.json();
+    const orderId = req.url.split("/orders/")[1]?.split("/")[0];
+    if (!orderId) return NextResponse.json({ error: "Missing ID" }, { status: 400 });
 
-    if (!trackingNumber) {
-      return NextResponse.json({ error: "缺少物流单号" }, { status: 400 });
-    }
+    const body = await req.json();
+    const order = await prisma.order.findUnique({ where: { id: orderId } });
+    if (!order) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    if (!["PAID", "PROCESSING"].includes(order.status)) return NextResponse.json({ error: "Cannot ship" }, { status: 400 });
 
-    const order = await prisma.order.findUnique({
-      where: { id: orderId },
-      include: { items: true },
-    });
-    if (!order) return NextResponse.json({ error: "订单不存在" }, { status: 404 });
-    if (!["PAID", "PROCESSING"].includes(order.status)) {
-      return NextResponse.json({ error: "当前订单状态不支持发货" }, { status: 400 });
-    }
+    await prisma.order.update({ where: { id: orderId }, data: { status: "SHIPPED" } });
+    await prisma.orderAuditLog.create({ data: { orderId, action: "ORDER_SHIPPED", performedBy: body.confirmedBy ?? "admin", metadata: { trackingNumber: body.trackingNumber, shippingCompany: body.shippingCompany } } });
 
-    await prisma.order.update({
-      where: { id: orderId },
-      data: { status: "SHIPPED" },
-    });
-
-    await prisma.orderAuditLog.create({
-      data: {
-        orderId,
-        action: "ORDER_SHIPPED",
-        performedBy: "admin",
-        previousStatus: order.status,
-        newStatus: "SHIPPED",
-        metadata: { trackingNumber, shippingCompany },
-      },
-    });
-
-    // Send shipping notification email (fire and forget)
-    if (order.customerEmail) {
-      sendOrderConfirmationEmail({
-        orderNumber: order.orderNumber || "",
-        customerName: order.customerName || "",
-        customerEmail: order.customerEmail,
-        total: Number(order.total),
-        items: order.items.map((i: any) => ({
-          productName: i.productName || "商品",
-          quantity: i.quantity,
-          unitPrice: Number(i.unitPrice || i.price),
-        })),
-        shippingName: order.shippingName || "",
-        shippingAddress1: order.shippingAddress1 || "",
-        shippingCity: order.shippingCity || "",
-        shippingProvince: order.shippingProvince || "",
-      }).catch((e) => console.error("Ship email failed:", e));
-    }
-
-    return NextResponse.json({ success: true, newStatus: "SHIPPED" });
-  } catch (error) {
-    console.error("Ship error:", error);
-    return NextResponse.json({ error: "服务器错误" }, { status: 500 });
-  }
+    return NextResponse.json({ success: true });
+  } catch { return NextResponse.json({ error: "Failed" }, { status: 500 }); }
 }

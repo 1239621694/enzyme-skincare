@@ -1,42 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
-export const dynamic = "force-dynamic";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function POST(req: NextRequest, { params }: { params: Promise<{ orderId: string }> }) {
+export async function POST(req: NextRequest) {
   try {
-    const { orderId } = await params;
-    const { reason } = await req.json();
+    const orderId = req.url.split("/orders/")[1]?.split("/")[0];
+    if (!orderId) return NextResponse.json({ error: "Missing ID" }, { status: 400 });
 
-    const order = await prisma.order.findUnique({ where: { id: orderId } });
-    if (!order) return NextResponse.json({ error: "订单不存在" }, { status: 404 });
-    if (!["PENDING_PAYMENT", "PAID"].includes(order.status)) {
-      return NextResponse.json({ error: "当前订单状态不支持取消" }, { status: 400 });
-    }
+    const body = await req.json();
+    const order = await prisma.order.findUnique({ where: { id: orderId }, include: { payments: true } });
+    if (!order) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    if (!["PENDING_PAYMENT", "PAID"].includes(order.status)) return NextResponse.json({ error: "Cannot cancel" }, { status: 400 });
 
-    await prisma.order.update({
-      where: { id: orderId },
-      data: { status: "CANCELLED" },
-    });
+    await prisma.order.update({ where: { id: orderId }, data: { status: "CANCELLED" } });
+    if (order.payments.length > 0) await prisma.payment.updateMany({ where: { orderId }, data: { status: "CANCELLED" } });
+    await prisma.orderAuditLog.create({ data: { orderId, action: "ORDER_CANCELLED", performedBy: body.confirmedBy ?? "admin", metadata: { reason: body.reason } } });
 
-    await prisma.payment.updateMany({
-      where: { orderId, status: "PENDING" },
-      data: { status: "CANCELLED" },
-    });
-
-    await prisma.orderAuditLog.create({
-      data: {
-        orderId,
-        action: "ORDER_CANCELLED",
-        performedBy: "admin",
-        previousStatus: order.status,
-        newStatus: "CANCELLED",
-        metadata: { reason },
-      },
-    });
-
-    return NextResponse.json({ success: true, newStatus: "CANCELLED" });
-  } catch (error) {
-    console.error("Cancel error:", error);
-    return NextResponse.json({ error: "服务器错误" }, { status: 500 });
-  }
+    return NextResponse.json({ success: true });
+  } catch { return NextResponse.json({ error: "Failed" }, { status: 500 }); }
 }

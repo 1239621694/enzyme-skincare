@@ -1,121 +1,150 @@
 ﻿import { NextRequest, NextResponse } from "next/server";
-export const dynamic = "force-dynamic";
-import { getStripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
-import { createHash } from "crypto";
 import { ALL_PRODUCTS } from "@/lib/products";
-
-function createCartFingerprint(items: any[]): string {
-  const normalized = items.map((i: any) => `${i.id}:${i.variantId ?? "base"}:${i.quantity}`).sort().join("|");
-  const sessionKey = Math.random().toString(36).slice(2, 8);
-  return createHash("sha256").update(normalized + sessionKey).digest("hex").slice(0, 16);
-}
+import { randomUUID } from "crypto";
 
 export async function POST(req: NextRequest) {
   try {
-    const { items, email } = await req.json();
+    const body = await req.json();
+    const { items, customerEmail, customerName, customerPhone, shippingAddress } = body;
+
+    // Validate required fields
     if (!items || !Array.isArray(items) || items.length === 0) {
-      return NextResponse.json({ error: "No items provided" }, { status: 400 });
+      return NextResponse.json({ success: false, error: "No items provided" }, { status: 400 });
+    }
+    if (!customerEmail) {
+      return NextResponse.json({ success: false, error: "Customer email is required" }, { status: 400 });
+    }
+    if (items.length > 50) {
+      return NextResponse.json({ success: false, error: "Maximum 50 items per order" }, { status: 400 });
     }
 
-    // M7: Items limit validation - max 10 per item, max 50 total
-    const totalQty = items.reduce((s: number, i: any) => s + i.quantity, 0);
-    if (totalQty > 50) return NextResponse.json({ error: "Maximum 50 items per order" }, { status: 400 });
+    // Lookup products from static data (server-side pricing)
+    const orderItems: {
+      productId: string; productName: string; productSlug: string; productImage: string;
+      variantId: string | null; variantName: string | null; quantity: number; unitPrice: number; subtotal: number;
+    }[] = [];
+    let subtotal = 0;
+
     for (const item of items) {
-      if (item.quantity > 10) return NextResponse.json({ error: "Maximum 10 per item: " + item.name }, { status: 400 });
-      if (item.quantity < 1) return NextResponse.json({ error: "Invalid quantity" }, { status: 400 });
-    }
-
-    // Validate products and prices
-    for (const item of items) {
-      const product = ALL_PRODUCTS.find((p) => p.id === item.id);
-      if (!product) return NextResponse.json({ error: "Product not found: " + item.id }, { status: 400 });
-      if (product.price !== item.price) return NextResponse.json({ error: "Price mismatch: " + product.name }, { status: 400 });
-    }
-
-    // Idempotency check
-    const fingerprint = createCartFingerprint(items);
-    const existing = await prisma.order.findFirst({
-      where: { cartFingerprint: fingerprint, status: { in: ["pending", "paid"] }, createdAt: { gte: new Date(Date.now() - 30 * 60 * 1000) } },
-      orderBy: { createdAt: "desc" },
-    });
-    if (existing?.stripeSessionId) {
-      try {
-        const session = await getStripe().checkout.sessions.retrieve(existing.stripeSessionId);
-        if (session.status === "open") return NextResponse.json({ url: session.url });
-      } catch {}
-    }
-
-    // C5: Atomic stock deduction at checkout creation
-    for (const item of items) {
-      if (item.variantId) {
-        const result = await prisma.productVariant.updateMany({
-          where: { id: item.variantId, stock: { gte: item.quantity } },
-          data: { stock: { decrement: item.quantity } },
-        });
-        if (result.count === 0) {
-          return NextResponse.json({ error: "Insufficient stock for item: " + item.name }, { status: 409 });
-        }
+      const product = ALL_PRODUCTS.find((p) => p.slug === item.productId || p.id === item.productId);
+      if (!product) {
+        return NextResponse.json({ success: false, error: "Product not found: " + item.productId }, { status: 400 });
       }
+
+      const qty = Math.min(Math.max(1, item.quantity || 1), 10);
+      const price = product.price;
+      const lineSubtotal = price * qty;
+      subtotal += lineSubtotal;
+
+      const variant = product.variants.find((v) => v.id === item.variantId) ?? product.variants[0];
+
+      orderItems.push({
+        productId: product.id,
+        productName: product.name,
+        productSlug: product.slug,
+        productImage: product.images[0] ?? "",
+        variantId: variant?.id ?? null,
+        variantName: variant?.name ?? null,
+        quantity: qty,
+        unitPrice: price,
+        subtotal: lineSubtotal,
+      });
     }
 
-    // M8: Atomic order counter using $transaction
+    const shippingFee = subtotal >= 50 ? 0 : 5.95;
+    const tax = 0;
+    const total = subtotal + shippingFee + tax;
+
+    // Generate order number
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-    const { orderNumber } = await prisma.$transaction(async (tx: any) => {
-      const counter = await tx.orderCounter.upsert({
+    let orderNumber = "ORD-" + today + "-0001";
+    try {
+      const counter = await prisma.orderCounter.upsert({
         where: { date: today },
         update: { sequence: { increment: 1 } },
         create: { date: today, sequence: 1 },
       });
-      return { orderNumber: "ES-" + today + "-" + String(counter.sequence).padStart(4, "0") };
-    });
+      orderNumber = "ORD-" + today + "-" + String(counter.sequence).padStart(4, "0");
+    } catch (dbErr) {
+      console.warn("Order counter failed, using fallback:", dbErr);
+    }
 
-    // Calculate total
-    const total = items.reduce((sum: number, i: any) => sum + i.price * i.quantity, 0);
-
-    // C4: Dynamic shipping_options based on order total
-    const freeThreshold = 50;
-    const shippingOptions = total >= freeThreshold
-      ? [{ shipping_rate_data: { type: "fixed_amount" as const, fixed_amount: { amount: 0, currency: "usd" }, display_name: "Free Shipping", delivery_estimate: { minimum: { unit: "business_day" as const, value: 5 }, maximum: { unit: "business_day" as const, value: 8 } } } }]
-      : [{ shipping_rate_data: { type: "fixed_amount" as const, fixed_amount: { amount: 595, currency: "usd" }, display_name: "Standard Shipping", delivery_estimate: { minimum: { unit: "business_day" as const, value: 3 }, maximum: { unit: "business_day" as const, value: 5 } } } }];
-
-    // Create Stripe Checkout Session
-    const session = await getStripe().checkout.sessions.create({
-      mode: "payment",
-      line_items: items.map((item: any) => ({
-        price_data: {
-          currency: "usd",
-          product_data: { name: item.name },
-          unit_amount: Math.round(item.price * 100),
-        },
-        quantity: item.quantity,
-      })),
-      customer_email: email,
-      shipping_options: shippingOptions,
-      success_url: (req.headers.get("origin") ?? "http://localhost:3000") + "/checkout/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: (req.headers.get("origin") ?? "http://localhost:3000") + "/checkout/cancel",
-      shipping_address_collection: { allowed_countries: ["US", "GB"] },
-      metadata: {
-        orderNumber,
-        items: JSON.stringify(items.map((i: any) => ({ id: i.id, variantId: i.variantId, quantity: i.quantity }))),
-      },
-    });
+    // Generate access token
+    const accessToken = randomUUID();
 
     // Create order
-    await prisma.order.create({
-      data: {
-        status: "pending",
-        total,
-        stripeSessionId: session.id,
-        orderNumber: orderNumber,
-        cartFingerprint: fingerprint,
-        email: email ?? null,
-      },
-    });
+    let orderId = "";
+    try {
+      const order = await prisma.order.create({
+        data: {
+          orderNumber,
+          status: "PENDING_PAYMENT",
+          customerEmail,
+          customerName: customerName ?? null,
+          customerPhone: customerPhone ?? null,
+          subtotal,
+          shippingFee,
+          tax,
+          total,
+          currency: "USD",
+          shippingName: shippingAddress?.name ?? null,
+          shippingPhone: shippingAddress?.phone ?? null,
+          shippingAddress1: shippingAddress?.address1 ?? null,
+          shippingAddress2: shippingAddress?.address2 ?? null,
+          shippingCity: shippingAddress?.city ?? null,
+          shippingProvince: shippingAddress?.province ?? null,
+          shippingPostal: shippingAddress?.postal ?? null,
+          shippingCountry: shippingAddress?.country ?? "US",
+          metadata: { accessToken },
+        },
+      });
+      orderId = order.id;
 
-    return NextResponse.json({ url: session.url });
+      // Create order items
+      for (const oi of orderItems) {
+        await prisma.orderItem.create({
+          data: {
+            orderId: order.id,
+            productId: oi.productId,
+            productName: oi.productName,
+            productSlug: oi.productSlug,
+            productImage: oi.productImage,
+            variantId: oi.variantId,
+            variantName: oi.variantName,
+            quantity: oi.quantity,
+            unitPrice: oi.unitPrice,
+            subtotal: oi.subtotal,
+            price: oi.unitPrice,
+          },
+        });
+      }
+
+      // Create audit log
+      await prisma.orderAuditLog.create({
+        data: { orderId: order.id, action: "ORDER_CREATED", metadata: { source: "checkout_api" } },
+      });
+
+      // Update counter
+      await prisma.orderCounter.upsert({
+        where: { date: today },
+        update: { sequence: { increment: 1 } },
+        create: { date: today, sequence: 1 },
+      });
+    } catch (dbErr) {
+      console.error("Database error during order creation:", dbErr);
+      return NextResponse.json({ success: false, error: "Failed to create order" }, { status: 500 });
+    }
+
+    return NextResponse.json({
+      success: true,
+      orderId,
+      orderNumber,
+      total,
+      redirectUrl: "/orders/" + orderId + "?token=" + accessToken,
+    });
   } catch (error) {
     console.error("Checkout error:", error);
-    return NextResponse.json({ error: "Failed to create checkout" }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Invalid request" }, { status: 400 });
   }
 }
