@@ -9,8 +9,19 @@ export function CartSidebar() {
   // Cart opens via useCartContext toggleCart
   const { items, isOpen, itemCount, total, removeItem, updateQuantity, toggleCart } = useCartContext();
   const [loading, setLoading] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponError, setCouponError] = useState("");
+  const [isValidating, setIsValidating] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
 
-  const handleCheckout = async () => {
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) return;
+    setIsValidating(true); setCouponError("");
+    try { const res = await fetch("/api/coupons/validate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: couponCode.trim(), cartTotal: total, items: items.map(i => ({ id: i.productId, quantity: i.quantity })) }) }); const data = await res.json(); if (data.valid) { setAppliedCoupon({ code: couponCode.trim().toUpperCase(), discount: data.discountAmount }); setCouponDiscount(data.discountAmount); setCouponCode(""); } else { setCouponError(data.message || "Invalid coupon"); } } catch { setCouponError("Failed"); } finally { setIsValidating(false); }
+  };
+  const handleRemoveCoupon = () => { setAppliedCoupon(null); setCouponDiscount(0); setCouponError(""); };
+const handleCheckout = async () => {
     if (items.length === 0) return;
     setLoading(true);
     try {

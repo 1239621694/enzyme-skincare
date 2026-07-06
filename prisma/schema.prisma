@@ -25,6 +25,20 @@ enum PaymentStatus {
   REFUNDED
 }
 
+
+enum ReferralStatus {
+  CLICKED
+  ORDERED
+  PAID
+  COMMISSIONED
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED
+  FREE_SHIPPING
+}
+
 enum AdminRole {
   ADMIN
   OPERATOR
@@ -110,6 +124,16 @@ model Order {
   shippingCountry   String?  @map("shipping_country")
   customerNote      String?  @map("customer_note")
   adminNote         String?  @map("admin_note")
+  referralId String? @map("referral_id")
+  referralCode String? @map("referral_code")
+  salesRepId String? @map("sales_rep_id") @db.Uuid
+  salesCode String? @map("sales_code")
+  utmSource String? @map("utm_source")
+  utmMedium String? @map("utm_medium")
+  utmCampaign String? @map("utm_campaign")
+  couponId String?  @map("coupon_id")
+  couponCode String? @map("coupon_code")
+  discountAmount Decimal? @db.Decimal(10, 2) @map("discount_amount")
   paidAt            DateTime? @map("paid_at")
   updatedAt         DateTime @updatedAt @map("updated_at")
   statusHistory OrderStatusHistory[]
@@ -118,6 +142,10 @@ model Order {
   items OrderItem[]
   payments Payment[]
   auditLogs OrderAuditLog[]
+  usages CouponUsage[]
+  salesRep SalesRep? @relation(fields: [salesRepId], references: [id])
+  marketingEvents MarketingEvent[]
+  referrals Referral[]
 
   @@index([status, createdAt])
   @@map("orders")
@@ -153,6 +181,8 @@ model Payment {
   currency         String          @default("USD")
   status           String          @default("PENDING")
   invoiceUrl       String?         @map("invoice_url")
+  invoiceNumber    String?         @map("invoice_number")
+  paymentNote      String?         @map("payment_note")
   confirmedBy      String?         @map("confirmed_by")
   confirmedNote    String?         @map("confirmed_note")
   completedAt      DateTime?       @map("completed_at")
@@ -397,6 +427,117 @@ model OrderStatusHistory {
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@map("order_status_history")
+}
+
+
+model MarketingEvent {
+  id           String   @id @default(uuid()) @db.Uuid
+  sessionId    String?  @map("session_id")
+  utmSource    String?  @map("utm_source")
+  utmMedium    String?  @map("utm_medium")
+  utmCampaign  String?  @map("utm_campaign")
+  utmTerm      String?  @map("utm_term")
+  utmContent   String?  @map("utm_content")
+  landingPage  String?  @map("landing_page")
+  referrerUrl  String?  @map("referrer_url")
+  userAgent    String?  @map("user_agent")
+  ipAddress    String?  @map("ip_address")
+  orderId      String?  @map("order_id") @db.Uuid
+  firstVisit   DateTime @default(now()) @map("first_visit")
+  convertedAt  DateTime? @map("converted_at")
+
+  order Order? @relation(fields: [orderId], references: [id])
+
+  @@index([sessionId])
+  @@index([utmSource, utmCampaign])
+  @@index([orderId])
+  @@map("marketing_events")
+}
+
+model SalesRep {
+  id             String   @id @default(uuid()) @db.Uuid
+  name           String
+  email          String   @unique
+  phone          String?
+  salesCode      String   @unique @map("sales_code")
+  commissionRate Decimal  @db.Decimal(5, 2) @map("commission_rate")
+  passwordHash   String   @map("password_hash")
+  isActive       Boolean  @default(true) @map("is_active")
+  notes          String?
+  orders Order[]
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@index([salesCode])
+  @@map("sales_reps")
+}
+
+model Referral {
+  id               String          @id @default(uuid()) @db.Uuid
+  referrerEmail    String          @map("referrer_email")
+  referrerCode     String          @unique @map("referrer_code")
+  visitorId        String?         @map("visitor_id")
+  clickedAt        DateTime        @default(now()) @map("clicked_at")
+  refereeEmail     String?         @map("referee_email")
+  orderId          String?         @map("order_id") @db.Uuid
+  commissionAmount  Decimal?        @db.Decimal(10, 2) @map("commission_amount")
+  commissionPaid   Boolean         @default(false) @map("commission_paid")
+  paidAt           DateTime?       @map("paid_at")
+  utmSource        String?         @map("utm_source")
+  utmMedium        String?         @map("utm_medium")
+  utmCampaign      String?         @map("utm_campaign")
+  status           ReferralStatus  @default(CLICKED)
+  createdAt        DateTime        @default(now()) @map("created_at")
+
+  order Order? @relation(fields: [orderId], references: [id])
+
+  @@index([referrerEmail])
+  @@index([referrerCode])
+  @@index([status])
+  @@map("referrals")
+}
+
+model Coupon {
+  id                 String     @id @default(uuid()) @db.Uuid
+  code               String     @unique
+  type               CouponType @default(PERCENTAGE)
+  value              Decimal    @db.Decimal(10, 2)
+  minOrderAmount     Decimal?   @db.Decimal(10, 2) @map("min_order_amount")
+  maxDiscount        Decimal?   @db.Decimal(10, 2) @map("max_discount")
+  usageLimit         Int?       @map("usage_limit")
+  usagePerUser       Int?       @map("usage_per_user")
+  currentUses        Int        @default(0) @map("current_uses")
+  startsAt           DateTime?  @map("starts_at")
+  expiresAt          DateTime?  @map("expires_at")
+  isActive           Boolean    @default(true) @map("is_active")
+  applicableProducts String[]   @map("applicable_products")
+  minQuantity        Int?       @map("min_quantity")
+  firstTimeOnly      Boolean    @default(false) @map("first_time_only")
+  description        String?
+  createdAt          DateTime   @default(now()) @map("created_at")
+  updatedAt          DateTime   @updatedAt @map("updated_at")
+
+  usages CouponUsage[]
+
+  @@index([code])
+  @@index([isActive, expiresAt])
+  @@map("coupons")
+}
+
+model CouponUsage {
+  id             String   @id @default(uuid()) @db.Uuid
+  couponId       String   @map("coupon_id") @db.Uuid
+  orderId        String   @map("order_id") @db.Uuid
+  customerEmail  String?  @map("customer_email")
+  discountAmount Decimal  @db.Decimal(10, 2) @map("discount_amount")
+  usedAt         DateTime @default(now()) @map("used_at")
+
+  coupon Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  order  Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([couponId])
+  @@index([customerEmail])
+  @@map("coupon_usages")
 }
 
 model OrderCounter {

@@ -10,7 +10,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     { h: "/admin", l: "Dashboard" },
     { h: "/admin/orders", l: "Orders" },
     { h: "/admin/products", l: "Products" },
+    { h: "/admin/coupons", l: "Coupons" },
+    { h: "/admin/referrals", l: "Referrals" },
     { h: "/admin/reviews", l: "Reviews" },
+    { h: "/admin/reports", l: "Reports" },
     { h: "/admin/analytics", l: "Analytics" },
   ];
 
