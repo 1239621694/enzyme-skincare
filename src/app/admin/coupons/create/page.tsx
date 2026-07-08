@@ -20,7 +20,7 @@ async function createCoupon(formData: FormData) {
     await prisma.coupon.create({
       data: {
         code,
-        type,
+        type: type as any,
         value,
         minOrderAmount: minOrder,
         maxDiscount,
