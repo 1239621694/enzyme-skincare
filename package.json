@@ -19,6 +19,7 @@
         "cssnano": "^8.0.2",
         "dompurify": "^3.4.10",
         "next": "16.2.9",
+        "pg": "^8.22.0",
         "prisma": "^5.4.0",
         "react": "19.2.4",
         "react-compare-image": "^3.5.17",
@@ -31,6 +32,7 @@
     "devDependencies": {
         "@tailwindcss/postcss": "^4",
         "@types/node": "^20",
+        "@types/pg": "^8.20.0",
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "eslint": "^9",
