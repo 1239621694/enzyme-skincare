@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     // 在路由内部创建 PrismaClient，确保使用正确的连接字符串
     const prisma = new PrismaClient({
       datasources: {
-        db: { url: "postgresql://postgres:lijiuliang0927@db.tsbxnpcbncoiasbacqja.supabase.co:5432/postgres?sslmode=require" }
+        db: { url: "postgresql://postgres:lijiuliang0927@db.tsbxnpcbncoiasbacqja.supabase.co:6543/postgres?pgbouncer=true" }
       }
     });
     
