@@ -2,38 +2,17 @@
 
 import { ALL_PRODUCTS } from "@/lib/products";
 import { ProductGrid } from "@/components/products/ProductGrid";
-import { ProductFilters } from "@/components/products/ProductFilters";
-import { ProductSort } from "@/components/products/ProductSort";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Shop All Products — Enzyme Skincare",
   description:
-    "Browse our complete collection of enzyme-powered skincare. Cleansers, serums, moisturizers, and more — all dermatologist tested.",
+    "Browse our complete collection of enzyme-powered skincare — all dermatologist tested.",
 };
 
-interface ProductsPageProps {
-  searchParams: Promise<{
-    category?: string;
-    concern?: string;
-    priceMin?: string;
-    priceMax?: string;
-    sort?: string;
-  }>;
-}
-
-export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-  const params = await searchParams;
-
-  const products = ALL_PRODUCTS.filter((p) => {
-    if (!p.isActive) return false;
-    if (params.category && p.category !== params.category.toUpperCase()) return false;
-    if (params.concern && !p.skinConcerns.includes(params.concern.toUpperCase() as any)) return false;
-    if (params.priceMin && p.price < Number(params.priceMin)) return false;
-    if (params.priceMax && p.price > Number(params.priceMax)) return false;
-    return true;
-  });
+export default async function ProductsPage() {
+  const products = ALL_PRODUCTS.filter((p) => p.isActive);
 
   return (
     <>
@@ -56,20 +35,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       </section>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="lg:grid lg:grid-cols-4 lg:gap-8">
-          <aside className="hidden lg:block">
-            <ProductFilters />
-          </aside>
-
-          <div className="lg:col-span-3">
-            <div className="flex items-center justify-between mb-6">
-              <div className="lg:hidden" />
-              <ProductSort />
-            </div>
-
-            <ProductGrid products={products} />
-          </div>
-        </div>
+        <ProductGrid products={products} />
       </div>
     </>
   );
