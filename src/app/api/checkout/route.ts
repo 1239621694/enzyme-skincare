@@ -162,6 +162,17 @@ export async function POST(req: NextRequest) {
         data: { orderId: order.id, action: "ORDER_CREATED", metadata: { source: "checkout_api" } },
       });
 
+      // Create payment record (XTransfer, manual confirmation)
+      await prisma.payment.create({
+        data: {
+          orderId: order.id,
+          provider: "XTRANSFER",
+          amount: total,
+          currency: "USD",
+          status: "PENDING",
+        },
+      });
+
       // Update counter
       await prisma.orderCounter.upsert({
         where: { date: today },

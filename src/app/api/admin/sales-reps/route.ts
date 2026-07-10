@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getBaseUrl } from "@/lib/url";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const reps = await prisma.salesRep.findMany({
       orderBy: { createdAt: "desc" },
@@ -16,7 +17,7 @@ export async function GET() {
         totalOrders: r.orders.length,
         totalRevenue,
         commissionRate: Number(r.commissionRate),
-        referralLink: process.env.NEXT_PUBLIC_SITE_URL + "/?ref=" + r.salesCode,
+        referralLink: getBaseUrl(req) + "/?ref=" + r.salesCode,
         recentOrders: r.orders.slice(0, 5),
       };
     });

@@ -11,9 +11,14 @@ export default function CartPage() {
   const { items, itemCount, total, updateQuantity, removeItem } = useCartContext();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [shippingName, setShippingName] = useState("");
+  const [shippingAddress1, setShippingAddress1] = useState("");
+  const [shippingCity, setShippingCity] = useState("");
 
   const handleCheckout = async () => {
     if (items.length === 0) return;
+    if (!email.trim()) { toast.error("Please enter your email"); return; }
     setLoading(true);
     try {
       const res = await fetch("/api/checkout", {
@@ -21,7 +26,13 @@ export default function CartPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: items.map((i) => ({ id: i.productId, name: i.name, price: i.price, quantity: i.quantity, variantId: i.variant })),
-          email: email || undefined,
+          customerEmail: email.trim(),
+          customerName: customerName.trim() || undefined,
+          shippingAddress: shippingAddress1.trim() ? {
+            name: shippingName.trim() || undefined,
+            address1: shippingAddress1.trim(),
+            city: shippingCity.trim() || undefined,
+          } : undefined,
         }),
       });
       const data = await res.json();
@@ -77,8 +88,17 @@ export default function CartPage() {
             </div>
             <div className="border-t border-neutral-200 mt-4 pt-4 flex justify-between font-semibold"><span>Total</span><span>${Number(total).toFixed(2)}</span></div>
 
-            <div className="mt-4">
-              <input type="email" placeholder="Email for confirmation" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-full border border-neutral-300 px-4 py-2.5 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
+            <div className="mt-4 space-y-3">
+              <input type="text" placeholder="Your name" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full rounded-full border border-neutral-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
+              <input type="email" placeholder="Email for confirmation *" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-full border border-neutral-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
+              <details className="text-sm">
+                <summary className="text-neutral-500 cursor-pointer">+ Add shipping address</summary>
+                <div className="mt-3 space-y-2">
+                  <input type="text" placeholder="Recipient name" value={shippingName} onChange={(e) => setShippingName(e.target.value)} className="w-full rounded-full border border-neutral-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
+                  <input type="text" placeholder="Address line 1" value={shippingAddress1} onChange={(e) => setShippingAddress1(e.target.value)} className="w-full rounded-full border border-neutral-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
+                  <input type="text" placeholder="City" value={shippingCity} onChange={(e) => setShippingCity(e.target.value)} className="w-full rounded-full border border-neutral-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
+                </div>
+              </details>
               <Button onClick={handleCheckout} loading={loading} className="w-full text-lg py-4" size="lg">Proceed to Checkout</Button>
             </div>
 

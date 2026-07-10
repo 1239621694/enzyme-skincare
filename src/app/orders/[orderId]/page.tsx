@@ -11,9 +11,11 @@ interface TrackingEvent {
 
 interface OrderData {
   id: string; orderNumber: string; status: string; total: number; currency: string;
+  subtotal: number | null; shippingFee: number | null; discountAmount: number | null;
   customerEmail: string; customerName: string | null;
-  items: { productName: string; quantity: number; unitPrice: number }[];
-  shippingAddress: { name: string | null; address1: string | null; city: string | null; province: string | null };
+  couponCode: string | null; salesCode: string | null;
+  items: { productName: string; productImage: string | null; quantity: number; unitPrice: number }[];
+  shippingAddress: { name: string | null; address1: string | null; address2: string | null; city: string | null; province: string | null; postal: string | null; country: string | null };
   payment: { provider: string; status: string; invoiceUrl: string | null } | null;
   trackingNumber: string | null; shippingCompany: string | null;
   deliveryStatus: string | null; shippedAt: string | null; deliveredAt: string | null;
@@ -62,31 +64,24 @@ export default function OrderDetailPage() {
       </div>
 
       {/* Payment Section */}
-      {order.payment?.status === "PENDING" && order.payment?.invoiceUrl && (
+      {order.status === "PENDING_PAYMENT" && (
         <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
           <h2 className="font-semibold text-green-800 mb-3">💳 Payment Required</h2>
-          <p className="text-sm text-green-700 mb-4">Click the button below to complete your payment via {order.payment.provider}.</p>
-          <a href={order.payment.invoiceUrl} target="_blank" rel="noopener noreferrer">
-            <Button className="w-full">Pay via {order.payment.provider}</Button>
+          <p className="text-sm text-green-700 mb-4">Complete your bank transfer to confirm your order.</p>
+          <a href={process.env.NEXT_PUBLIC_XTRANSFER_URL || "#"} target="_blank" rel="noopener noreferrer" onClick={(e) => { if (!process.env.NEXT_PUBLIC_XTRANSFER_URL) { e.preventDefault(); alert("Payment link not configured."); } }}>
+            <Button className="w-full">Pay via XTransfer</Button>
           </a>
-          {order.payment.invoiceUrl && (
-            <div className="mt-3 text-xs text-green-600 space-y-1">
-              <p>1. Click the button above to go to the payment page.</p>
-              <p>2. Complete the bank transfer as instructed.</p>
-              <p>3. Include order number <strong>{order.orderNumber}</strong> as payment reference.</p>
-              <p>4. Payment confirmation takes 1-3 business days.</p>
-            </div>
-          )}
+          <div className="mt-3 text-xs text-green-600 space-y-1">
+            <p>1. Click the button above to go to the XTransfer payment page.</p>
+            <p>2. Complete the bank transfer as instructed.</p>
+            <p>3. Include order number <strong>{order.orderNumber}</strong> as payment reference.</p>
+            <p>4. Payment confirmation takes 1-3 business days.</p>
+          </div>
         </div>
       )}
       {order.payment?.status === "COMPLETED" && (
         <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
           <p className="font-semibold text-green-700">✅ Payment Confirmed</p>
-        </div>
-      )}
-      {!order.payment && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-6">
-          <p className="text-sm text-amber-700">⏳ Waiting for admin to attach payment method.</p>
         </div>
       )}
 
@@ -101,9 +96,20 @@ export default function OrderDetailPage() {
             </div>
           ))}
         </div>
-        <div className="border-t border-neutral-200 mt-3 pt-3 flex justify-between font-semibold">
-          <span>Total</span><span>${order.total.toFixed(2)} {order.currency}</span>
+        <div className="border-t border-neutral-200 mt-3 pt-3 space-y-1 text-sm text-right">
+          <p>Subtotal: ${(order.subtotal || order.total).toFixed(2)}</p>
+          {order.shippingFee ? <p>Shipping: ${order.shippingFee.toFixed(2)}</p> : null}
+          {order.discountAmount ? <p className="text-green-600">Discount: -${order.discountAmount.toFixed(2)}</p> : null}
+          <div className="flex justify-between font-semibold text-base pt-1 border-t border-neutral-200">
+            <span>Total</span><span>${order.total.toFixed(2)} {order.currency}</span>
+          </div>
         </div>
+        {order.couponCode && (
+          <div className="mt-3 pt-2 border-t border-neutral-100 text-xs text-neutral-500">
+            Coupon: <span className="font-mono">{order.couponCode}</span>
+            {order.salesCode && <span className="ml-3">Referral: {order.salesCode}</span>}
+          </div>
+        )}
       </div>
 
       {/* Shipping & Tracking */}
