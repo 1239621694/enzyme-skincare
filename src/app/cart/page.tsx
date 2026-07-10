@@ -25,7 +25,7 @@ export default function CartPage() {
         }),
       });
       const data = await res.json();
-      if (res.ok && data.url) window.location.href = data.url;
+      if (res.ok && data.redirectUrl) window.location.href = data.redirectUrl;
       else toast.error(data.error || "Checkout failed");
     } catch {
       toast.error("Network error");

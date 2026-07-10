@@ -4,12 +4,20 @@ import { useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
+interface TrackingEvent {
+  id: string; status: string; location: string | null; description: string | null;
+  trackingNumber: string | null; shippingCompany: string | null; timestamp: string;
+}
+
 interface OrderData {
   id: string; orderNumber: string; status: string; total: number; currency: string;
   customerEmail: string; customerName: string | null;
   items: { productName: string; quantity: number; unitPrice: number }[];
   shippingAddress: { name: string | null; address1: string | null; city: string | null; province: string | null };
   payment: { provider: string; status: string; invoiceUrl: string | null } | null;
+  trackingNumber: string | null; shippingCompany: string | null;
+  deliveryStatus: string | null; shippedAt: string | null; deliveredAt: string | null;
+  trackingEvents: TrackingEvent[];
   createdAt: string;
 }
 
@@ -98,13 +106,45 @@ export default function OrderDetailPage() {
         </div>
       </div>
 
-      {/* Shipping */}
-      {order.shippingAddress?.name && (
+      {/* Shipping & Tracking */}
+      <div className="border border-neutral-200 rounded-xl p-6 mb-6">
+        <h2 className="font-semibold mb-2">Shipping</h2>
+        {order.shippingAddress?.name ? (
+          <>
+            <p className="text-sm text-neutral-600">{order.shippingAddress.name}</p>
+            <p className="text-sm text-neutral-600">{order.shippingAddress.address1}</p>
+            <p className="text-sm text-neutral-600">{order.shippingAddress.city}, {order.shippingAddress.province}</p>
+          </>
+        ) : <p className="text-sm text-neutral-400">No address collected</p>}
+        {order.trackingNumber && (
+          <div className="mt-4 pt-4 border-t border-neutral-200">
+            <p className="text-sm"><span className="font-medium">Tracking:</span> {order.trackingNumber}</p>
+            {order.shippingCompany && <p className="text-sm text-neutral-500">{order.shippingCompany}</p>}
+            {order.deliveryStatus && <p className="text-sm text-neutral-500 mt-1">Status: {order.deliveryStatus}</p>}
+          </div>
+        )}
+      </div>
+
+      {/* Tracking Timeline */}
+      {order.trackingEvents && order.trackingEvents.length > 0 && (
         <div className="border border-neutral-200 rounded-xl p-6 mb-6">
-          <h2 className="font-semibold mb-2">Shipping Address</h2>
-          <p className="text-sm text-neutral-600">{order.shippingAddress.name}</p>
-          <p className="text-sm text-neutral-600">{order.shippingAddress.address1}</p>
-          <p className="text-sm text-neutral-600">{order.shippingAddress.city}, {order.shippingAddress.province}</p>
+          <h2 className="font-semibold mb-3">Tracking Timeline</h2>
+          <div className="space-y-0">
+            {order.trackingEvents.map((event, i) => (
+              <div key={event.id} className="flex gap-4 pb-4 relative">
+                <div className="flex flex-col items-center">
+                  <div className={`w-3 h-3 rounded-full ${i === 0 ? "bg-primary-600" : "bg-neutral-300"} mt-1.5 z-10`} />
+                  {i < order.trackingEvents.length - 1 && <div className="w-0.5 flex-1 bg-neutral-200 -mt-0.5" />}
+                </div>
+                <div className="flex-1 text-sm">
+                  <p className="font-medium text-neutral-800">{event.status.replace(/_/g, " ")}</p>
+                  {event.description && <p className="text-neutral-500 text-xs">{event.description}</p>}
+                  {event.location && <p className="text-neutral-400 text-xs">{event.location}</p>}
+                  <p className="text-neutral-400 text-xs mt-1">{new Date(event.timestamp).toLocaleString()}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

@@ -22,6 +22,8 @@ export async function POST(req: NextRequest) {
     const coupon = await prisma.coupon.findUnique({ where: { code: code.toUpperCase() } });
     if (!coupon) return NextResponse.json({ valid: false, ...ERROR_CODES.NOT_FOUND }, { status: 400 });
     if (!coupon.isActive) return NextResponse.json({ valid: false, ...ERROR_CODES.NOT_ACTIVE }, { status: 400 });
+    if (coupon.status === "DISABLED" || coupon.status === "EXPIRED") return NextResponse.json({ valid: false, ...ERROR_CODES.NOT_ACTIVE }, { status: 400 });
+    if (coupon.status === "DRAFT") return NextResponse.json({ valid: false, reason: "COUPON_DRAFT", message: "This coupon is not yet available." }, { status: 400 });
 
     const now = new Date();
     if (coupon.startsAt && coupon.startsAt > now) return NextResponse.json({ valid: false, ...ERROR_CODES.NOT_STARTED }, { status: 400 });

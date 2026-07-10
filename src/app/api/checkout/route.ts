@@ -73,6 +73,26 @@ export async function POST(req: NextRequest) {
     // Generate access token
     const accessToken = randomUUID();
 
+    // Create or find customer
+    let customerId: string | null = null;
+    try {
+      let customer = await prisma.customer.findUnique({ where: { email: customerEmail } });
+      if (customer) {
+        await prisma.customer.update({
+          where: { id: customer.id },
+          data: { totalOrders: { increment: 1 }, totalSpent: { increment: total }, lastOrderAt: new Date(), lastVisitAt: new Date() },
+        });
+        customerId = customer.id;
+      } else {
+        customer = await prisma.customer.create({
+          data: { email: customerEmail, firstName: customerName?.split(" ")[0] ?? null, lastName: customerName?.split(" ").slice(1).join(" ") ?? null, totalOrders: 1, totalSpent: total, firstOrderAt: new Date(), lastOrderAt: new Date(), lastVisitAt: new Date() },
+        });
+        customerId = customer.id;
+      }
+    } catch (err) {
+      console.warn("Customer sync failed (non-blocking):", err);
+    }
+
     // Create order
     let orderId = "";
     try {
@@ -80,6 +100,7 @@ export async function POST(req: NextRequest) {
         data: {
           orderNumber,
           status: "PENDING_PAYMENT",
+          customerId,
           customerEmail,
           customerName: customerName ?? null,
           customerPhone: customerPhone ?? null,
