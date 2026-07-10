@@ -17,6 +17,10 @@ export default function CreateCouponPage() {
           </div>
         )}
         <div>
+          <label className="block text-sm font-medium mb-1">Coupon Name</label>
+          <input name="name" className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="e.g. Summer Sale 2026" />
+        </div>
+        <div>
           <label className="block text-sm font-medium mb-1">Coupon Code *</label>
           <input name="code" required className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="e.g. SUMMER20" />
         </div>
@@ -29,11 +33,30 @@ export default function CreateCouponPage() {
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Discount Value *</label>
-          <input name="value" type="number" step="0.01" required className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="e.g. 20 = 20% or " />
+          <input name="value" type="number" step="0.01" required className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="e.g. 20 = 20% or $20" />
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Usage Per User</label>
-          <input name="usagePerUser" type="number" defaultValue={1} className="w-full px-3 py-2 border rounded-lg text-sm" />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Status</label>
+            <select name="status" className="w-full px-3 py-2 border rounded-lg text-sm">
+              <option value="ACTIVE">Active</option>
+              <option value="DRAFT">Draft</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Usage Limit</label>
+            <input name="usageLimit" type="number" className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Unlimited" />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Min Order Amount</label>
+            <input name="minOrderAmount" type="number" step="0.01" className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="None" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Usage Per User</label>
+            <input name="usagePerUser" type="number" defaultValue={1} className="w-full px-3 py-2 border rounded-lg text-sm" />
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Expiry Date</label>

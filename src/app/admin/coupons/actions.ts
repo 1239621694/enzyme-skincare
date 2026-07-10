@@ -23,6 +23,14 @@ export async function createCoupon(
         code,
         type: type as "PERCENTAGE" | "FIXED" | "FREE_SHIPPING",
         value,
+        name: (formData.get("name") as string) || null,
+        status: (formData.get("status") as string) || "ACTIVE",
+        usageLimit: formData.get("usageLimit")
+          ? parseInt(formData.get("usageLimit") as string, 10)
+          : null,
+        minOrderAmount: formData.get("minOrderAmount")
+          ? parseFloat(formData.get("minOrderAmount") as string)
+          : null,
         usagePerUser: usagePerUser || 1,
         expiresAt,
         isActive: true,
@@ -30,6 +38,10 @@ export async function createCoupon(
     });
   } catch (e: unknown) {
     console.error("Failed to create coupon:", e);
+    // Check for unique constraint violation (duplicate code)
+    if (typeof e === "object" && e !== null && "code" in e && (e as any).code === "P2002") {
+      return { error: `Coupon code "${code}" already exists. Please use a different code.` };
+    }
     return { error: "Failed to create coupon. Please try again." };
   }
 

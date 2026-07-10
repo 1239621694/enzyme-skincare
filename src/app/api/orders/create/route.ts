@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const orderNumber = "ES-" + today + "-" + String(counter.sequence).padStart(4, "0");
 
     const order = await prisma.order.create({
-      data: { orderNumber, status: "pending", total, email: email ?? null },
+      data: { orderNumber, status: "PENDING_PAYMENT", total, email: email ?? null },
     });
 
     for (const item of items) {

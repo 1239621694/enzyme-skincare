@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
         await prisma.order.update({
           where: { id: order.id },
           data: {
-            status: "paid",
+            status: "PAID",
             paymentIntentId: paymentIntentId,
             email: session.customer_details?.email ?? order.email,
             shippingAddress: shippingAddress,
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
 
         // Record status history
         await prisma.orderStatusHistory.create({
-          data: { orderId: order.id, fromStatus: "pending", toStatus: "paid" },
+          data: { orderId: order.id, fromStatus: "PENDING_PAYMENT", toStatus: "PAID" },
         });
 
         // Send confirmation email (non-blocking)
@@ -103,10 +103,10 @@ export async function POST(request: NextRequest) {
       case "payment_intent.succeeded": {
         const pi = event.data.object as any;
         const order = await prisma.order.findFirst({ where: { paymentIntentId: pi.id } });
-        if (order && order.status === "pending") {
-          await prisma.order.update({ where: { id: order.id }, data: { status: "paid" } });
+        if (order && order.status === "PENDING_PAYMENT") {
+          await prisma.order.update({ where: { id: order.id }, data: { status: "PAID" } });
           await prisma.orderStatusHistory.create({
-            data: { orderId: order.id, fromStatus: "pending", toStatus: "paid" },
+            data: { orderId: order.id, fromStatus: "PENDING_PAYMENT", toStatus: "PAID" },
           });
         }
         break;
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
       case "payment_intent.processing": {
         const pi = event.data.object as any;
         await prisma.orderStatusHistory.create({
-          data: { orderId: pi.id, fromStatus: "pending", toStatus: "processing", note: "Payment processing (async)" },
+          data: { orderId: pi.id, fromStatus: "PENDING_PAYMENT", toStatus: "PROCESSING", note: "Payment processing (async)" },
         });
         console.log("Payment processing (async):", pi.id);
         break;
@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
       case "checkout.session.expired": {
         const session = event.data.object as any;
         const order = await prisma.order.findFirst({ where: { stripeSessionId: session.id } });
-        if (order && order.status === "pending") {
+        if (order && order.status === "PENDING_PAYMENT") {
           // C5: Restore stock that was deducted at checkout creation
           const lineItems: any[] = session.metadata?.items ? JSON.parse(session.metadata.items) : [];
           for (const item of lineItems) {
@@ -136,9 +136,9 @@ export async function POST(request: NextRequest) {
               });
             }
           }
-          await prisma.order.update({ where: { id: order.id }, data: { status: "failed" } });
+          await prisma.order.update({ where: { id: order.id }, data: { status: "CANCELLED" } });
           await prisma.orderStatusHistory.create({
-            data: { orderId: order.id, fromStatus: "pending", toStatus: "failed", note: "Session expired - stock restored" },
+            data: { orderId: order.id, fromStatus: "PENDING_PAYMENT", toStatus: "CANCELLED", note: "Session expired - stock restored" },
           });
         }
         break;

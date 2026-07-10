@@ -11,11 +11,12 @@ export default async function AdminOrdersPage() {
   }
 
   const statusColor = (s: string) => ({
-    pending: "bg-yellow-100 text-yellow-800",
-    paid: "bg-green-100 text-green-800",
-    shipped: "bg-purple-100 text-purple-800",
-    delivered: "bg-blue-100 text-blue-800",
-    cancelled: "bg-red-100 text-red-800",
+    "PENDING_PAYMENT": "bg-amber-100 text-amber-800",
+    "PAID": "bg-green-100 text-green-800",
+    "SHIPPED": "bg-purple-100 text-purple-800",
+    "DELIVERED": "bg-blue-100 text-blue-800",
+    "CANCELLED": "bg-red-100 text-red-800",
+    "REFUNDED": "bg-red-50 text-red-500",
   }[s] || "bg-neutral-100");
 
   return (
