@@ -6,11 +6,13 @@ import { cn } from "@/lib/utils";
 
 const categories = [
   { value: "", label: "All" },
-  { value: "cleansers", label: "Cleansers" },
-  { value: "serums", label: "Serums" },
-  { value: "moisturizers", label: "Moisturizers" },
-  { value: "masks", label: "Masks" },
-  { value: "sets", label: "Sets" },
+  { value: "cleanser", label: "Cleansers" },
+  { value: "serum", label: "Serums" },
+  { value: "moisturizer", label: "Moisturizers" },
+  { value: "mask", label: "Masks" },
+  { value: "treatment", label: "Treatments" },
+  { value: "spray", label: "Sprays" },
+  { value: "set", label: "Sets" },
 ];
 
 const skinConcerns = [
