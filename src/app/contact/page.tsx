@@ -55,9 +55,8 @@ export default function ContactPage() {
           <div className="p-6 bg-neutral-50 rounded-xl">
             <h2 className="font-semibold text-neutral-800 mb-4">Contact Information</h2>
             <div className="space-y-3 text-sm text-neutral-600">
-              <p><strong>Email:</strong> hello@enzymeskincare.com</p>
-              <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-              <p><strong>Hours:</strong> Mon-Fri, 9AM-5PM EST</p>
+              <p><strong>Email:</strong> tkyds888@gmail.com</p>
+              <p><strong>Phone:</strong> +86 13980551004</p>
             </div>
           </div>
         </div>
