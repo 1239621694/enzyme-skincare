@@ -6,7 +6,7 @@ import { randomUUID } from "crypto";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { items, customerEmail, customerName, customerPhone, shippingAddress } = body;
+    const { items, customerEmail, customerName, customerPhone, shippingAddress, couponCode, discountAmount, salesRepCode } = body;
 
     // Validate required fields
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -54,7 +54,8 @@ export async function POST(req: NextRequest) {
 
     const shippingFee = subtotal >= 50 ? 0 : 5.95;
     const tax = 0;
-    const total = subtotal + shippingFee + tax;
+    const discount = Math.min(Math.max(0, Number(discountAmount || 0)), subtotal);
+    const total = Math.max(0, subtotal + shippingFee + tax - discount);
 
     // Generate order number
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
@@ -72,6 +73,17 @@ export async function POST(req: NextRequest) {
 
     // Generate access token
     const accessToken = randomUUID();
+
+    // Check for sales rep referral cookie
+    let salesCode: string | undefined;
+    let salesRepId: string | null = null;
+    if (salesRepCode) {
+      salesCode = salesRepCode;
+      try {
+        const rep = await prisma.salesRep.findUnique({ where: { salesCode: salesCode as string } });
+        if (rep) salesRepId = rep.id;
+      } catch (_) { /* ignore */ }
+    }
 
     // Create or find customer
     let customerId: string | null = null;
@@ -104,6 +116,10 @@ export async function POST(req: NextRequest) {
           customerEmail,
           customerName: customerName ?? null,
           customerPhone: customerPhone ?? null,
+          salesCode,
+          salesRepId,
+          couponCode: couponCode || null,
+          discountAmount: discount > 0 ? discount : null,
           subtotal,
           shippingFee,
           tax,

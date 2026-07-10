@@ -4,11 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCartContext } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 export function CartSidebar() {
   // Cart opens via useCartContext toggleCart
   const { items, isOpen, itemCount, total, removeItem, updateQuantity, toggleCart } = useCartContext();
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [couponError, setCouponError] = useState("");
@@ -21,19 +23,37 @@ export function CartSidebar() {
     try { const res = await fetch("/api/coupons/validate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: couponCode.trim(), cartTotal: total, items: items.map(i => ({ id: i.productId, quantity: i.quantity })) }) }); const data = await res.json(); if (data.valid) { setAppliedCoupon({ code: couponCode.trim().toUpperCase(), discount: data.discountAmount }); setCouponDiscount(data.discountAmount); setCouponCode(""); } else { setCouponError(data.message || "Invalid coupon"); } } catch { setCouponError("Failed"); } finally { setIsValidating(false); }
   };
   const handleRemoveCoupon = () => { setAppliedCoupon(null); setCouponDiscount(0); setCouponError(""); };
-const handleCheckout = async () => {
+
+  const handleCheckout = async () => {
     if (items.length === 0) return;
+    if (!email.trim()) { toast.error("Please enter your email"); return; }
     setLoading(true);
     try {
-      // 直接跳转 XTransfer 付款链接
-      const xtransferUrl = process.env.NEXT_PUBLIC_XTRANSFER_URL;
-      if (xtransferUrl) {
-        window.open(xtransferUrl, "_blank");
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((i) => ({
+            productId: i.productId || i.id,
+            name: i.name,
+            price: i.price,
+            quantity: i.quantity,
+            variantId: i.variant,
+          })),
+          customerEmail: email.trim(),
+          customerName: "",
+          couponCode: appliedCoupon?.code || null,
+          discountAmount: couponDiscount || null,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.redirectUrl) {
+        window.location.href = data.redirectUrl;
       } else {
-        alert("Payment link not configured. Please contact support.");
+        toast.error(data.error || "Checkout failed");
       }
     } catch {
-      alert("Checkout error. Please try again.");
+      toast.error("Network error");
     } finally {
       setLoading(false);
     }
@@ -87,11 +107,35 @@ const handleCheckout = async () => {
         </div>
         {items.length > 0 && (
           <div className="border-t border-neutral-200 px-6 py-4 space-y-3">
+            <div className="space-y-2 mb-3">
+              {appliedCoupon ? (
+                <div className="flex items-center justify-between px-3 py-2 bg-green-50 rounded-lg text-sm">
+                  <span className="text-green-700 font-medium">{appliedCoupon.code}</span>
+                  <button onClick={handleRemoveCoupon} className="text-xs text-green-600 hover:text-green-800">Remove</button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input type="text" placeholder="Coupon code" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} className="flex-1 rounded-full border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
+                  <button onClick={handleApplyCoupon} disabled={isValidating} className="px-4 py-2 bg-neutral-100 text-sm rounded-full hover:bg-neutral-200 disabled:opacity-50">{isValidating ? "..." : "Apply"}</button>
+                </div>
+              )}
+              {couponError && <p className="text-xs text-red-500 px-1">{couponError}</p>}
+            </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-neutral-600">Subtotal</span>
               <span className="font-semibold text-neutral-800">${Number(total).toFixed(2)}</span>
             </div>
-            <p className="text-xs text-neutral-400">Shipping calculated at checkout</p>
+            {couponDiscount > 0 && (
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-green-600">Discount ({appliedCoupon?.code})</span>
+                <span className="font-semibold text-green-600">-${couponDiscount.toFixed(2)}</span>
+              </div>
+            )}
+            <div className="flex items-center justify-between text-sm font-semibold border-t border-neutral-200 pt-2">
+              <span>Total</span>
+              <span>${Math.max(0, Number(total) - couponDiscount).toFixed(2)}</span>
+            </div>
+            <input type="email" placeholder="Email for confirmation" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-full border border-neutral-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
             <button onClick={handleCheckout} disabled={loading} className="block w-full text-center px-6 py-3 rounded-full bg-primary-600 text-white text-lg font-semibold hover:bg-primary-700 transition-colors">{loading ? "Processing..." : "Proceed to Checkout"}</button>
             <div className="flex items-center justify-center gap-3 mt-3">
               <span className="text-xs text-neutral-500">Pay via:</span>
