@@ -16,7 +16,7 @@ export default function HomePage() {
       <HeroSection />
       {/* Promo Banner */}
       <section className="py-3 bg-accent-500 text-white text-center text-sm font-semibold">
-        🎉 New Customer Special: 15% off your first order with code <span className="underline mx-1">WELCOME15</span> — Free shipping over $50
+        🎉 New Customer Special: 15% off your first order with code <span className="underline mx-1">WELCOME15</span>
       </section>
       <TrustBar />
       <TheEnzymeDifference />
@@ -25,9 +25,9 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
         {[
           ["🔄", "30-Day Money Back"],
-          ["🚚", "Free Shipping $50+"],
-          ["🧪", "Dermatologist Tested"],
           ["🔒", "Secure Checkout"],
+          ["🧪", "Dermatologist Tested"],
+          ["🌟", "Premium Quality"],
         ].map(([icon, label]) => (
           <div key={label} className="flex flex-col items-center gap-2">
             <span className="text-2xl">{icon}</span>
@@ -43,7 +43,7 @@ export default function HomePage() {
         <div className="max-w-2xl mx-auto px-4">
           <h2 className="text-2xl font-heading font-bold text-neutral-800 mb-3">Need Help Choosing?</h2>
           <p className="text-neutral-500 mb-6">
-            Chat with our online skincare specialists. Free shipping on orders over $50.
+            Chat with our online skincare specialists.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a href="https://wa.me/8613980551004" target="_blank" rel="noopener noreferrer">
