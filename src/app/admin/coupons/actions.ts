@@ -40,9 +40,13 @@ export async function createCoupon(
     console.error("Failed to create coupon:", e);
     // Check for unique constraint violation (duplicate code)
     if (typeof e === "object" && e !== null && "code" in e && (e as any).code === "P2002") {
-      return { error: `Coupon code "${code}" already exists. Please use a different code.` };
+      return { error: `优惠券代码 "${code}" 已存在，请使用其他代码。` };
     }
-    return { error: "Failed to create coupon. Please try again." };
+    // Check for missing required fields
+    if (typeof e === "object" && e !== null && "code" in e && (e as any).code === "P2011") {
+      return { error: "请填写所有必填字段（名称、值等）。" };
+    }
+    return { error: "创建优惠券失败，请重试。请检查所有字段是否正确填写。" };
   }
 
   revalidatePath("/admin/coupons");
