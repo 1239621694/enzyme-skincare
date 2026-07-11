@@ -84,6 +84,25 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── Disclaimer ── */}
+      <section className="py-14 md:py-18 bg-neutral-50/80 border-t border-neutral-200">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-neutral-800 mb-5">
+              Disclaimer
+            </h2>
+            <div className="max-w-prose space-y-4">
+              <p className="text-neutral-500 leading-relaxed">
+                Results may vary from person to person.
+              </p>
+              <p className="text-neutral-500 leading-relaxed">
+                This treatment is intended for cosmetic skincare purposes only and is not intended to diagnose, treat, cure, or prevent any medical condition.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── fadeInUp animation ── */}
       <style>{`
         @keyframes fadeInUp {

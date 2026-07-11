@@ -106,11 +106,16 @@ export default function CasesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-heading text-2xl md:text-3xl font-bold text-neutral-800 mb-5">
-              A Note About Results
+              Disclaimer
             </h2>
-            <p className="text-neutral-500 leading-relaxed max-w-prose">
-              Every client&apos;s skin is different. Treatment plans, timelines and outcomes vary according to skin condition, lifestyle, consistency and professional recommendations. Images are provided for educational and illustrative purposes only and do not guarantee identical results.
-            </p>
+            <div className="max-w-prose space-y-4">
+              <p className="text-neutral-500 leading-relaxed">
+                Results may vary from person to person.
+              </p>
+              <p className="text-neutral-500 leading-relaxed">
+                This treatment is intended for cosmetic skincare purposes only and is not intended to diagnose, treat, cure, or prevent any medical condition.
+              </p>
+            </div>
           </div>
         </div>
       </section>
