@@ -1,94 +1,153 @@
-﻿"use client";
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ALL_CASES, getCasesByConcern } from "@/lib/cases";
-import { Modal } from "@/components/ui/Modal";
-import type { CaseData } from "@/lib/cases";
+"use client";
 
-const FILTERS = [
-  { value: "all", label: "All Results" },
-  { value: "acne", label: "Acne" },
-  { value: "aging", label: "Aging" },
-  { value: "pigmentation", label: "Pigmentation" },
-  { value: "dryness", label: "Dryness" },
+import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+
+const galleryImages = [
+  { src: "/images/before-after/before-after-01.jpg", alt: "Before and after enzyme therapy skin progress result 01", label: "Client Result 01" },
+  { src: "/images/before-after/before-after-02.jpg", alt: "Before and after enzyme therapy skin progress result 02", label: "Client Result 02" },
+  { src: "/images/before-after/before-after-03.jpg", alt: "Before and after enzyme therapy skin progress result 03", label: "Client Result 03" },
+  { src: "/images/before-after/before-after-04.jpg", alt: "Before and after enzyme therapy skin progress result 04", label: "Client Result 04" },
+  { src: "/images/before-after/before-after-05.jpg", alt: "Before and after enzyme therapy skin progress result 05", label: "Client Result 05" },
+  { src: "/images/before-after/before-after-06.jpg", alt: "Before and after enzyme therapy skin progress result 06", label: "Client Result 06" },
+  { src: "/images/before-after/before-after-07.jpg", alt: "Before and after enzyme therapy skin progress result 07", label: "Client Result 07" },
+  { src: "/images/before-after/before-after-08.jpg", alt: "Before and after enzyme therapy skin progress result 08", label: "Client Result 08" },
+  { src: "/images/before-after/before-after-09.jpg", alt: "Before and after enzyme therapy skin progress result 09", label: "Client Result 09" },
+  { src: "/images/before-after/before-after-10.jpg", alt: "Before and after enzyme therapy skin progress result 10", label: "Client Result 10" },
+  { src: "/images/before-after/before-after-11.jpg", alt: "Before and after enzyme therapy skin progress result 11", label: "Client Result 11" },
 ];
 
 export default function CasesPage() {
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [selectedCase, setSelectedCase] = useState<CaseData | null>(null);
-  const filtered = getCasesByConcern(activeFilter);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const openLightbox = (index: number) => {
+    setActiveIndex(index);
+    setLightboxOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false);
+    document.body.style.overflow = "";
+  }, []);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+    if (lightboxOpen) window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [lightboxOpen, closeLightbox]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      {/* Page title */}
-      <div className="text-center mb-10">
-        <h1 className="text-3xl md:text-4xl font-heading font-bold text-neutral-800 mb-3">Before &amp; After Results</h1>
-        <p className="text-neutral-500 max-w-2xl mx-auto">
-          Real transformations from real clients. Each result showcases the power of enzyme-powered skincare.
-        </p>
-      </div>
+    <>
+      <BreadcrumbSchema items={[{ name: "Home", url: "/" }, { name: "Before & After", url: "/cases" }]} />
 
-      {/* Filter bar */}
-      <div className="flex flex-wrap justify-center gap-2 mb-10">
-        {FILTERS.map((f) => (
-          <button
-            key={f.value}
-            onClick={() => setActiveFilter(f.value)}
-            className={"px-5 py-2 rounded-full text-sm font-medium transition-colors " + (activeFilter === f.value ? "bg-primary-600 text-white" : "bg-white text-neutral-600 border border-neutral-300 hover:border-primary-400")}
+      {/* Hero */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-sm font-semibold text-primary-600 tracking-[0.2em] uppercase mb-4">
+              BEFORE / AFTER
+            </p>
+            <h1 className="font-heading text-4xl md:text-5xl font-bold text-neutral-800 leading-tight mb-5">
+              Real Skin. Real Progress.
+            </h1>
+            <p className="text-lg text-neutral-500 leading-relaxed mb-2">
+              Explore real client progress documented before and after a personalised enzyme treatment programme.
+            </p>
+            <p className="text-sm text-neutral-400">
+              Individual results vary depending on skin condition, treatment frequency, lifestyle and home care.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="pb-20 md:pb-28">
+        <div className="container mx-auto px-4">
+          <div className="max-w-[1380px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
+            {galleryImages.map((img, index) => (
+              <div
+                key={index}
+                className="group bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden transition-shadow hover:shadow-md cursor-pointer"
+                onClick={() => openLightbox(index)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") openLightbox(index); }}
+                aria-label={`Open enlarged view of ${img.label}`}
+              >
+                <div className="relative w-full overflow-hidden">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    width={1200}
+                    height={1200}
+                    className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-4 md:p-5">
+                  <p className="text-sm font-medium text-neutral-800">{img.label}</p>
+                  <p className="text-xs text-neutral-400 mt-1.5 leading-relaxed">
+                    Results shown are individual and may not represent the experience of every client.
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Disclaimer */}
+      <section className="py-14 md:py-18 bg-neutral-50/80 border-t border-neutral-200">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-neutral-800 mb-5">
+              A Note About Results
+            </h2>
+            <p className="text-neutral-500 leading-relaxed max-w-prose">
+              Every client&apos;s skin is different. Treatment plans, timelines and outcomes vary according to skin condition, lifestyle, consistency and professional recommendations. Images are provided for educational and illustrative purposes only and do not guarantee identical results.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox / Modal */}
+      {lightboxOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image lightbox"
+        >
+          <div
+            className="relative max-w-[90vw] max-h-[90vh] rounded-2xl overflow-hidden bg-white shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
           >
-            {f.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Gallery grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filtered.map((cs) => (
-          <div key={cs.slug} className="group cursor-pointer" onClick={() => setSelectedCase(cs)}>
-            {/* Before/After images side by side */}
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-neutral-100 flex">
-              <div className="relative w-1/2 overflow-hidden">
-                <Image src={cs.beforeImage} alt={"Before - " + cs.title} fill className="object-cover" sizes="25vw" />
-                <span className="absolute top-2 left-2 bg-white/90 text-neutral-800 text-[10px] font-bold px-1.5 py-0.5 rounded">BEFORE</span>
-              </div>
-              <div className="relative w-1/2 overflow-hidden border-l border-white/30">
-                <Image src={cs.afterImage} alt={"After - " + cs.title} fill className="object-cover" sizes="25vw" />
-                <span className="absolute top-2 left-2 bg-primary-600/90 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">AFTER</span>
-              </div>
-            </div>
-            {/* Info */}
-            <div className="mt-2">
-              <p className="text-xs font-medium text-neutral-800 line-clamp-1">{cs.title}</p>
-              {cs.treatmentDuration && <p className="text-xs text-neutral-400">{cs.treatmentDuration}</p>}
-            </div>
+            <button
+              onClick={closeLightbox}
+              className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-neutral-800 hover:bg-white transition-colors shadow-md"
+              aria-label="Close lightbox"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <Image
+              src={galleryImages[activeIndex].src}
+              alt={galleryImages[activeIndex].alt}
+              width={1600}
+              height={1600}
+              className="w-auto h-auto max-w-full max-h-[85vh] object-contain"
+              priority
+            />
           </div>
-        ))}
-      </div>
-
-      {/* Modal for zoomed view */}
-      <Modal open={!!selectedCase} onClose={() => setSelectedCase(null)} title={selectedCase?.title ?? ""}>
-        {selectedCase && (
-          <div>
-            <div className="flex gap-2 mb-4">
-              <div className="relative w-1/2 aspect-[3/4] rounded-lg overflow-hidden bg-neutral-100">
-                <Image src={selectedCase.beforeImage} alt="Before" fill className="object-cover" sizes="50vw" />
-                <span className="absolute top-2 left-2 bg-white/90 text-neutral-800 text-xs font-bold px-2 py-0.5 rounded">BEFORE</span>
-              </div>
-              <div className="relative w-1/2 aspect-[3/4] rounded-lg overflow-hidden bg-neutral-100">
-                <Image src={selectedCase.afterImage} alt="After" fill className="object-cover" sizes="50vw" />
-                <span className="absolute top-2 left-2 bg-primary-600/90 text-white text-xs font-bold px-2 py-0.5 rounded">AFTER</span>
-              </div>
-            </div>
-            <p className="text-sm text-neutral-600 mb-1">{selectedCase.description}</p>
-            <div className="flex flex-wrap gap-2 mb-3">
-              {selectedCase.skinConcern.map((c) => (<span key={c} className="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full">{c}</span>))}
-              <span className="text-xs bg-accent-50 text-accent-700 px-2 py-0.5 rounded-full">{selectedCase.treatmentDuration}</span>
-            </div>
-            <Link href={"/cases/" + selectedCase.slug} className="text-sm text-primary-600 hover:text-primary-700 font-medium">View Full Details &rarr;</Link>
-          </div>
-        )}
-      </Modal>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
