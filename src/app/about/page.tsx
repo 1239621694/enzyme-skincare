@@ -14,7 +14,6 @@ const sections = [
       "Enzyme Therapy is a professional skin treatment designed to support the skin's natural renewal processes rather than focusing only on temporary surface-level changes.",
       "The treatment is intended to encourage healthy circulation, oxygen delivery and lymphatic movement, helping create a more supportive environment for normal skin function. It may also assist with the removal of surface buildup and help the skin appear smoother, clearer and more balanced.",
       "Depending on the individual treatment plan, Enzyme Therapy may be used to support concerns such as congestion, uneven-looking skin tone, dullness, visible pores, blemish-prone skin and early signs of ageing.",
-      "Results vary from person to person. A professional skin consultation should be completed before beginning treatment, particularly for clients with sensitive skin or an existing skin condition.",
     ],
   },
   {
@@ -23,7 +22,6 @@ const sections = [
       "During some enzyme-based facial treatments, a temporary network-like pattern may become visible across the skin. This appearance is commonly referred to as the Plasmatic Effect.",
       "It can occur when circulation near the surface of the skin becomes more noticeable during treatment. Fine vascular patterns may temporarily appear around areas such as the cheeks, forehead, neck or upper chest.",
       "The visible pattern usually fades naturally after the treatment, often within approximately 15 to 30 minutes, although the duration may vary between individuals.",
-      "The Plasmatic Effect should not be presented as a guaranteed result or as proof of treatment effectiveness. It is also important to distinguish it from persistent irritation, swelling, pain or an allergic reaction. Any unusual or prolonged reaction should be assessed by a qualified professional.",
     ],
   },
   {
@@ -31,8 +29,6 @@ const sections = [
     answer: [
       "The treatment timeline depends on the client's skin condition, goals, lifestyle, home-care routine and response to treatment.",
       "Some clients may notice that their skin feels smoother or appears more refreshed after the first session. More visible and lasting changes generally require a consistent treatment plan completed over several weeks or months.",
-      "A professional may initially recommend a short series of treatments scheduled at regular intervals. Once the desired skin condition has been achieved, maintenance treatments may be suggested every four to eight weeks, depending on individual needs.",
-      "Enzyme Therapy should not be treated as a one-size-fits-all programme. The frequency and total number of sessions should always be determined through a personalised consultation and adjusted according to the skin's response.",
     ],
   },
 ];
@@ -84,22 +80,6 @@ export default function AboutPage() {
                 )}
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Important Notice ── */}
-      <section className="py-16 md:py-20 bg-neutral-50/80 border-t border-neutral-200">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-neutral-800 mb-6">
-              Important Information
-            </h2>
-            <div className="max-w-prose">
-              <p className="text-neutral-500 leading-relaxed">
-                Enzyme Therapy is a cosmetic skin treatment and is not intended to diagnose, treat or cure a medical condition. Individual results and skin responses may vary. Always consult a qualified skin professional before beginning a new treatment programme.
-              </p>
-            </div>
           </div>
         </div>
       </section>
