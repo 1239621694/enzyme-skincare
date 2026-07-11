@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import { t } from "@/lib/admin-i18n";
 
 interface Order {
   id: string;
@@ -41,14 +42,14 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 const STATUS_OPTIONS = [
-  { value: "", label: "All Statuses" },
-  { value: "PENDING_PAYMENT", label: "Pending Payment" },
-  { value: "PAID", label: "Paid" },
-  { value: "PROCESSING", label: "Processing" },
-  { value: "SHIPPED", label: "Shipped" },
-  { value: "DELIVERED", label: "Delivered" },
-  { value: "CANCELLED", label: "Cancelled" },
-  { value: "REFUNDED", label: "Refunded" },
+  { value: "", label: t("All Statuses") },
+  { value: "PENDING_PAYMENT", label: t("PENDING_PAYMENT") },
+  { value: "PAID", label: t("PAID") },
+  { value: "PROCESSING", label: t("PROCESSING") },
+  { value: "SHIPPED", label: t("SHIPPED") },
+  { value: "DELIVERED", label: t("DELIVERED") },
+  { value: "CANCELLED", label: t("CANCELLED") },
+  { value: "REFUNDED", label: t("REFUNDED") },
 ];
 
 const ALLOWED_BULK_STATUSES = ["PAID", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"];
@@ -163,7 +164,7 @@ export default function AdminOrdersPage() {
           <span className="text-base font-normal text-neutral-400">({pagination.total})</span>
         </h1>
         <button onClick={handleExport} className="px-4 py-2 border border-neutral-300 rounded-lg text-sm hover:bg-neutral-50">
-          ⬇ Export CSV
+          ⬇ {t("Export CSV")}
         </button>
       </div>
 
@@ -172,7 +173,7 @@ export default function AdminOrdersPage() {
         <div className="flex-1 min-w-[200px]">
           <input
             type="text"
-            placeholder="Search order number, name, email..."
+            placeholder={t("Search order number, name, email...")}
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPagination((p) => ({ ...p, page: 1 })); }}
             className="w-full px-3 py-2 border rounded-lg text-sm"
@@ -198,21 +199,21 @@ export default function AdminOrdersPage() {
       {selectedIds.size > 0 && (
         <div className="flex flex-wrap items-center gap-3 mb-4 p-3 bg-primary-50 rounded-lg border border-primary-200">
           <span className="text-sm font-medium text-primary-800">
-            {selectedIds.size} selected
+            {selectedIds.size} {t("selected")}
           </span>
           <select
             value={bulkStatus}
             onChange={(e) => setBulkStatus(e.target.value)}
             className="px-3 py-1.5 border rounded-lg text-sm"
           >
-            <option value="">Change status...</option>
+            <option value="">{t("Change status...")}</option>
             {ALLOWED_BULK_STATUSES.map((s) => (
-              <option key={s} value={s}>{s.replace(/_/g, " ")}</option>
+              <option key={s} value={s}>{t(s)}</option>
             ))}
           </select>
           <input
             type="text"
-            placeholder="Note (optional)"
+            placeholder={t("Note (optional)")}
             value={bulkNote}
             onChange={(e) => setBulkNote(e.target.value)}
             className="px-3 py-1.5 border rounded-lg text-sm flex-1 max-w-xs"
@@ -222,13 +223,13 @@ export default function AdminOrdersPage() {
             disabled={!bulkStatus}
             className="px-4 py-1.5 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700 disabled:opacity-50"
           >
-            Apply
+            {t("Apply")}
           </button>
           <button
             onClick={() => setSelectedIds(new Set())}
             className="px-4 py-1.5 border rounded-lg text-sm hover:bg-neutral-50"
           >
-            Clear
+            {t("Clear")}
           </button>
         </div>
       )}
@@ -248,27 +249,27 @@ export default function AdminOrdersPage() {
                   />
                 </th>
                 <th className="p-3 font-medium cursor-pointer select-none" onClick={() => handleSort("orderNumber")}>
-                  Order <SortIcon field="orderNumber" />
+                  {t("Order")} <SortIcon field="orderNumber" />
                 </th>
                 <th className="p-3 font-medium cursor-pointer select-none" onClick={() => handleSort("customerName")}>
-                  Customer <SortIcon field="customerName" />
+                  {t("Customer")} <SortIcon field="customerName" />
                 </th>
-                <th className="p-3 font-medium">Status</th>
-                <th className="p-3 font-medium">Items</th>
+                <th className="p-3 font-medium">{t("Status")}</th>
+                <th className="p-3 font-medium">{t("Items")}</th>
                 <th className="p-3 font-medium cursor-pointer select-none" onClick={() => handleSort("total")}>
-                  Total <SortIcon field="total" />
+                  {t("Total")} <SortIcon field="total" />
                 </th>
-                <th className="p-3 font-medium">Delivery</th>
+                <th className="p-3 font-medium">{t("Delivery")}</th>
                 <th className="p-3 font-medium cursor-pointer select-none" onClick={() => handleSort("createdAt")}>
-                  Date <SortIcon field="createdAt" />
+                  {t("Date")} <SortIcon field="createdAt" />
                 </th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={8} className="p-6 text-center text-neutral-400">Loading...</td></tr>
+                <tr><td colSpan={8} className="p-6 text-center text-neutral-400">{t("Loading")}</td></tr>
               ) : orders.length === 0 ? (
-                <tr><td colSpan={8} className="p-6 text-center text-neutral-400">No orders found</td></tr>
+                <tr><td colSpan={8} className="p-6 text-center text-neutral-400">{t("No orders found")}</td></tr>
               ) : orders.map((o) => (
                 <tr key={o.id} className="border-t border-neutral-100 hover:bg-neutral-50">
                   <td className="p-3">
@@ -290,7 +291,7 @@ export default function AdminOrdersPage() {
                   </td>
                   <td className="p-3">
                     <span className={"rounded-full px-2 py-0.5 text-xs font-medium " + (STATUS_COLORS[o.status] || "bg-neutral-100")}>
-                      {o.status.replace(/_/g, " ")}
+                      {t(o.status)}
                     </span>
                   </td>
                   <td className="p-3 text-neutral-500">{o.itemCount}</td>

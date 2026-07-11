@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { t } from "@/lib/admin-i18n";
 
 interface OrderDetail {
   id: string;
@@ -166,7 +167,7 @@ export default function AdminOrderDetailPage() {
   };
 
   if (loading) return <div className="text-center py-12 text-neutral-400">Loading...</div>;
-  if (!order) return <div className="text-center py-12">Order not found</div>;
+  if (!order) return <div className="text-center py-12">{t("Order not found")}</div>;
 
   const startEdit = () => {
     setEditForm({
@@ -191,7 +192,7 @@ export default function AdminOrderDetailPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <Link href="/admin/orders" className="text-sm text-primary-600 hover:underline">← Orders</Link>
+          <Link href="/admin/orders" className="text-sm text-primary-600 hover:underline">{t("← Orders")}</Link>
           <h1 className="font-heading text-2xl font-bold mt-1">
             Order #{order.orderNumber || order.id.slice(0, 12)}
           </h1>
@@ -200,7 +201,7 @@ export default function AdminOrderDetailPage() {
           <span className={"px-3 py-1 rounded-full text-xs font-medium " + (STATUS_COLORS[order.status] || "bg-neutral-100")}>
             {order.status.replace(/_/g, " ")}
           </span>
-          <button onClick={startEdit} className="px-4 py-2 border rounded-lg text-sm hover:bg-neutral-50">✏️ Edit</button>
+          <button onClick={startEdit} className="px-4 py-2 border rounded-lg text-sm hover:bg-neutral-50">{t("✏️ Edit")}</button>
         </div>
       </div>
 
@@ -209,7 +210,7 @@ export default function AdminOrderDetailPage() {
         <div className="lg:col-span-2 space-y-4">
           {/* Customer Info */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Customer</h2>
+            <h2 className="font-semibold mb-3">{t("OrderCustomer")}</h2>
             {editing ? (
               <div className="space-y-2 text-sm">
                 <input value={editForm.customerName || ""} onChange={(e) => setEditForm({ ...editForm, customerName: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Name" />
@@ -227,7 +228,7 @@ export default function AdminOrderDetailPage() {
 
           {/* Shipping Address */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Shipping Address</h2>
+            <h2 className="font-semibold mb-3">{t("Shipping Address")}</h2>
             {editing ? (
               <div className="space-y-2 text-sm">
                 <input value={editForm.shippingName || ""} onChange={(e) => setEditForm({ ...editForm, shippingName: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Recipient name" />
@@ -249,7 +250,7 @@ export default function AdminOrderDetailPage() {
               </div>
             ) : (
               <div className="text-sm space-y-1 text-neutral-600">
-                {order.shippingName ? <p>{order.shippingName}{order.shippingPhone ? " | " + order.shippingPhone : ""}</p> : <p>No address collected</p>}
+                {order.shippingName ? <p>{order.shippingName}{order.shippingPhone ? " | " + order.shippingPhone : ""}</p> : <p>{t("No address collected")}</p>}
                 {order.shippingAddress1 && <p>{order.shippingAddress1}{order.shippingAddress2 ? ", " + order.shippingAddress2 : ""}</p>}
                 {order.shippingCity && <p>{order.shippingCity}{order.shippingProvince ? ", " + order.shippingProvince : ""} {order.shippingPostal || ""}</p>}
                 {order.shippingCountry && <p>{order.shippingCountry}</p>}
@@ -259,7 +260,7 @@ export default function AdminOrderDetailPage() {
 
           {/* Items */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Items</h2>
+            <h2 className="font-semibold mb-3">{t("Items")}</h2>
             <table className="w-full text-sm">
               <thead><tr className="text-left text-neutral-500"><th className="pb-2">Product</th><th className="pb-2">Qty</th><th className="pb-2">Price</th><th className="pb-2 text-right">Subtotal</th></tr></thead>
               <tbody>
@@ -285,7 +286,7 @@ export default function AdminOrderDetailPage() {
           {/* Tracking Timeline */}
           {order.trackingEvents && order.trackingEvents.length > 0 && (
             <div className="rounded-xl border bg-white p-6">
-              <h2 className="font-semibold mb-3">Tracking Timeline</h2>
+              <h2 className="font-semibold mb-3">{t("Tracking Timeline")}</h2>
               <div className="space-y-0">
                 {order.trackingEvents.map((event, i) => (
                   <div key={event.id} className="flex gap-4 pb-4 relative">
@@ -307,7 +308,7 @@ export default function AdminOrderDetailPage() {
 
           {/* Admin Notes */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Admin Notes</h2>
+            <h2 className="font-semibold mb-3">{t("Admin Notes")}</h2>
             {editing ? (
               <textarea value={editForm.adminNote || ""} onChange={(e) => setEditForm({ ...editForm, adminNote: e.target.value })} rows={3} className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Internal notes..." />
             ) : (
@@ -324,7 +325,7 @@ export default function AdminOrderDetailPage() {
           {/* Audit Log */}
           {order.auditLogs.length > 0 && (
             <div className="rounded-xl border bg-white p-6">
-              <h2 className="font-semibold mb-3">Activity Log</h2>
+              <h2 className="font-semibold mb-3">{t("Activity Log")}</h2>
               <div className="space-y-2 max-h-48 overflow-y-auto">
                 {order.auditLogs.map((log) => (
                   <div key={log.id} className="flex justify-between text-sm text-neutral-500 py-1 border-b border-neutral-100 last:border-0">
@@ -341,37 +342,37 @@ export default function AdminOrderDetailPage() {
         <div className="space-y-4">
           {/* Summary Card */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Summary</h2>
+            <h2 className="font-semibold mb-3">{t("OrderSummary")}</h2>
             <dl className="space-y-2 text-sm">
-              <div className="flex justify-between"><dt className="text-neutral-500">Created</dt><dd>{new Date(order.createdAt).toLocaleString()}</dd></div>
-              {order.paidAt && <div className="flex justify-between"><dt className="text-neutral-500">Paid</dt><dd>{new Date(order.paidAt).toLocaleString()}</dd></div>}
-              {order.shippedAt && <div className="flex justify-between"><dt className="text-neutral-500">Shipped</dt><dd>{new Date(order.shippedAt).toLocaleString()}</dd></div>}
-              {order.deliveredAt && <div className="flex justify-between"><dt className="text-neutral-500">Delivered</dt><dd>{new Date(order.deliveredAt).toLocaleString()}</dd></div>}
-              {order.deliveryStatus && <div className="flex justify-between"><dt className="text-neutral-500">Delivery Status</dt><dd>{order.deliveryStatus}</dd></div>}
+              <div className="flex justify-between"><dt className="text-neutral-500">{t("Created")}</dt><dd>{new Date(order.createdAt).toLocaleString()}</dd></div>
+              {order.paidAt && <div className="flex justify-between"><dt className="text-neutral-500">{t("Paid")}</dt><dd>{new Date(order.paidAt).toLocaleString()}</dd></div>}
+              {order.shippedAt && <div className="flex justify-between"><dt className="text-neutral-500">{t("Shipped")}</dt><dd>{new Date(order.shippedAt).toLocaleString()}</dd></div>}
+              {order.deliveredAt && <div className="flex justify-between"><dt className="text-neutral-500">{t("Delivered")}</dt><dd>{new Date(order.deliveredAt).toLocaleString()}</dd></div>}
+              {order.deliveryStatus && <div className="flex justify-between"><dt className="text-neutral-500">{t("Delivery Status")}</dt><dd>{order.deliveryStatus}</dd></div>}
             </dl>
           </div>
 
           {/* Shipping Info Card */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Shipping & Tracking</h2>
+            <h2 className="font-semibold mb-3">{t("Shipping & Tracking")}</h2>
             <div className="text-sm space-y-3">
               <div>
-                <label className="block text-xs text-neutral-500 mb-1">Shipping Company</label>
+                <label className="block text-xs text-neutral-500 mb-1">{t("Shipping Company")}</label>
                 <input value={shippingCompany} onChange={(e) => setShippingCompany(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="e.g. USPS, FedEx" />
               </div>
               <div>
-                <label className="block text-xs text-neutral-500 mb-1">Tracking Number</label>
+                <label className="block text-xs text-neutral-500 mb-1">{t("Tracking Number")}</label>
                 <input value={trackingNumber} onChange={(e) => setTrackingNumber(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Enter tracking number" />
               </div>
               <button onClick={handleShip} className="w-full px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700">
-                📦 Update Tracking
+                {t("📦 Update Tracking")}
               </button>
             </div>
           </div>
 
           {/* Payment Card */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Payment</h2>
+            <h2 className="font-semibold mb-3">{t("Payment")}</h2>
             {order.payments.length > 0 ? order.payments.map((p) => (
               <div key={p.id} className="text-sm space-y-1 text-neutral-600 border-b border-neutral-100 pb-3 mb-3 last:border-0">
                 <p>Provider: {p.provider} | Status: <span className="font-medium">{p.status}</span></p>
@@ -383,15 +384,15 @@ export default function AdminOrderDetailPage() {
 
           {/* Actions Card */}
           <div className="rounded-xl border bg-white p-6 space-y-3">
-            <h2 className="font-semibold mb-3">Actions</h2>
+            <h2 className="font-semibold mb-3">{t("Actions")}</h2>
             {order.status === "PENDING_PAYMENT" && (
               <button onClick={() => markAsPaid(order.id)} className="w-full px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 font-semibold">
-                ✅ Confirm Payment
+                {t("✅ Confirm Payment")}
               </button>
             )}
             {["PENDING_PAYMENT", "PAID"].includes(order.status) && (
               <button onClick={handleCancel} className="w-full px-4 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700">
-                ✕ Cancel Order
+                {t("✕ Cancel Order")}
               </button>
             )}
           </div>

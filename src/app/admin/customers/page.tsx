@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import { t } from "@/lib/admin-i18n";
 
 interface Customer {
   id: string;
@@ -53,13 +54,13 @@ export default function AdminCustomersPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="font-heading text-2xl font-bold">Customers ({total})</h1>
+        <h1 className="font-heading text-2xl font-bold">{t("Customers")} ({total})</h1>
       </div>
 
       <div className="flex gap-3 mb-4">
         <input
           type="text"
-          placeholder="Search by name, email, phone..."
+          placeholder={t("Search by name, email, phone...")}
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
           className="flex-1 px-3 py-2 border rounded-lg text-sm"
@@ -71,25 +72,25 @@ export default function AdminCustomersPage() {
           <table className="w-full text-sm">
             <thead className="bg-neutral-50 text-left">
               <tr>
-                <th className="p-3 font-medium">Customer</th>
-                <th className="p-3 font-medium">Email</th>
-                <th className="p-3 font-medium">Phone</th>
+                <th className="p-3 font-medium">{t("Customer")}</th>
+                <th className="p-3 font-medium">{t("Email")}</th>
+                <th className="p-3 font-medium">{t("Phone")}</th>
                 <th className="p-3 font-medium cursor-pointer select-none" onClick={() => { setSortBy("totalOrders"); setSortOrder(sortOrder === "desc" ? "asc" : "desc"); }}>
-                  Orders {sortBy === "totalOrders" ? (sortOrder === "desc" ? "↓" : "↑") : "↕"}
+                  {t("Orders")} {sortBy === "totalOrders" ? (sortOrder === "desc" ? "↓" : "↑") : "↕"}
                 </th>
                 <th className="p-3 font-medium cursor-pointer select-none" onClick={() => { setSortBy("totalSpent"); setSortOrder(sortOrder === "desc" ? "asc" : "desc"); }}>
-                  Total Spent {sortBy === "totalSpent" ? (sortOrder === "desc" ? "↓" : "↑") : "↕"}
+                  {t("Total Spent")} {sortBy === "totalSpent" ? (sortOrder === "desc" ? "↓" : "↑") : "↕"}
                 </th>
-                <th className="p-3 font-medium">AOV</th>
-                <th className="p-3 font-medium">Tags</th>
-                <th className="p-3 font-medium">Last Order</th>
+                <th className="p-3 font-medium">{t("AOV")}</th>
+                <th className="p-3 font-medium">{t("Tags")}</th>
+                <th className="p-3 font-medium">{t("Last Order")}</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={8} className="p-6 text-center text-neutral-400">Loading...</td></tr>
+                <tr><td colSpan={8} className="p-6 text-center text-neutral-400">{t("Loading")}</td></tr>
               ) : customers.length === 0 ? (
-                <tr><td colSpan={8} className="p-6 text-center text-neutral-400">No customers found</td></tr>
+                <tr><td colSpan={8} className="p-6 text-center text-neutral-400">{t("No customers found")}</td></tr>
               ) : customers.map((c) => (
                 <tr key={c.id} className="border-t border-neutral-100 hover:bg-neutral-50">
                   <td className="p-3">
@@ -121,10 +122,10 @@ export default function AdminCustomersPage() {
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4 text-sm">
-          <span className="text-neutral-500">Page {page} of {totalPages}</span>
+          <span className="text-neutral-500">{t("Page")} {page} {t("of")} {totalPages}</span>
           <div className="flex gap-2">
-            <button disabled={page <= 1} onClick={() => setPage(page - 1)} className="px-3 py-1.5 border rounded-lg disabled:opacity-30">← Prev</button>
-            <button disabled={page >= totalPages} onClick={() => setPage(page + 1)} className="px-3 py-1.5 border rounded-lg disabled:opacity-30">Next →</button>
+            <button disabled={page <= 1} onClick={() => setPage(page - 1)} className="px-3 py-1.5 border rounded-lg disabled:opacity-30">{t("← Prev")}</button>
+            <button disabled={page >= totalPages} onClick={() => setPage(page + 1)} className="px-3 py-1.5 border rounded-lg disabled:opacity-30">{t("Next →")}</button>
           </div>
         </div>
       )}

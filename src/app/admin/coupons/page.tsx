@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { DuplicateButton } from "./DuplicateButton";
+import { t } from "@/lib/admin-i18n";
 
 export default async function CouponsPage() {
   let coupons: any[] = [];
@@ -24,25 +25,25 @@ export default async function CouponsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="font-heading text-2xl font-bold">Coupons ({coupons.length})</h1>
-        <Link href="/admin/coupons/create" className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700">+ Create Coupon</Link>
+        <h1 className="font-heading text-2xl font-bold">{t("Coupons")} ({coupons.length})</h1>
+        <Link href="/admin/coupons/create" className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700">+ {t("Create Coupon")}</Link>
       </div>
 
       {coupons.length === 0 ? (
-        <div className="rounded-xl border bg-white py-12 text-center text-neutral-400">No coupons yet.</div>
+        <div className="rounded-xl border bg-white py-12 text-center text-neutral-400">{t("No coupons yet")}.</div>
       ) : (
         <div className="rounded-xl border bg-white overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-neutral-50 text-left">
                 <tr>
-                  <th className="p-3 font-medium">Name / Code</th>
-                  <th className="p-3 font-medium">Type</th>
-                  <th className="p-3 font-medium">Value</th>
-                  <th className="p-3 font-medium">Uses</th>
-                  <th className="p-3 font-medium">Status</th>
-                  <th className="p-3 font-medium">Expires</th>
-                  <th className="p-3 font-medium">Actions</th>
+                  <th className="p-3 font-medium">{t("Name / Code")}</th>
+                  <th className="p-3 font-medium">{t("Type")}</th>
+                  <th className="p-3 font-medium">{t("Value")}</th>
+                  <th className="p-3 font-medium">{t("Uses")}</th>
+                  <th className="p-3 font-medium">{t("Status")}</th>
+                  <th className="p-3 font-medium">{t("Expires")}</th>
+                  <th className="p-3 font-medium">{t("CouponActions")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,7 +64,7 @@ export default async function CouponsPage() {
                     <td className="p-3 text-neutral-400 text-xs">{c.expiresAt ? new Date(c.expiresAt).toLocaleDateString() : "—"}</td>
                     <td className="p-3">
                       <div className="flex gap-2">
-                        <Link href={"/admin/coupons/" + c.id + "/edit"} className="px-2 py-1 text-xs border rounded hover:bg-neutral-50">Edit</Link>
+                        <Link href={"/admin/coupons/" + c.id + "/edit"} className="px-2 py-1 text-xs border rounded hover:bg-neutral-50">{t("Edit")}</Link>
                         <DuplicateButton couponId={c.id} />
                       </div>
                     </td>

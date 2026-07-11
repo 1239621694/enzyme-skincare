@@ -1,4 +1,5 @@
 "use client";
+import { t } from "@/lib/admin-i18n";
 
 export function DuplicateButton({ couponId }: { couponId: string }) {
   const handleDuplicate = async () => {
@@ -17,7 +18,7 @@ export function DuplicateButton({ couponId }: { couponId: string }) {
 
   return (
     <button onClick={handleDuplicate} className="px-2 py-1 text-xs border rounded hover:bg-neutral-50">
-      Duplicate
+      {t("Duplicate")}
     </button>
   );
 }

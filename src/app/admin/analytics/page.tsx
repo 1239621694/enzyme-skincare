@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
+import { t } from "@/lib/admin-i18n";
 
 export default async function AdminAnalyticsPage() {
   let oc = 0, rev = 0, ap = 0, subs = 0;
@@ -22,7 +23,7 @@ export default async function AdminAnalyticsPage() {
 
   return (
     <div>
-      <h1 className="mb-6 font-heading text-2xl font-bold">Analytics</h1>
+      <h1 className="mb-6 font-heading text-2xl font-bold">{t("Analytics")}</h1>
       <div className="grid grid-cols-4 gap-4">
         {metrics.map((m) => (
           <div key={m.l} className="rounded-xl border bg-white p-5">

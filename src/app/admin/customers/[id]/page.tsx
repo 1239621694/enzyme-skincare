@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { t } from "@/lib/admin-i18n";
 
 interface CustomerDetail {
   id: string;
@@ -84,13 +85,13 @@ export default function AdminCustomerDetailPage() {
 
   return (
     <div>
-      <Link href="/admin/customers" className="text-sm text-primary-600 hover:underline">← Customers</Link>
+      <Link href="/admin/customers" className="text-sm text-primary-600 hover:underline">{t("← Customers")}</Link>
       <div className="flex items-center justify-between mt-1 mb-6">
         <h1 className="font-heading text-2xl font-bold">
           {[customer.firstName, customer.lastName].filter(Boolean).join(" ") || "Anonymous"}
         </h1>
         <button onClick={() => { setEditing(!editing); setEditForm({ firstName: customer.firstName, lastName: customer.lastName, phone: customer.phone, notes: customer.notes, tags: [...customer.tags], referralSource: customer.referralSource }); }} className="px-4 py-2 border rounded-lg text-sm hover:bg-neutral-50">
-          {editing ? "Cancel" : "✏️ Edit"}
+          {editing ? t("Cancel") : t("✏️ Edit")}
         </button>
       </div>
 
@@ -98,7 +99,7 @@ export default function AdminCustomerDetailPage() {
         <div className="lg:col-span-2 space-y-4">
           {/* Profile */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Profile</h2>
+            <h2 className="font-semibold mb-3">{t("Profile")}</h2>
             {editing ? (
               <div className="space-y-2 text-sm">
                 <div className="grid grid-cols-2 gap-2">
@@ -122,13 +123,13 @@ export default function AdminCustomerDetailPage() {
                     <button onClick={addTag} className="px-3 py-1.5 bg-neutral-100 rounded-lg text-sm hover:bg-neutral-200">+</button>
                   </div>
                 </div>
-                <button onClick={handleSave} className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700">Save</button>
+                <button onClick={handleSave} className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700">{t("Save")}</button>
               </div>
             ) : (
               <div className="text-sm space-y-2 text-neutral-600">
-                <p><span className="font-medium">Email:</span> {customer.email}</p>
-                <p><span className="font-medium">Phone:</span> {customer.phone || "—"}</p>
-                <p><span className="font-medium">Referral Source:</span> {customer.referralSource || "—"}</p>
+                <p><span className="font-medium">{t("Email")}:</span> {customer.email}</p>
+                <p><span className="font-medium">{t("Phone")}:</span> {customer.phone || "—"}</p>
+                <p><span className="font-medium">{t("Referral Source")}:</span> {customer.referralSource || "—"}</p>
                 <div>
                   <span className="font-medium">Tags: </span>
                   <div className="inline-flex gap-1 flex-wrap ml-1">
@@ -149,7 +150,7 @@ export default function AdminCustomerDetailPage() {
 
           {/* Order History */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Order History ({customer.orders.length})</h2>
+            <h2 className="font-semibold mb-3">{t("Order History")} ({customer.orders.length})</h2>
             {customer.orders.length === 0 ? (
               <p className="text-sm text-neutral-400">No orders yet.</p>
             ) : (
@@ -176,14 +177,14 @@ export default function AdminCustomerDetailPage() {
         {/* Stats Sidebar */}
         <div className="space-y-4">
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">Stats</h2>
+            <h2 className="font-semibold mb-3">{t("Stats")}</h2>
             <dl className="space-y-3 text-sm">
-              <div className="flex justify-between"><dt className="text-neutral-500">Total Orders</dt><dd className="font-semibold">{customer.stats.totalOrders}</dd></div>
-              <div className="flex justify-between"><dt className="text-neutral-500">Total Spent</dt><dd className="font-semibold">${customer.stats.totalSpent.toFixed(2)}</dd></div>
-              <div className="flex justify-between"><dt className="text-neutral-500">Average Order</dt><dd className="font-semibold">${customer.stats.averageOrderValue.toFixed(2)}</dd></div>
-              <div className="flex justify-between"><dt className="text-neutral-500">First Order</dt><dd className="text-xs">{customer.firstOrderAt ? new Date(customer.firstOrderAt).toLocaleDateString() : "—"}</dd></div>
-              <div className="flex justify-between"><dt className="text-neutral-500">Last Order</dt><dd className="text-xs">{customer.lastOrderAt ? new Date(customer.lastOrderAt).toLocaleDateString() : "—"}</dd></div>
-              <div className="flex justify-between"><dt className="text-neutral-500">Customer Since</dt><dd className="text-xs">{new Date(customer.createdAt).toLocaleDateString()}</dd></div>
+              <div className="flex justify-between"><dt className="text-neutral-500">{t("Total Orders")}</dt><dd className="font-semibold">{customer.stats.totalOrders}</dd></div>
+              <div className="flex justify-between"><dt className="text-neutral-500">{t("Total Spent")}</dt><dd className="font-semibold">${customer.stats.totalSpent.toFixed(2)}</dd></div>
+              <div className="flex justify-between"><dt className="text-neutral-500">{t("Average Order")}</dt><dd className="font-semibold">${customer.stats.averageOrderValue.toFixed(2)}</dd></div>
+              <div className="flex justify-between"><dt className="text-neutral-500">{t("First Order")}</dt><dd className="text-xs">{customer.firstOrderAt ? new Date(customer.firstOrderAt).toLocaleDateString() : "—"}</dd></div>
+              <div className="flex justify-between"><dt className="text-neutral-500">{t("LastOrderDetail")}</dt><dd className="text-xs">{customer.lastOrderAt ? new Date(customer.lastOrderAt).toLocaleDateString() : "—"}</dd></div>
+              <div className="flex justify-between"><dt className="text-neutral-500">{t("Customer Since")}</dt><dd className="text-xs">{new Date(customer.createdAt).toLocaleDateString()}</dd></div>
             </dl>
           </div>
         </div>

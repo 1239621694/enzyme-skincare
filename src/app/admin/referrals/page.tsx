@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
+import { t } from "@/lib/admin-i18n";
 
 export default async function AdminReferralsPage() {
   let referrals: any[] = [];
@@ -11,14 +12,14 @@ export default async function AdminReferralsPage() {
 
   return (
     <div>
-      <h1 className="mb-6 font-heading text-2xl font-bold">Referrals ({referrals.length})</h1>
+      <h1 className="mb-6 font-heading text-2xl font-bold">{t("Referrals")} ({referrals.length})</h1>
       <div className="overflow-hidden rounded-xl border bg-white">
         <table className="w-full text-sm">
           <thead className="bg-neutral-50 text-left">
-            <tr><th className="p-3 font-medium">Referrer</th><th className="p-3 font-medium">Code</th><th className="p-3 font-medium">Status</th><th className="p-3 font-medium">Order</th><th className="p-3 font-medium">Commission</th><th className="p-3 font-medium">Date</th></tr>
+            <tr><th className="p-3 font-medium">{t("Referrer")}</th><th className="p-3 font-medium">{t("Code")}</th><th className="p-3 font-medium">{t("Status")}</th><th className="p-3 font-medium">{t("Order")}</th><th className="p-3 font-medium">{t("CommissionReferral")}</th><th className="p-3 font-medium">{t("Date")}</th></tr>
           </thead>
           <tbody>
-            {referrals.length === 0 && <tr><td colSpan={6} className="p-6 text-center text-neutral-400">No referrals yet</td></tr>}
+            {referrals.length === 0 && <tr><td colSpan={6} className="p-6 text-center text-neutral-400">{t("No referrals yet")}</td></tr>}
             {referrals.map((r: any) => (
               <tr key={r.id} className="border-t border-neutral-100">
                 <td className="p-3">{r.referrerEmail}</td>
