@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Learn what enzyme therapy is, understand the temporary plasmatic effect, and discover how long a personalised enzyme treatment programme may take.",
 };
 
-const faqData = [
+const sections = [
   {
     question: "What Is Enzyme Therapy?",
     answer: [
@@ -59,11 +59,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── FAQ Sections ── */}
+      {/* ── Content Sections ── */}
       <section className="pb-16 md:pb-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto space-y-20 md:space-y-28">
-            {faqData.map((item, index) => (
+            {sections.map((item, index) => (
               <div
                 key={index}
                 className="opacity-0 animate-fadeInUp"
@@ -79,7 +79,7 @@ export default function AboutPage() {
                     </p>
                   ))}
                 </div>
-                {index < faqData.length - 1 && (
+                {index < sections.length - 1 && (
                   <hr className="mt-16 md:mt-20 border-neutral-200/60" />
                 )}
               </div>
