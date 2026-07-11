@@ -7,9 +7,9 @@ import { useCartContext } from "@/hooks/useCart";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Shop" },
-  { href: "/cases", label: "Results" },
-  { href: "/science", label: "Science" },
+  { href: "/cases", label: "BEFORE / AFTER" },
   { href: "/about", label: "About" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
