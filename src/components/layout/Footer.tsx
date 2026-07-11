@@ -10,13 +10,10 @@ const footerLinks = {
   ],
   Learn: [
         { href: "/cases", label: "Case Studies" },
-    { href: "/faq", label: "FAQ" },
     { href: "/about", label: "Our Story" },
   ],
   Support: [
     { href: "/contact", label: "Contact Us" },
-    
-    { href: "/faq", label: "Shipping & Returns" },
     { href: "/rewards", label: "Rewards" },
   ],
 };
@@ -82,8 +79,6 @@ export function Footer() {
         <div className="mt-8 pt-6 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <p>&copy; {new Date().getFullYear()} Enzyme Skincare. All rights reserved.</p>
           <div className="flex gap-4">
-            <Link href="/faq" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/faq" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
