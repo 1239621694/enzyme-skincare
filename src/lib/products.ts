@@ -63,6 +63,20 @@ export const ALL_PRODUCTS: ProductData[] = [
     isActive: true, sortOrder: 3,
     variants: [{ id: "v14", name: "Standard", size: "100g / 3.53 oz", price: 38, sku: "RBF-100", stock: 40 }],
   },
+  {
+    id: "4", slug: "copper-peptide-repair-freeze-dried-powder",
+    name: "Copper Peptide Repair Freeze-Dried Powder",
+    tagline: "Repair. Calm. Strengthen. Renew. — A sensitive-skin-friendly peptide treatment",
+    description: "A sensitive-skin-friendly freeze-dried peptide treatment designed to support barrier repair, improve hydration, and soften the appearance of early fine lines.\n\nPowered by Copper Tripeptide-1 and an advanced CUPEP peptide delivery system, the formula activates fresh before use and absorbs quickly into skin with a lightweight blue essence texture.\n\nFresh Activation for Maximum Potency: Each treatment combines freeze-dried peptide powder with activating essence immediately before use, helping preserve ingredient freshness until the moment of application.\n\nExclusive CUPEP Peptide Delivery Technology helps Copper Peptides absorb quickly while supporting a smoother, more resilient, healthier-looking complexion.\n\nHero Ingredients:\n- Copper Tripeptide-1: Supports skin renewal and barrier care.\n- Oligopeptide-1: Helps maintain smoother-looking skin.\n- Acetyl Hexapeptide-8: Helps soften the appearance of expression lines.\n- Collagen: Supports hydration and skin comfort.\n- Beta-Glucan: Helps calm dry, stressed skin.\n- Gentian Root Extract: Helps soothe and refresh the skin.\n\nVisible Benefits With Continued Use: Barrier support, Skin comfort, Hydration, Healthy glow.\n\nClean Gentle Formula: Alcohol Free, Mineral Oil Free, Artificial Fragrance Free, Harsh Preservative Free.",
+    ingredients: "Copper Tripeptide-1, Oligopeptide-1, Acetyl Hexapeptide-8, Collagen, Beta-Glucan, Gentian Root Extract",
+    howToUse: "Step 1: Mix freeze-dried powder with activating essence. Step 2: Shake gently until dissolved. Step 3: Apply evenly to clean skin. Step 4: Massage until absorbed. Step 5: Follow with moisturizer.\n\nEach box contains 10 sets. Each set: 60mg freeze-dried powder + 3ml activating essence. Carton: 52 boxes/carton.",
+    price: 68, comparePrice: null, category: "TREATMENT",
+    skinConcerns: ["SENSITIVITY", "AGING", "DRYNESS"], badge: "NEW",
+    rating: 4.8, reviewsCount: 178, size: "10 Sets/Box (60mg + 3ml each)",
+    images: ["/images/copper-peptide/hero.png", "/images/copper-peptide/concerns.png", "/images/copper-peptide/technology.png", "/images/copper-peptide/delivery.png", "/images/copper-peptide/ingredients.png", "/images/copper-peptide/benefits.png", "/images/copper-peptide/clean.png", "/images/copper-peptide/texture.png", "/images/copper-peptide/howtouse.png", "/images/copper-peptide/packaging.png", "/images/copper-peptide/cta.png", "/images/copper-peptide/display.png"],
+    isActive: true, sortOrder: 4,
+    variants: [{ id: "v15", name: "Standard Box", size: "10 Sets", price: 68, sku: "CPR-010", stock: 35 }],
+  },
 ];
 
 export function getProductBySlug(slug: string): ProductData | undefined {
