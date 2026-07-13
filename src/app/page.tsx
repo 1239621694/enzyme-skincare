@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/Button";
 const skinConcerns = [
   { src: "/images/skin-concerns/original_background/icon_1_acne_congestion.png", title: "Acne & Congestion", desc: "Breakouts, clogged pores and uneven texture" },
   { src: "/images/skin-concerns/original_background/icon_2_enlarged_pores.png", title: "Enlarged Pores", desc: "Visible pores that appear stretched or open" },
-  { src: "/images/skin-concerns/original_background/icon_3_fine_lines_wrinkles.png", title: "Fine Lines & Wrinkles", desc: "Early signs of ageing around eyes and forehead" },
+  { src: "/images/skin-concerns/original_background/icon_3_fine_lines_wrinkles.png", title: "Fine Lines & Wrinkles", desc: "Helps smooth visible wrinkles and fine lines for a more youthful-looking complexion." },
   { src: "/images/skin-concerns/original_background/icon_4_uneven_skin_tone.png", title: "Uneven Skin Tone", desc: "Discoloration, redness or patchy pigmentation" },
   { src: "/images/skin-concerns/original_background/icon_5_dullness.png", title: "Dullness", desc: "Lack of radiance and tired-looking complexion" },
   { src: "/images/skin-concerns/original_background/icon_6_sensitive_skin.png", title: "Sensitive Skin", desc: "Easily irritated, reactive or uncomfortable skin" },
