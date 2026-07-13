@@ -17,7 +17,8 @@ export function WhatsAppFeed() {
             Chat With Us on WhatsApp
           </h2>
           <p className="mt-3 text-neutral-600">
-            Have questions about your skincare routine? Message us directly on WhatsApp and our experts will help you find the perfect products.
+            Have questions about our enzyme treatment?<br />
+            Our skincare experts are here on WhatsApp to answer your questions and help you create the right skincare routine.
           </p>
           <Link
             href={WHATSAPP_URL + "?text=" + encodeURIComponent(WHATSAPP_TEXT)}
