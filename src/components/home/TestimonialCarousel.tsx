@@ -29,8 +29,8 @@ const testimonials = [
   {
     quote:
       "I started with the Active Protease Anti-Wrinkle Kit and Rose Brightening Fermented Mask because my skin looked dull and I had many fine lines. After seeing how amazing they felt on my skin, I added the DNA Sodium Instant Firming V-Face Spray and Copper Peptide Repair Freeze-Dried Powder to my daily routine. These products completely changed my view of skincare. They are so unique and effective, and I’ve fallen in love with all of their products!",
-    name: "David R.",
-    location: "Austin, USA",
+    name: "Anna K.",
+    location: "Munich, Germany",
     rating: 5,
   },
 ];
