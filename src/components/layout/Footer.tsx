@@ -53,10 +53,7 @@ export function Footer() {
         {/* Newsletter */}
         <div className="mt-10 pt-8 border-t border-neutral-800">
           <div className="max-w-md">
-            <h3 className="text-sm font-semibold text-white mb-2">Stay in touch</h3>
-            <p className="text-sm text-neutral-400 mb-3">
-              Get 10% off your first order and exclusive enzyme science insights.
-            </p>
+            <h3 className="text-sm font-semibold text-white mb-3">Stay in touch</h3>
             <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
