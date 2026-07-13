@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils";
 import { useCartContext } from "@/hooks/useCart";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/products", label: "Shop" },
+  { href: "/", label: "HOME" },
+  { href: "/products", label: "SHOP" },
   { href: "/cases", label: "BEFORE / AFTER" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "ABOUT" },
+  { href: "/contact", label: "CONTACT" },
 ];
 
 export function Header() {
