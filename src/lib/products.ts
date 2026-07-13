@@ -73,7 +73,7 @@ export const ALL_PRODUCTS: ProductData[] = [
     price: 68, comparePrice: null, category: "TREATMENT",
     skinConcerns: ["SENSITIVITY", "AGING", "DRYNESS"], badge: "NEW",
     rating: 4.8, reviewsCount: 178, size: "10 Sets/Box (60mg + 3ml each)",
-    images: ["/images/copper-peptide/hero.png", "/images/copper-peptide/concerns.png", "/images/copper-peptide/technology.png", "/images/copper-peptide/delivery.png", "/images/copper-peptide/ingredients.png", "/images/copper-peptide/benefits.png", "/images/copper-peptide/clean.png", "/images/copper-peptide/texture.png", "/images/copper-peptide/howtouse.png", "/images/copper-peptide/packaging.png", "/images/copper-peptide/cta.png", "/images/copper-peptide/display.png"],
+    images: ["/images/copper-peptide-en/main-1.png", "/images/copper-peptide-en/main-2.png", "/images/copper-peptide-en/main-3.png", "/images/copper-peptide-en/main-4.png", "/images/copper-peptide-en/main-5.png", "/images/copper-peptide-en/detail-1.png", "/images/copper-peptide-en/detail-2.png", "/images/copper-peptide-en/detail-3.png", "/images/copper-peptide-en/detail-4.png", "/images/copper-peptide-en/detail-5.png", "/images/copper-peptide-en/detail-6.png", "/images/copper-peptide-en/detail-7.png", "/images/copper-peptide-en/detail-8.png", "/images/copper-peptide-en/detail-9.png"],
     isActive: true, sortOrder: 4,
     variants: [{ id: "v15", name: "Standard Box", size: "10 Sets", price: 68, sku: "CPR-010", stock: 35 }],
   },
