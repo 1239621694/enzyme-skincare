@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 
 export const metadata: Metadata = {
@@ -38,22 +39,16 @@ export default function AboutPage() {
     <>
       <BreadcrumbSchema items={[{ name: "Home", url: "/" }, { name: "About", url: "/about" }]} />
 
-      {/* ── Hero ── */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <p className="text-sm font-semibold text-primary-600 tracking-[0.2em] uppercase mb-4">
-              ABOUT
-            </p>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-800 leading-tight mb-6">
-              Understanding Enzyme Therapy
-            </h1>
-            <p className="text-lg md:text-xl text-neutral-500 leading-relaxed max-w-2xl">
-              Learn how enzyme-based skin treatments support healthy skin function, why temporary vascular patterns may appear during treatment, and how treatment frequency is determined.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── Hero Image ── */}
+      <Image
+        src="/images/about-hero-skincare.png"
+        alt="Woman applying a facial mask in front of a mirror"
+        width={1920}
+        height={800}
+        className="w-full h-auto"
+        priority
+        sizes="100vw"
+      />
 
       {/* ── Content Sections ── */}
       <section className="pb-16 md:pb-24">
