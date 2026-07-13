@@ -6,7 +6,6 @@ const footerLinks = {
     { href: "/products", label: "All Products" },
     { href: "/products?badge=best-seller", label: "Best Sellers" },
     { href: "/products?badge=new", label: "New Arrivals" },
-    { href: "/science", label: "The Science" },
   ],
   Learn: [
         { href: "/cases", label: "Case Studies" },
@@ -14,7 +13,6 @@ const footerLinks = {
   ],
   Support: [
     { href: "/contact", label: "Contact Us" },
-    { href: "/rewards", label: "Rewards" },
   ],
 };
 
