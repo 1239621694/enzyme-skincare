@@ -7,13 +7,113 @@ import { WhatsAppFeed } from "@/components/home/WhatsAppFeed";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
+const SkinAcneIcon = () => (
+  <svg viewBox="0 0 160 160" fill="none" stroke="#8b7440" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+    <circle cx="100" cy="55" r="38" />
+    <path d="M62 55a8 8 0 0 1 4-7" />
+    <path d="M138 55a8 8 0 0 0-4-7" />
+    <ellipse cx="88" cy="51" rx="3" ry="2" />
+    <ellipse cx="112" cy="51" rx="3" ry="2" />
+    <path d="M100 60v3" />
+    <path d="M70 90a30 30 0 0 0 60 0" />
+    <path d="M78 95a4 4 0 0 1 4-4" />
+    <path d="M122 95a4 4 0 0 0-4-4" />
+    <circle cx="90" cy="100" r="3.5" />
+    <circle cx="110" cy="100" r="3.5" />
+    <circle cx="100" cy="108" r="3.5" />
+    <circle cx="84" cy="108" r="2.5" />
+    <circle cx="116" cy="108" r="2.5" />
+  </svg>
+);
+
+const SkinPoresIcon = () => (
+  <svg viewBox="0 0 160 160" fill="none" stroke="#8b7440" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+    <rect x="20" y="20" width="90" height="90" rx="10" />
+    <circle cx="65" cy="50" r="4" />
+    <circle cx="45" cy="70" r="4" />
+    <circle cx="85" cy="70" r="4" />
+    <circle cx="65" cy="90" r="4" />
+    <circle cx="50" cy="45" r="2.5" />
+    <circle cx="80" cy="45" r="2.5" />
+    <circle cx="55" cy="80" r="2.5" />
+    <circle cx="75" cy="80" r="2.5" />
+    <path d="M110 50l32 32M142 82l-8 8" />
+    <circle cx="130" cy="70" r="12" />
+    <line x1="130" y1="62" x2="130" y2="78" />
+    <line x1="122" y1="70" x2="138" y2="70" />
+  </svg>
+);
+
+const SkinFineLinesIcon = () => (
+  <svg viewBox="0 0 160 160" fill="none" stroke="#8b7440" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+    <ellipse cx="80" cy="65" rx="36" ry="28" />
+    <circle cx="65" cy="55" r="4" />
+    <circle cx="95" cy="55" r="4" />
+    <path d="M60 68q4 2 8 0" />
+    <path d="M92 68q4 2 8 0" />
+    <path d="M80 72v4" />
+    <path d="M30 98q10-3 20 0 10 3 20 0 10-3 20 0 10 3 20 0 10-3 20 0" />
+    <path d="M35 104q10-2 18 0 9 2 18 0 9-2 18 0 9 2 18 0 9-2 17 0" />
+    <path d="M40 110q8-2 16 0 8 2 16 0 8-2 16 0 8 2 16 0 8-2 16 0" />
+  </svg>
+);
+
+const SkinToneIcon = () => (
+  <svg viewBox="0 0 160 160" fill="none" stroke="#8b7440" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+    <circle cx="80" cy="80" r="55" />
+    <line x1="80" y1="25" x2="80" y2="135" />
+    <path d="M40 70q10-5 20 0 10 5 20 0" />
+    <path d="M100 70q10-5 20 0" />
+    <path d="M40 90q10-5 20 0 10 5 20 0" />
+    <path d="M100 90q10-5 20 0" />
+    <circle cx="60" cy="60" r="4" />
+    <circle cx="100" cy="60" r="4" />
+    <circle cx="55" cy="76" r="3" />
+    <circle cx="105" cy="76" r="3" />
+    <circle cx="58" cy="90" r="3" />
+    <circle cx="102" cy="90" r="3" />
+    <circle cx="52" cy="105" r="2.5" />
+    <circle cx="108" cy="105" r="2.5" />
+    <circle cx="62" cy="108" r="2.5" />
+    <circle cx="98" cy="108" r="2.5" />
+  </svg>
+);
+
+const SkinDullnessIcon = () => (
+  <svg viewBox="0 0 160 160" fill="none" stroke="#8b7440" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+    <circle cx="80" cy="80" r="30" />
+    <circle cx="80" cy="80" r="48" />
+    <circle cx="80" cy="80" r="64" />
+    <line x1="80" y1="8" x2="80" y2="22" />
+    <line x1="80" y1="138" x2="80" y2="152" />
+    <line x1="8" y1="80" x2="22" y2="80" />
+    <line x1="138" y1="80" x2="152" y2="80" />
+    <line x1="30" y1="30" x2="40" y2="40" />
+    <line x1="120" y1="120" x2="130" y2="130" />
+    <line x1="30" y1="130" x2="40" y2="120" />
+    <line x1="120" y1="40" x2="130" y2="30" />
+    <path d="M72 72l8 8 16-16" />
+  </svg>
+);
+
+const SkinSensitiveIcon = () => (
+  <svg viewBox="0 0 160 160" fill="none" stroke="#8b7440" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+    <path d="M80 140s40-20 50-50V35L80 15 30 35v55c0 30 50 50 50 50z" />
+    <path d="M53 68c0 10 7 15 15 15s15-5 15-15" />
+    <path d="M53 62l32 32M85 62l-32 32" strokeWidth="1.2" />
+    <path d="M68 55a4 4 0 0 1 8-2" />
+    <circle cx="62" cy="95" r="2" />
+    <circle cx="86" cy="95" r="2" />
+  </svg>
+);
+
 const skinConcerns = [
-  { icon: "01", title: "Acne & Congestion", desc: "Breakouts, clogged pores and uneven texture" },
-  { icon: "02", title: "Enlarged Pores", desc: "Visible pores that appear stretched or open" },
-  { icon: "03", title: "Fine Lines & Wrinkles", desc: "Early signs of ageing around eyes and forehead" },
-  { icon: "04", title: "Uneven Skin Tone", desc: "Discoloration, redness or patchy pigmentation" },
-  { icon: "05", title: "Dullness", desc: "Lack of radiance and tired-looking complexion" },
-  { icon: "06", title: "Sensitive Skin", desc: "Easily irritated, reactive or uncomfortable skin" },
+  { icon: <SkinAcneIcon />, title: "Acne & Congestion", desc: "Breakouts, clogged pores and uneven texture" },
+  { icon: <SkinPoresIcon />, title: "Enlarged Pores", desc: "Visible pores that appear stretched or open" },
+  { icon: <SkinFineLinesIcon />, title: "Fine Lines & Wrinkles", desc: "Early signs of ageing around eyes and forehead" },
+  { icon: <SkinToneIcon />, title: "Uneven Skin Tone", desc: "Discoloration, redness or patchy pigmentation" },
+  { icon: <SkinDullnessIcon />, title: "Dullness", desc: "Lack of radiance and tired-looking complexion" },
+  { icon: <SkinSensitiveIcon />, title: "Sensitive Skin", desc: "Easily irritated, reactive or uncomfortable skin" },
 ];
 
 export default function HomePage() {
@@ -34,17 +134,13 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-5xl mx-auto">
             {skinConcerns.map((item) => (
-              <div key={item.icon} className="group text-center p-6 md:p-8 rounded-2xl bg-white border border-neutral-200/60 hover:border-primary-200/60 hover:bg-primary-50/30 transition-all duration-300">
-                <div className="w-14 h-14 mx-auto mb-5 rounded-full bg-neutral-100 group-hover:bg-primary-100 flex items-center justify-center transition-colors duration-300">
-                  <svg className="w-7 h-7 text-neutral-600 group-hover:text-primary-600 transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    {item.icon === "01" && <><circle cx="12" cy="8" r="5"/><path d="M5 22a7 7 0 0 1 14 0"/><circle cx="9" cy="10" r="1.5"/><circle cx="15" cy="10" r="1.5"/><path d="M12 13v1"/></>}
-                    {item.icon === "02" && <><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></>}
-                    {item.icon === "03" && <><path d="M12 3c-4 0-7 2-7 6 0 3 2 5 7 5s7-2 7-5c0-4-3-6-7-6z"/><path d="M8 14c0 2 1.5 4 4 4s4-2 4-4"/><path d="M9 17.5c0 1.5.5 2.5 3 2.5s3-1 3-2.5"/></>}
-                    {item.icon === "04" && <><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9c-3 0-5-1-7-3s-4-3-7-3a9 9 0 0 1 5-3z"/><path d="M3 12c0 5 4 9 9 9 0-3-1-5-3-7s-3-4-3-7a9 9 0 0 0-3 5z"/></>}
-                    {item.icon === "05" && <><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="4"/></>}
-                    {item.icon === "06" && <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 10c0 2 1.5 3 3 3s3-1 3-3"/></>}
-                  </svg>
+              <div key={item.title} className="group text-center pt-10 pb-8 px-6 md:pt-12 md:pb-10 md:px-8 rounded-2xl bg-white border border-neutral-200/60 hover:border-primary-200/60 hover:bg-primary-50/30 transition-all duration-300">
+                <div className="w-[120px] h-[120px] md:w-[140px] md:h-[140px] mx-auto mb-5 rounded-full border border-[rgba(139,116,64,0.75)] flex items-center justify-center overflow-hidden">
+                  <div className="w-[68%] h-[68%]">
+                    {item.icon}
+                  </div>
                 </div>
+                <div className="w-9 h-[2px] bg-[#b79a58] mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-semibold text-neutral-800 mb-2">{item.title}</h3>
                 <p className="text-sm text-neutral-500 leading-relaxed">{item.desc}</p>
               </div>
