@@ -59,7 +59,7 @@ export const ALL_PRODUCTS: ProductData[] = [
     price: 38, comparePrice: 48, category: "MASK",
     skinConcerns: ["DRYNESS", "PIGMENTATION"], badge: "NEW",
     rating: 4.8, reviewsCount: 215, size: "100g / 3.53 oz",
-    images: ["/images/rose-mask/main.jpg", "/images/rose-mask/benefits.jpg", "/images/rose-mask/barrier.jpg", "/images/rose-mask/technology.jpg", "/images/rose-mask/glow-effect.jpg", "/images/rose-mask/rose-extract.jpg", "/images/rose-mask/ferment.jpg", "/images/rose-mask/texture.jpg", "/images/rose-mask/gentle.jpg", "/images/rose-mask/howtouse.jpg", "/images/rose-mask/packaging.jpg", "/images/rose-mask/back.jpg"],
+    images: ["/images/rose-mask/main.png", "/images/rose-mask/benefits.jpg", "/images/rose-mask/barrier.jpg", "/images/rose-mask/technology.jpg", "/images/rose-mask/glow-effect.jpg", "/images/rose-mask/rose-extract.jpg", "/images/rose-mask/ferment.jpg", "/images/rose-mask/texture.jpg", "/images/rose-mask/gentle.jpg", "/images/rose-mask/howtouse.jpg", "/images/rose-mask/packaging.jpg", "/images/rose-mask/back.jpg"],
     isActive: true, sortOrder: 3,
     variants: [{ id: "v14", name: "Standard", size: "100g / 3.53 oz", price: 38, sku: "RBF-100", stock: 40 }],
   },
