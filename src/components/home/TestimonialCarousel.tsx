@@ -7,31 +7,31 @@ import { cn } from "@/lib/utils";
 const testimonials = [
   {
     quote:
-      "I have struggled with acne for years. After 8 weeks of using the Enzyme Repair Serum, my skin has never looked better. The redness is gone and my texture is smooth.",
-    name: "Jessica M.",
-    location: "New York, USA",
-    rating: 5,
-  },
-  {
-    quote:
-      "The Enzyme Cleansing Balm is the only cleanser that does not strip my sensitive skin. I can actually wash my face without feeling tight and dry afterward.",
-    name: "Amara K.",
-    location: "London, UK",
-    rating: 5,
-  },
-  {
-    quote:
-      "At 52, I have tried everything. This enzyme-based routine brought back the glow I thought I had lost forever. My friends keep asking what I have been doing.",
+      "My friend has been getting enzyme treatments at a skincare clinic, and her skin looked amazing. I always wanted to try it, but the clinic price was too high. I’ve been using this at-home enzyme treatment for 3 months, and it’s so easy! My skin looks smoother, brighter, and more radiant. I truly love the results! My friend even wants to try buying it here next time.",
     name: "Margaret L.",
     location: "San Francisco, USA",
     rating: 5,
   },
   {
     quote:
-      "I was skeptical about enzyme skincare, but the science convinced me to try. After one month, my dark spots are visibly fading. I am a believer now.",
+      "I use the Active Protease once a week, then follow it up with this additive-free Rose Brightening Fermented Mask. It instantly calms my skin after enzyme treatment and leaves my skin with a beautiful glass-like glow by the next morning. I’m honestly so surprised by the results!",
+    name: "Margaret L.",
+    location: "London, UK",
+    rating: 5,
+  },
+  {
+    quote:
+      "I’ve struggled with acne for years, and I honestly didn’t expect such a big change. After 8 weeks of using the Active Protease Anti-Wrinkle Kit, my skin has never looked this good! So grateful I found this!",
+    name: "Elena G.",
+    location: "Madrid, Spain",
+    rating: 5,
+  },
+  {
+    quote:
+      "I started with the Active Protease Anti-Wrinkle Kit and Rose Brightening Fermented Mask because my skin looked dull and I had many fine lines. After seeing how amazing they felt on my skin, I added the DNA Sodium Instant Firming V-Face Spray and Copper Peptide Repair Freeze-Dried Powder to my daily routine. These products completely changed my view of skincare. They are so unique and effective, and I’ve fallen in love with all of their products!",
     name: "David R.",
     location: "Austin, USA",
-    rating: 4,
+    rating: 5,
   },
 ];
 
