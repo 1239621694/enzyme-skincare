@@ -20,10 +20,6 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      {/* Promo Banner */}
-      <section className="py-3 bg-accent-500 text-white text-center text-sm font-semibold">
-        🎉 New Customer Special: 15% off your first order with code <span className="underline mx-1">WELCOME15</span>
-      </section>
 
       {/* ── Skin Concerns Grid ── */}
       <section className="py-20 md:py-28">
