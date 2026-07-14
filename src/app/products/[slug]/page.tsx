@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = getProductBySlug(slug);
   if (!p) return { title: "Not Found" };
 
-  const name = p.slug === "dna-sodium-firming-v-face-spray" ? "BELOYAN DNA Sodium Instant Firming V-Face Spray" : p.slug === "active-protease-anti-wrinkle-kit" ? "Active Protease Anti-Wrinkle Kit | Enzyme Skincare" : p.name;
+  const name = p.slug === "dna-sodium-firming-v-face-spray" ? "BELOYAN DNA Sodium Instant Firming V-Face Spray" : p.slug === "active-protease-anti-wrinkle-kit" ? "Active Protease Anti-Wrinkle Kit | Enzyme Skincare" : p.slug === "blue-copper-peptide-freeze-dried-powder-set" ? "BELOYAN Blue Copper Peptide Freeze-Dried Powder Set" : p.name;
   return {
     title: name + " | Enzyme Skincare",
     description: "Instant lift, long-lasting firmness and 4-week skin renewal with DNA Sodium active technology.",
@@ -59,8 +59,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </div>
     );
 
-  // Only apply the premium layout to the firming spray or protease product
-  const isPremiumPage = p.slug === "dna-sodium-firming-v-face-spray" || p.slug === "active-protease-anti-wrinkle-kit";
+  // Only apply the premium layout to the firming spray, protease, or copper peptide product
+  const isPremiumPage = p.slug === "dna-sodium-firming-v-face-spray" || p.slug === "active-protease-anti-wrinkle-kit" || p.slug === "blue-copper-peptide-freeze-dried-powder-set";
 
   if (!isPremiumPage) {
     return (
@@ -124,8 +124,412 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     );
   }
 
-  // ── PREMIUM LAYOUT for Firming Spray or Protease ──
+  // ── PREMIUM LAYOUT for Firming Spray, Protease, or Copper Peptide ──
   const isProtease = p.slug === "active-protease-anti-wrinkle-kit";
+  const isCopperPeptide = p.slug === "blue-copper-peptide-freeze-dried-powder-set";
+
+  if (isCopperPeptide) {
+    const concernCards = [
+      { title: "Dryness and Tightness", desc: "Skin may feel uncomfortable, rough or dehydrated." },
+      { title: "Visible Redness", desc: "Stressed-looking skin can appear uneven and reactive." },
+      { title: "Fine Lines", desc: "Loss of moisture and elasticity can make lines more visible." },
+      { title: "Loss of Firmness", desc: "Reduced resilience can affect the appearance of facial contours." },
+      { title: "Weakened Skin Barrier", desc: "Compromised skin may become more prone to dryness and sensitivity." },
+    ];
+
+    const benefitCards = [
+      { title: "Barrier Support", desc: "Helps maintain a stronger and more resilient-looking skin barrier." },
+      { title: "Firming Care", desc: "Supports firmer-looking skin and improved elasticity." },
+      { title: "Fine Line Care", desc: "Helps soften the appearance of visible fine lines." },
+      { title: "Soothing Support", desc: "Helps comfort stressed and redness-prone-looking skin." },
+      { title: "Deep Hydration", desc: "Replenishes moisture for softer and smoother-feeling skin." },
+      { title: "Refined Texture", desc: "Helps improve the appearance of roughness and enlarged pores." },
+    ];
+
+    const techCards = [
+      { title: "Low-Temperature Freeze-Drying", desc: "Helps preserve ingredient freshness during production." },
+      { title: "Vacuum Sealing", desc: "Protects the freeze-dried powder before activation." },
+      { title: "Fresh Activation", desc: "Powder and solution are mixed before use for a freshly prepared treatment." },
+    ];
+
+    const ingredientItems = [
+      { name: "Copper Tripeptide-1", desc: "Supports skin firmness, resilience and a healthier-looking barrier." },
+      { name: "Oligopeptide-1", desc: "Helps support smoother-looking texture and skin renewal care." },
+      { name: "Acetyl Hexapeptide-8", desc: "Helps soften the appearance of expression lines." },
+      { name: "Hydrolyzed Collagen", desc: "Supports a soft, conditioned and supple skin feel." },
+      { name: "Beta-Glucan", desc: "Helps comfort dry, stressed and sensitive-looking skin." },
+      { name: "Gentian Root Extract", desc: "Provides botanical soothing and antioxidant care." },
+      { name: "Serum Protein", desc: "Supports moisture retention and a smoother skin feel." },
+    ];
+
+    const resultCards = [
+      { title: "Improved Firmness", desc: "Supports firmer and more resilient-looking skin." },
+      { title: "Reduced Appearance of Fine Lines", desc: "Helps soften visible marks and expression lines." },
+      { title: "Refined Pore Appearance", desc: "Helps improve the appearance of enlarged pores." },
+      { title: "Balanced Oiliness", desc: "Helps support a fresher and more balanced-looking complexion." },
+    ];
+
+    const howToSteps = [
+      { step: "1", title: "Open", desc: "Open one freeze-dried powder vial and one activating solution vial." },
+      { step: "2", title: "Combine", desc: "Pour the activating solution into the freeze-dried powder vial." },
+      { step: "3", title: "Mix", desc: "Shake gently until the powder is fully dissolved." },
+      { step: "4", title: "Apply", desc: "Apply the freshly mixed solution evenly to clean skin." },
+      { step: "5", title: "Absorb", desc: "Gently pat or massage until fully absorbed." },
+      { step: "6", title: "Follow", desc: "Continue with moisturizer or a hydrating recovery mask if desired." },
+    ];
+
+    const freeFromItems = ["No Alcohol", "No Added Pigments", "No Fluorescent Agents", "No Mineral Oil", "No Added Hormones", "No Heavy Metals"];
+    const patentCards = [
+      { title: "Patented Freeze-Drying Process", desc: "Helps preserve ingredient freshness and stability." },
+      { title: "Professional Manufacturing Standards", desc: "Manufactured in facilities with quality and safety certifications." },
+      { title: "Innovative Dual-Bottle System", desc: "Designed to protect active ingredients until the moment of activation." },
+    ];
+    const suitableItems = ["Sensitive-Looking Skin", "Skin Prone to Redness", "Dry or Dehydrated Skin", "Fine Lines and Early Aging", "Loss of Firmness", "Weak or Stressed-Looking Skin Barrier"];
+    const sensoryCards = [
+      { title: "Light Blue Texture", desc: "Fresh and lightweight appearance." },
+      { title: "Fast Absorption", desc: "Absorbs comfortably into the skin." },
+      { title: "Hydrating Finish", desc: "Leaves skin feeling refreshed, soft and moisturized." },
+    ];
+    const faqItems = [
+      { q: "Why are the powder and activating solution packaged separately?", a: "The two-part system helps preserve the freshness of the freeze-dried powder until it is mixed immediately before use." },
+      { q: "How do I activate the freeze-dried powder?", a: "Pour one vial of activating solution into one vial of powder and shake gently until fully dissolved." },
+      { q: "How many treatments are included?", a: "Each box contains 10 complete powder and activating solution sets." },
+      { q: "What does the texture feel like?", a: "The freshly mixed solution has a lightweight, watery texture that absorbs quickly without a heavy feel." },
+      { q: "Is it suitable for sensitive-looking skin?", a: "The formula is designed for skin needing gentle barrier, hydration and soothing care. A patch test is recommended before first use." },
+      { q: "Can I use it with other skincare products?", a: "Yes. Apply the freshly activated solution after cleansing, then follow with moisturizer or other gentle skincare products." },
+    ];
+
+    return (
+      <div className="bg-white">
+        {/* ====== SECTION 1: HERO ====== */}
+        <section className="bg-gradient-to-br from-[#f0f4fa] via-white to-[#e8eff8]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 min-h-[80vh] items-center">
+              <div className="order-2 md:order-1 py-12 md:py-0">
+                <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">ADVANCED BLUE COPPER PEPTIDE CARE</p>
+                <h1 className="text-[clamp(1.8rem,3.8vw,3.2rem)] font-bold text-[#1a2a4a] leading-[1.08] mb-5" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  BELOYAN Blue Copper Peptide Repair & Anti-Wrinkle Freeze-Dried Powder Set
+                </h1>
+                <p className="text-lg text-[#4a5a7a] leading-relaxed mb-4">Reawaken Firmer, Calmer and More Resilient-Looking Skin</p>
+                <p className="text-sm text-[#6b7a9a] leading-relaxed mb-6 max-w-lg">A professional two-part freeze-dried powder treatment powered by Blue Copper Peptide and advanced peptide technology to support barrier repair, firmness, hydration and smoother-looking skin.</p>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {["Barrier Repair", "Firming Support", "Fine Line Care", "Soothing Hydration"].map(b => <span key={b} className="px-3 py-1.5 text-xs font-medium rounded-full bg-[#3a6b9e]/10 text-[#3a6b9e] border border-[#3a6b9e]/20">{b}</span>)}
+                </div>
+                <div className="flex items-center gap-6">
+                  <AddToCartButton product={p} />
+                  <span className="text-xs text-[#6b7a9a]">{p.size}</span>
+                </div>
+                <div className="flex flex-wrap gap-4 mt-6 pt-4 border-t border-[#d0d8e8] text-xs text-[#6b7a9a]">
+                  <span>Two-Part Fresh Activation</span>
+                  <span>Peptide-Powered Formula</span>
+                  <span>Designed for Sensitive-Looking Skin</span>
+                </div>
+              </div>
+              <div className="order-1 md:order-2">
+                <Image src={p.images[0]} alt="BELOYAN Blue Copper Peptide Freeze-Dried Powder Set" width={800} height={800} className="w-full h-auto object-contain" priority />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 2: SKIN CONCERNS ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div className="order-2 md:order-1">
+                <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">WHEN SKIN NEEDS MORE SUPPORT</p>
+                <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] leading-tight mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Is Your Skin Showing Signs of Barrier Stress and Early Aging?</h2>
+                <p className="text-sm text-[#6b7a9a] leading-relaxed mb-8">Daily stress, dehydration and reduced skin resilience can lead to visible redness, dryness, fine lines, rough texture and loss of firmness.</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {concernCards.map(c => <div key={c.title} className="p-4 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8]"><p className="text-sm font-semibold text-[#1a2a4a] mb-1">{c.title}</p><p className="text-xs text-[#6b7a9a]">{c.desc}</p></div>)}
+                </div>
+              </div>
+              <div className="order-1 md:order-2">
+                <Image src={p.images[1]} alt="Skin concerns showing barrier stress signs" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 3: PRODUCT BENEFITS ====== */}
+        <section className="py-20 md:py-28 bg-[#f0f4fa]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div>
+                <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">MULTI-ACTION PEPTIDE CARE</p>
+                <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] leading-tight mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Repair, Firm and Replenish in One Advanced Treatment</h2>
+                <p className="text-sm text-[#6b7a9a] leading-relaxed mb-8">The blue copper peptide freeze-dried powder set combines professional peptide care with a freshly activated application system to support stronger, smoother and healthier-looking skin.</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {benefitCards.map(c => <div key={c.title} className="p-4 rounded-xl bg-white border border-[#d0d8e8]"><p className="text-sm font-semibold text-[#1a2a4a] mb-1">{c.title}</p><p className="text-xs text-[#6b7a9a]">{c.desc}</p></div>)}
+                </div>
+              </div>
+              <div>
+                <Image src={p.images[2]} alt="Product benefits illustration" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 4: FRESH-LOCK TECHNOLOGY ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div>
+                <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">BIOTECHNOLOGY FREEZE-DRIED FRESHNESS</p>
+                <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] leading-tight mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Freshly Activated Performance in Every Application</h2>
+                <p className="text-sm text-[#6b7a9a] leading-relaxed mb-8">The freeze-drying process helps preserve the freshness and stability of active ingredients until the powder is mixed with the activating solution.</p>
+                <div className="space-y-3">
+                  {techCards.map(c => <div key={c.title} className="flex items-start gap-3 p-4 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8]"><span className="w-2 h-2 rounded-full bg-[#3a6b9e] mt-1.5 flex-shrink-0" /><div><p className="text-sm font-semibold text-[#1a2a4a]">{c.title}</p><p className="text-xs text-[#6b7a9a]">{c.desc}</p></div></div>)}
+                </div>
+              </div>
+              <div>
+                <Image src={p.images[3]} alt="Fresh-Lock freeze-drying technology diagram" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 5: KEY INGREDIENTS ====== */}
+        <section className="py-20 md:py-28 bg-[#f0f4fa]">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center mb-12">
+              <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">PEPTIDE-POWERED FORMULA</p>
+              <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>The Power of Blue Copper Peptide</h2>
+              <p className="text-sm text-[#6b7a9a] max-w-xl mx-auto">Blue Copper Peptide, also known as Copper Tripeptide-1, is combined with complementary peptides and skin-conditioning ingredients to support firmness, hydration and barrier care.</p>
+            </div>
+            <div className="mb-10">
+              <Image src={p.images[4]} alt="Key ingredients: copper tripeptide and peptides" width={1200} height={600} className="w-full h-auto object-contain rounded-2xl" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {ingredientItems.map(c => <div key={c.name} className="p-5 rounded-xl bg-white border border-[#d0d8e8]"><p className="text-sm font-semibold text-[#1a2a4a] mb-1">{c.name}</p><p className="text-xs text-[#6b7a9a]">{c.desc}</p></div>)}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 6: INGREDIENT FUNCTIONS ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div>
+                <Image src={p.images[5]} alt="Ingredient functions diagram" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">A BALANCED REPAIR COMPLEX</p>
+                <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] leading-tight mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Multiple Actives Working Together for Better-Looking Skin</h2>
+                <p className="text-sm text-[#6b7a9a] leading-relaxed mb-8">The formula combines peptides, humectants and botanical ingredients to address hydration, barrier resilience, firmness and visible signs of stress.</p>
+                <div className="space-y-3">
+                  <div className="p-4 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8]"><p className="text-sm font-semibold text-[#1a2a4a]">Blue Copper Peptide Complex</p><p className="text-xs text-[#6b7a9a] mt-1">Supports repair care, skin firmness and collagen-supporting routines.</p></div>
+                  <div className="p-4 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8]"><p className="text-sm font-semibold text-[#1a2a4a]">Peptide and Hyaluronic Support</p><p className="text-xs text-[#6b7a9a] mt-1">Helps maintain hydration and soften the appearance of fine lines.</p></div>
+                  <div className="p-4 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8]"><p className="text-sm font-semibold text-[#1a2a4a]">Botanical Comfort Complex</p><p className="text-xs text-[#6b7a9a] mt-1">Helps soothe dryness, redness and discomfort.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 7: DUAL-BOTTLE ACTIVATION SYSTEM ====== */}
+        <section className="py-20 md:py-28 bg-[#f0f4fa]">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center mb-12">
+              <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">TWO-PART FRESH ACTIVATION</p>
+              <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Powder and Activator, Designed to Work Together</h2>
+              <p className="text-sm text-[#6b7a9a] max-w-xl mx-auto">The treatment uses two separate components that are mixed before application, helping maintain ingredient freshness and create a lightweight, fast-absorbing solution.</p>
+            </div>
+            <div className="mb-10">
+              <Image src={p.images[6]} alt="Dual-bottle activation system" width={1200} height={600} className="w-full h-auto object-contain rounded-2xl" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <div className="p-6 rounded-xl bg-white border border-[#d0d8e8]">
+                <p className="text-sm font-semibold text-[#3a6b9e] mb-3">Blue Copper Peptide Freeze-Dried Powder</p>
+                <ul className="space-y-1.5 text-xs text-[#6b7a9a]"><li>• Supports barrier repair</li><li>• Helps improve skin elasticity</li><li>• Supports smoother-looking skin</li><li>• Provides concentrated peptide care</li></ul>
+              </div>
+              <div className="p-6 rounded-xl bg-white border border-[#d0d8e8]">
+                <p className="text-sm font-semibold text-[#3a6b9e] mb-3">Blue Copper Peptide Activating Solution</p>
+                <ul className="space-y-1.5 text-xs text-[#6b7a9a]"><li>• Provides moisture support</li><li>• Helps dissolve and activate the powder</li><li>• Creates a fresh, lightweight texture</li><li>• Supports comfortable absorption</li></ul>
+              </div>
+            </div>
+            <div className="text-center mt-8 p-5 rounded-xl bg-[#1a2a4a] text-white max-w-md mx-auto">
+              <p className="text-sm font-semibold">Mix Before Use → Freshly Activated Peptide Treatment</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 8: EFFECTIVENESS RESULTS ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center mb-10">
+              <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">VISIBLE RESULTS</p>
+              <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Stronger-Looking Skin with Consistent Care</h2>
+              <p className="text-sm text-[#6b7a9a] max-w-xl mx-auto">Testing demonstrated visible improvements in firmness, fine lines, pores and overall skin condition after continued use.</p>
+            </div>
+            <div className="mb-10">
+              <Image src={p.images[7]} alt="Effectiveness results showing improvements in firmness, lines and pores" width={1400} height={700} className="w-full h-auto object-contain rounded-2xl" />
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              {resultCards.map(c => <div key={c.title} className="p-5 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8] text-center"><p className="text-sm font-semibold text-[#1a2a4a] mb-1">{c.title}</p><p className="text-xs text-[#6b7a9a]">{c.desc}</p></div>)}
+            </div>
+            <p className="text-center text-xs text-[#6b7a9a] mt-6">Individual results may vary.</p>
+          </div>
+        </section>
+
+        {/* ====== SECTION 9: PRODUCT DETAILS ====== */}
+        <section className="py-20 md:py-28 bg-[#f0f4fa]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div>
+                <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">COMPLETE PROFESSIONAL TREATMENT SET</p>
+                <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] leading-tight mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>Everything You Need for a Freshly Activated Peptide Ritual</h2>
+                <div className="space-y-3">
+                  <div className="flex justify-between p-3 rounded-lg bg-white border border-[#d0d8e8] text-sm"><span className="text-[#6b7a9a]">Freeze-Dried Powder</span><span className="font-semibold text-[#1a2a4a]">60 mg per vial</span></div>
+                  <div className="flex justify-between p-3 rounded-lg bg-white border border-[#d0d8e8] text-sm"><span className="text-[#6b7a9a]">Activating Solution</span><span className="font-semibold text-[#1a2a4a]">3 ml per vial</span></div>
+                  <div className="flex justify-between p-3 rounded-lg bg-white border border-[#d0d8e8] text-sm"><span className="text-[#6b7a9a]">Quantity</span><span className="font-semibold text-[#1a2a4a]">10 complete sets per box</span></div>
+                  <div className="flex justify-between p-3 rounded-lg bg-white border border-[#d0d8e8] text-sm"><span className="text-[#6b7a9a]">Package Contents</span><span className="font-semibold text-[#1a2a4a]">10 Powder + 10 Solution vials</span></div>
+                </div>
+                <p className="text-center text-sm font-semibold text-[#3a6b9e] mt-6 p-3 rounded-xl bg-white border border-[#3a6b9e]/20">Ten Individually Prepared Treatments</p>
+              </div>
+              <div>
+                <Image src={p.images[8]} alt="Product details and packaging" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 10: HOW TO USE ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center mb-12">
+              <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">FRESHLY ACTIVATE BEFORE USE</p>
+              <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a]" style={{ fontFamily: "'Playfair Display', serif" }}>How to Prepare and Apply</h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
+              {howToSteps.map(s => <div key={s.step} className="p-5 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8] text-center"><div className="w-8 h-8 rounded-full bg-[#3a6b9e] text-white flex items-center justify-center mx-auto mb-3 text-sm font-bold">{s.step}</div><p className="text-sm font-semibold text-[#1a2a4a] mb-1">{s.title}</p><p className="text-xs text-[#6b7a9a]">{s.desc}</p></div>)}
+            </div>
+            <p className="text-center text-xs text-[#6b7a9a] mt-6">Follow the frequency shown on the product packaging or professional skincare guidance.</p>
+          </div>
+        </section>
+
+        {/* ====== SECTION 11: FREE-FROM FORMULA ====== */}
+        <section className="py-20 md:py-28 bg-[#f0f4fa]">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div>
+                <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">GENTLE FORMULA STANDARDS</p>
+                <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] leading-tight mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Thoughtfully Formulated for Comfortable Care</h2>
+                <p className="text-sm text-[#6b7a9a] leading-relaxed mb-8">The formula is designed without several commonly avoided ingredients, making it suitable for a refined and gentle skincare routine.</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {freeFromItems.map(item => <div key={item} className="flex items-center gap-2 p-3 rounded-lg bg-white border border-[#d0d8e8]"><span className="w-5 h-5 rounded-full bg-[#3a6b9e]/10 text-[#3a6b9e] flex items-center justify-center text-xs font-bold">✓</span><span className="text-xs text-[#1a2a4a]">{item}</span></div>)}
+                </div>
+              </div>
+              <div>
+                <Image src={p.images[9]} alt="Free-from formula claims" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 12: PATENTS AND QUALITY ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center mb-12">
+              <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">PATENTED TECHNOLOGY AND QUALITY ASSURANCE</p>
+              <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Backed by Innovation and Professional Manufacturing</h2>
+              <p className="text-sm text-[#6b7a9a] max-w-xl mx-auto">The product is supported by patented technology and quality-focused manufacturing processes designed to protect ingredient freshness, stability and performance.</p>
+            </div>
+            <div className="mb-10">
+              <Image src={p.images[10]} alt="Patents and quality certifications" width={1200} height={600} className="w-full h-auto object-contain rounded-2xl" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {patentCards.map(c => <div key={c.title} className="p-6 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8] text-center"><p className="text-sm font-semibold text-[#1a2a4a] mb-2">{c.title}</p><p className="text-xs text-[#6b7a9a]">{c.desc}</p></div>)}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 13: SUITABLE FOR ====== */}
+        <section className="py-20 md:py-28 bg-[#f0f4fa]">
+          <div className="max-w-5xl mx-auto px-4 md:px-8 lg:px-12 text-center">
+            <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">DESIGNED FOR</p>
+            <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] mb-10" style={{ fontFamily: "'Playfair Display', serif" }}>Advanced Care for Skin That Needs Repair and Resilience</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {suitableItems.map(item => <div key={item} className="p-5 rounded-xl bg-white border border-[#d0d8e8]"><p className="text-sm font-semibold text-[#1a2a4a]">{item}</p></div>)}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 14: TEXTURE AND EXPERIENCE ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-5xl mx-auto px-4 md:px-8 lg:px-12 text-center">
+            <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase mb-4">TEXTURE</p>
+            <h2 className="text-[clamp(1.6rem,3vw,2.6rem)] font-bold text-[#1a2a4a] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>Lightweight, Fresh and Fast-Absorbing</h2>
+            <p className="text-sm text-[#6b7a9a] max-w-xl mx-auto mb-10">Once activated, the formula has a light blue, watery texture that absorbs quickly without leaving a heavy or greasy finish.</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+              {sensoryCards.map(c => <div key={c.title} className="p-6 rounded-xl bg-[#f0f4fa] border border-[#d0d8e8]"><p className="text-sm font-semibold text-[#1a2a4a] mb-2">{c.title}</p><p className="text-xs text-[#6b7a9a]">{c.desc}</p></div>)}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 15: FAQ ====== */}
+        <section className="py-20 md:py-28 bg-[#f0f4fa]">
+          <div className="max-w-3xl mx-auto px-4 md:px-8 lg:px-12">
+            <p className="text-xs font-semibold text-[#3a6b9e] tracking-[0.3em] uppercase text-center mb-4">FREQUENTLY ASKED QUESTIONS</p>
+            <h2 className="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-[#1a2a4a] text-center mb-10" style={{ fontFamily: "'Playfair Display', serif" }}>Everything You Need to Know</h2>
+            <div className="space-y-3">
+              {faqItems.map((faq, i) => (
+                <details key={i} className="group p-5 rounded-xl bg-white border border-[#d0d8e8] open:border-[#3a6b9e] transition-colors">
+                  <summary className="text-sm font-semibold text-[#1a2a4a] cursor-pointer list-none flex items-center justify-between">{faq.q}<span className="text-[#3a6b9e] group-open:rotate-180 transition-transform">▼</span></summary>
+                  <p className="mt-3 text-sm text-[#6b7a9a] leading-relaxed">{faq.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 16: WHATSAPP SUPPORT ====== */}
+        <section className="py-16 bg-white border-t border-[#d0d8e8]">
+          <div className="max-w-lg mx-auto px-4 text-center">
+            <div className="w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center mx-auto mb-4">
+              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <p className="text-lg font-bold text-[#1a2a4a]" style={{ fontFamily: "'Playfair Display', serif" }}>Chat with Us on WhatsApp</p>
+            <p className="text-sm text-[#6b7a9a] mt-2 mb-6">Have questions about the Blue Copper Peptide Freeze-Dried Powder Set? Message us on WhatsApp and our skincare team will help with activation, application and routine guidance.</p>
+            <a href="https://wa.me/8613980551004" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#25D366] text-white text-sm font-semibold hover:bg-[#20bd5a] transition-colors">Chat on WhatsApp</a>
+          </div>
+        </section>
+
+        {/* ====== SECTION 17: BRAND ENDING ====== */}
+        <section className="py-20">
+          <div className="max-w-lg mx-auto px-4 text-center">
+            <p className="text-2xl font-bold text-[#1a2a4a]" style={{ fontFamily: "'Playfair Display', serif" }}>BELOYAN</p>
+            <p className="text-sm text-[#3a6b9e] font-semibold tracking-[0.2em] uppercase mt-2 mb-4">Professional Beauty Technology</p>
+            <p className="text-sm text-[#6b7a9a] leading-relaxed">Advanced skincare formulas inspired by professional beauty science and created to support healthier-looking, more resilient skin.</p>
+          </div>
+        </section>
+
+        {/* ====== RELATED PRODUCTS ====== */}
+        {(() => {
+          const others = ALL_PRODUCTS.filter((op) => op.slug !== p.slug && op.isActive).slice(0, 2);
+          if (others.length === 0) return null;
+          return (
+            <section className="py-16 border-t border-[#d0d8e8]">
+              <div className="max-w-4xl mx-auto px-4 md:px-8 lg:px-12">
+                <h2 className="text-xl font-bold text-[#1a2a4a] mb-8 text-center" style={{ fontFamily: "'Playfair Display', serif" }}>Complete Your Routine</h2>
+                <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
+                  {others.map((op) => (
+                    <Link key={op.slug} href={"/products/" + op.slug} className="group">
+                      <div className="aspect-square rounded-2xl overflow-hidden bg-[#f0f4fa] mb-3 relative border border-[#d0d8e8]">
+                        <Image src={op.images[0]} alt={op.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="200px" />
+                      </div>
+                      <p className="text-sm font-semibold text-[#1a2a4a]">{op.name}</p>
+                      <p className="text-sm font-bold text-[#3a6b9e]">{formatCurrency(op.price)}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })()}
+      </div>
+    );
+  }
 
   if (isProtease) {
     const proteaseSteps = [
@@ -154,83 +558,175 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     ];
 
     return (
-      <div className="bg-white">
-        {/* ====== SECTION 1: HERO ====== */}
-        <section className="bg-gradient-to-br from-[#f5f0ff] via-white to-[#f5f0ff]">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+      <div className="bg-white font-body">
+        {/* ════════════════════════════════════════════
+           SECTION 1 — HERO
+           ════════════════════════════════════════════ */}
+        <section className="bg-luxe-gradient relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 min-h-[80vh] items-center">
               <div className="order-2 md:order-1 py-12 md:py-0">
-                <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Professional Enzyme Brush Treatment</p>
-                <h1 className="font-heading text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.08] font-bold text-[#21133d] mb-5">
-                  ACTIVE PROTEASE ANTI-WRINKLE SKIN REJUVENATION KIT
+                <p className="text-xs font-semibold text-[#c9a96e] tracking-[0.2em] uppercase mb-4">BELOYAN</p>
+                <h1 className="font-heading text-[clamp(2rem,4.5vw,3.8rem)] leading-[1.08] font-bold text-white mb-3">
+                  ACTIVE PROTEASE<br />ANTI-WRINKLE SKIN<br />REJUVENATION KIT
                 </h1>
-                <p className="text-base md:text-lg text-[#555954] leading-relaxed mb-6 max-w-lg">
+                <p className="text-lg md:text-xl font-heading italic text-[#f5ecd6] mb-5">
+                  Professional Enzyme Brush Treatment
+                </p>
+                <p className="text-base text-white/80 leading-relaxed mb-6 max-w-lg">
                   Restore the look of smoother, brighter and healthier-looking skin with a professional enzyme treatment designed for home skincare routines.
                 </p>
-                <div className="space-y-2 mb-8">
-                  {["✓ Helps improve dull-looking skin", "✓ Supports smoother skin texture", "✓ Helps soften the appearance of fine lines", "✓ Refreshes and revitalizes skin"].map((b) => (
-                    <p key={b} className="text-sm text-[#555954]">{b}</p>
+                {/* Benefits Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-8">
+                  {[
+                    "Helps improve dull-looking skin",
+                    "Supports smoother skin texture",
+                    "Helps soften appearance of fine lines",
+                    "Refreshes and revitalizes skin",
+                  ].map((b) => (
+                    <span key={b} className="text-sm text-white/85 flex items-center gap-2">
+                      <span className="text-[#c9a96e] text-xs">✦</span> {b}
+                    </span>
                   ))}
                 </div>
                 <AddToCartButton product={p} />
+                {/* Badges */}
+                <div className="flex flex-wrap gap-2.5 mt-6 pt-6 border-t border-white/10">
+                  {["2 Complete Kits", "Professional Brush Included", "Approx. One Month Supply"].map((badge) => (
+                    <span key={badge} className="text-xs text-white/60 bg-white/6 px-3.5 py-1.5 rounded-full">
+                      {badge}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="order-1 md:order-2">
-                <Image src={p.images[0]} alt="Active Protease Anti-Wrinkle Kit" width={800} height={800} className="w-full h-auto object-contain" priority />
+              <div className="order-1 md:order-2 flex items-end justify-center">
+                <div className="w-full max-w-lg">
+                  <Image
+                    src={p.images[0]}
+                    alt="Active Protease Anti-Wrinkle Kit"
+                    width={800}
+                    height={800}
+                    className="w-full h-auto object-contain drop-shadow-2xl"
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ====== SECTION 2: SKIN CONCERNS ====== */}
-        <section className="py-20 md:py-28">
+        {/* ════════════════════════════════════════════
+           SECTION 2 — SKIN CONCERNS
+           ════════════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-[#faf9fc]">
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-              <div className="order-2 md:order-1">
-                <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Skin Concerns</p>
-                <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] leading-tight mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <div className="order-2 lg:order-1">
+                <p className="text-xs font-semibold text-[#6f3fc4] tracking-[0.18em] uppercase mb-3">Skin Concerns</p>
+                <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#1e1a2e] leading-tight mb-6">
                   Reveal Your Skin&apos;s Natural Radiance
                 </h2>
+                <p className="text-sm text-[#5c5470] leading-relaxed mb-8 max-w-md">
+                  Target the signs of tired, aging skin with targeted enzyme care.
+                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { title: "Dull Skin", desc: "Helps restore a brighter-looking complexion." },
-                    { title: "Uneven Texture", desc: "Supports smoother-looking skin texture." },
-                    { title: "Fine Lines & Loss of Firmness", desc: "Helps improve the appearance of aging concerns." },
-                    { title: "Enlarged Pores", desc: "Helps refine the appearance of uneven skin texture." },
+                    { icon: "M12 8v4l2 2m-6-2a6 6 0 0 0 6 6", title: "Dull Skin", desc: "Helps restore a brighter-looking complexion." },
+                    { icon: "M3 3l18 18M5 12h.01M9 8h.01M15 16h.01M19 12h.01M12 19v.01M12 5v.01", title: "Uneven Texture", desc: "Supports smoother-looking skin texture." },
+                    { icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5", title: "Fine Lines & Loss of Firmness", desc: "Helps improve the appearance of aging concerns." },
+                    { icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5", title: "Enlarged Pores", desc: "Helps refine the appearance of uneven skin texture." },
                   ].map((item) => (
-                    <div key={item.title} className="p-5 rounded-xl bg-[#f8f4ff] border border-[#e8d9ff]">
-                      <p className="text-sm font-semibold text-[#21133d] mb-1">{item.title}</p>
-                      <p className="text-xs text-[#6b706a]">{item.desc}</p>
+                    <div key={item.title} className="flex items-start gap-4 p-5 rounded-xl bg-white border border-[#e8e2f0] shadow-luxe-sm hover:shadow-luxe-md transition-all duration-300 hover:-translate-y-0.5">
+                      <div className="w-11 h-11 min-w-[44px] rounded-full bg-[#f7f3ff] flex items-center justify-center text-[#6f3fc4]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                          <path d={item.icon} />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold text-[#1e1a2e] mb-0.5">{item.title}</h3>
+                        <p className="text-xs text-[#5c5470]">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="order-1 lg:order-2">
+                <div className="rounded-2xl overflow-hidden shadow-luxe-md">
+                  <Image src={p.images[1]} alt="Skin concerns" width={800} height={800} className="w-full h-auto object-contain" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════════════════
+           SECTION 3 — TECHNOLOGY
+           ════════════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-luxe-gradient relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div className="order-2 md:order-1">
+                <p className="text-xs font-semibold text-[#c9a96e] tracking-[0.18em] uppercase mb-3">Enzyme Technology</p>
+                <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-white leading-tight mb-6">
+                  Professional Enzyme Care,<br />Inspired by Clinical Treatments
+                </h2>
+                <p className="text-sm text-white/75 leading-relaxed mb-8 max-w-lg">
+                  Unlike traditional exfoliating products, this enzyme treatment is activated by mixing the enzyme lotion with enzyme powder immediately before use, creating a fresh formula for every application.
+                </p>
+                <div className="space-y-3">
+                  {["Freshly Activated Formula", "Professional Enzyme Technology", "Silicone Brush Application"].map((item) => (
+                    <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-white/6 backdrop-blur-sm border border-white/10">
+                      <span className="w-2 h-2 min-w-[8px] rounded-full bg-[#c9a96e]" />
+                      <span className="text-sm font-medium text-white">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="order-1 md:order-2">
-                <Image src={p.images[1]} alt="Skin concerns" width={800} height={800} className="w-full h-auto object-contain" />
+                <div className="rounded-2xl overflow-hidden shadow-2xl">
+                  <Image src={p.images[2]} alt="Enzyme activation technology" width={800} height={800} className="w-full h-auto object-contain" />
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ====== SECTION 3: TECHNOLOGY / ENZYME SYSTEM ====== */}
-        <section className="py-20 md:py-28 bg-[#f8f4ff]">
+        {/* ════════════════════════════════════════════
+           SECTION 4 — KEY INGREDIENTS
+           ════════════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-white">
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-              <div>
-                <Image src={p.images[2]} alt="Enzyme technology" width={800} height={800} className="w-full h-auto object-contain" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <div className="rounded-2xl overflow-hidden shadow-luxe-md order-1">
+                <Image src={p.images[3]} alt="Key active ingredients" width={800} height={800} className="w-full h-auto object-contain" />
               </div>
-              <div>
-                <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Technology</p>
-                <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] leading-tight mb-6">
-                  Professional Enzyme Care, Inspired by Clinical Treatments
+              <div className="order-2">
+                <p className="text-xs font-semibold text-[#6f3fc4] tracking-[0.18em] uppercase mb-3">Key Ingredients</p>
+                <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#1e1a2e] leading-tight mb-6">
+                  Powered By Carefully Selected Active Ingredients
                 </h2>
-                <p className="text-[#6b706a] leading-relaxed mb-8">
-                  Unlike traditional exfoliating products, this enzyme treatment is activated by mixing the enzyme lotion with enzyme powder immediately before use, creating a fresh formula for every application.
+                <p className="text-sm text-[#5c5470] leading-relaxed mb-8 max-w-md">
+                  Each component is chosen for its proven efficacy in professional skincare.
                 </p>
                 <div className="grid grid-cols-1 gap-4">
-                  {["Freshly Activated Formula", "Professional Enzyme Technology", "Silicone Brush Application"].map((item) => (
-                    <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-white border border-[#e8d9ff]">
-                      <span className="w-2 h-2 rounded-full bg-[#7c4bd5]" />
-                      <span className="text-sm font-medium text-[#21133d]">{item}</span>
+                  {[
+                    { label: "Active Enzyme", name: "Papain (Protease)", desc: "A natural enzyme extracted from papaya, known for its gentle exfoliating properties.", icon: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" },
+                    { label: "Antioxidant", name: "Superoxide Dismutase (SOD)", desc: "A powerful antioxidant supporting skin protection against environmental stressors.", icon: "M12 3a9 9 0 0 0-9 9c0 4.97 4.03 9 9 9s9-4.03 9-9a9 9 0 0 0-9-9zM12 8v4l3 3" },
+                    { label: "Vitamin B3", name: "Niacinamide", desc: "Helps improve uneven skin tone and supports the skin barrier function.", icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" },
+                  ].map((ing) => (
+                    <div key={ing.name} className="gradient-luxe-top bg-luxe-card border border-[#e8e2f0] rounded-xl p-5 shadow-luxe-sm hover:shadow-luxe-md transition-all duration-300 hover:-translate-y-0.5">
+                      <div className="flex items-start gap-4">
+                        <div className="w-11 h-11 min-w-[44px] rounded-full bg-[#f7f3ff] flex items-center justify-center text-[#6f3fc4]">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                            <path d={ing.icon} />
+                          </svg>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-semibold text-[#6f3fc4] tracking-[0.06em] uppercase">{ing.label}</span>
+                          <h3 className="text-sm font-semibold text-[#1e1a2e] mt-0.5">{ing.name}</h3>
+                          <p className="text-xs text-[#5c5470] leading-relaxed mt-1">{ing.desc}</p>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -239,165 +735,203 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </div>
         </section>
 
-        {/* ====== SECTION 4: KEY INGREDIENTS ====== */}
-        <section className="py-20 md:py-28">
-          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
-            <div className="text-center mb-14">
-              <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Ingredients</p>
-              <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d]">
-                Powered By Carefully Selected Active Ingredients
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {[
-                { name: "Papain (Protease)", desc: "A natural enzyme extracted from papaya." },
-                { name: "Superoxide Dismutase (SOD)", desc: "A powerful antioxidant supporting skin protection." },
-                { name: "Niacinamide", desc: "Helps improve uneven skin tone and supports the skin barrier." },
-              ].map((ing) => (
-                <div key={ing.name} className="p-6 rounded-xl bg-[#f8f4ff] border border-[#e8d9ff] text-center">
-                  <p className="text-sm font-semibold text-[#21133d] mb-2">{ing.name}</p>
-                  <p className="text-xs text-[#6b706a] leading-relaxed">{ing.desc}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-10">
-              <Image src={p.images[3]} alt="Key ingredients" width={1200} height={600} className="w-full h-auto object-contain rounded-2xl" />
-            </div>
-          </div>
-        </section>
-
-        {/* ====== SECTION 5: PRODUCT SHOWCASE ====== */}
-        <section className="py-20 md:py-28 bg-[#f8f4ff]">
-          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+        {/* ════════════════════════════════════════════
+           SECTION 5 — PRODUCT SHOWCASE
+           ════════════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-luxe-soft">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] mb-4">
+              <p className="text-xs font-semibold text-[#6f3fc4] tracking-[0.18em] uppercase mb-3">What&apos;s Inside</p>
+              <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#1e1a2e] leading-tight max-w-2xl mx-auto">
                 Everything You Need For A Professional Enzyme Treatment At Home
               </h2>
+              <p className="text-sm text-[#5c5470] mt-4 max-w-lg mx-auto">
+                Each order is carefully packaged to deliver a complete spa-quality experience.
+              </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
-              <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              <div className="rounded-2xl overflow-hidden shadow-luxe-md">
                 <Image src={p.images[4]} alt="Product showcase" width={800} height={800} className="w-full h-auto object-contain" />
               </div>
-              <div className="space-y-6">
-                <div className="p-6 rounded-xl bg-white border border-[#e8d9ff]">
-                  <p className="text-sm font-semibold text-[#7c4bd5] mb-3">Each order includes</p>
-                  <p className="text-lg font-bold text-[#21133d]">2 Complete Treatment Kits</p>
+              <div className="space-y-4">
+                <div className="rounded-xl bg-white border border-[#e8e2f0] p-5 shadow-luxe-sm hover:shadow-luxe-md transition-all duration-300">
+                  <h3 className="text-xs font-semibold text-[#6f3fc4] tracking-[0.06em] uppercase mb-2">Each Order Includes</h3>
+                  <p className="text-lg font-bold text-[#1e1a2e]">2 Complete Treatment Kits</p>
                 </div>
-                <div className="p-6 rounded-xl bg-white border border-[#e8d9ff]">
-                  <p className="text-sm font-semibold text-[#7c4bd5] mb-3">Each kit contains</p>
-                  <ul className="space-y-2 text-sm text-[#555954]">
-                    <li>• Active Protease Lotion (10g)</li>
-                    <li>• Active Protease Powder (5g)</li>
-                    <li>• Silicone Application Brush</li>
-                  </ul>
+                <div className="rounded-xl bg-white border border-[#e8e2f0] p-5 shadow-luxe-sm hover:shadow-luxe-md transition-all duration-300">
+                  <h3 className="text-xs font-semibold text-[#6f3fc4] tracking-[0.06em] uppercase mb-3">Each Kit Contains</h3>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+                    {["Active Protease Lotion (10g)", "Active Protease Powder (5g)", "Silicone Application Brush"].map((item) => (
+                      <span key={item} className="text-sm text-[#1e1a2e] flex items-center gap-1.5">
+                        <span className="text-[#c9a96e] font-bold">·</span> {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div className="p-6 rounded-xl bg-[#21133d] text-white text-center">
-                  <p className="text-sm font-semibold">Two Boxes = Approximately One Month Supply</p>
+                <div className="rounded-xl bg-[#1e1040] text-white p-5 text-center shadow-luxe-md">
+                  <p className="text-sm font-semibold flex items-center justify-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    Two Boxes = Approximately One Month Supply
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ====== SECTION 6: HOW TO USE ====== */}
-        <section className="py-20 md:py-28">
-          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
-            <div className="text-center mb-14">
-              <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">How To Use</p>
-              <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d]">
-                Simple Professional Treatment At Home
-              </h2>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-5xl mx-auto mb-8">
-              {proteaseSteps.map((s) => (
-                <div key={s.step} className="p-5 rounded-xl bg-[#f8f4ff] border border-[#e8d9ff] text-center">
-                  <div className="w-8 h-8 rounded-full bg-[#7c4bd5] text-white flex items-center justify-center mx-auto mb-3 text-sm font-bold">{s.step}</div>
-                  <p className="text-sm font-semibold text-[#21133d] mb-1">{s.title}</p>
-                  <p className="text-xs text-[#6b706a]">{s.desc}</p>
+        {/* ════════════════════════════════════════════
+           SECTION 6 — HOW TO USE
+           ════════════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-luxe-gradient relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div className="order-2 md:order-1">
+                <p className="text-xs font-semibold text-[#c9a96e] tracking-[0.18em] uppercase mb-3">How To Use</p>
+                <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-white leading-tight mb-6">
+                  Simple Professional Treatment At Home
+                </h2>
+                <div className="space-y-3">
+                  {proteaseSteps.map((s) => (
+                    <div key={s.step} className="flex items-center gap-4 p-4 rounded-xl bg-white/6 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors duration-300">
+                      <div className="w-9 h-9 min-w-[36px] rounded-full bg-white/12 flex items-center justify-center text-sm font-bold text-[#c9a96e] font-heading">
+                        {s.step.padStart(2, '0')}
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-white">{s.title}</h4>
+                        <p className="text-xs text-white/65">{s.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <div className="mt-5 p-4 rounded-xl bg-[#c9a96e]/10 border border-[#c9a96e]/20">
+                  <p className="text-xs text-[#f5ecd6]">
+                    <span className="text-[#c9a96e] font-semibold">Tip:</span> Follow with a hydrating recovery mask after treatment for optimal skin comfort.
+                  </p>
+                </div>
+              </div>
+              <div className="order-1 md:order-2">
+                <div className="rounded-2xl overflow-hidden shadow-2xl">
+                  <Image src={p.images[6]} alt="How to apply enzyme treatment" width={800} height={800} className="w-full h-auto object-contain" />
+                </div>
+              </div>
             </div>
-            <div className="text-center">
-              <Image src={p.images[6]} alt="How to use" width={1000} height={500} className="w-full h-auto object-contain rounded-2xl mx-auto" />
-            </div>
-            <p className="text-center text-sm text-[#6b706a] mt-6">Follow with a hydrating recovery mask after treatment.</p>
           </div>
         </section>
 
-        {/* ====== SECTION 7: AFTERCARE & ROUTINE ====== */}
-        <section className="py-20 md:py-28 bg-[#f8f4ff]">
+        {/* ════════════════════════════════════════════
+           SECTION 7 — AFTERCARE & ROUTINE
+           ════════════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-[#faf9fc]">
           <div className="max-w-4xl mx-auto px-4 md:px-8 lg:px-12 text-center">
-            <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Aftercare</p>
-            <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] mb-4">
+            <p className="text-xs font-semibold text-[#6f3fc4] tracking-[0.18em] uppercase mb-3">Aftercare &amp; Routine</p>
+            <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#1e1a2e] leading-tight mb-4">
               Complete Your Post-Treatment Skincare Routine
             </h2>
-            <p className="text-[#6b706a] mb-10 max-w-xl mx-auto">
+            <p className="text-sm text-[#5c5470] mb-10 max-w-xl mx-auto">
               Pair with hydrating and repairing skincare products to maintain skin comfort after enzyme treatment.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
-              {aftercareCards.map((card) => (
-                <div key={card.title} className="p-6 rounded-xl bg-white border border-[#e8d9ff] text-center">
-                  <p className="text-sm font-semibold text-[#21133d] mb-2">{card.title}</p>
-                  <p className="text-xs text-[#6b706a]">{card.desc}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+              {aftercareCards.map((card, idx) => (
+                <div key={card.title} className="relative overflow-hidden rounded-xl bg-white border border-[#e8e2f0] p-7 shadow-luxe-sm hover:shadow-luxe-md transition-all duration-300 hover:-translate-y-1 text-left group">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8b5cf6] to-[#c9a96e] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="w-11 h-11 rounded-full bg-[#f7f3ff] flex items-center justify-center text-[#6f3fc4] mb-4">
+                    {idx === 0 ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                        <path d="M2 12h4l3-9 4 18 3-9h4" />
+                      </svg>
+                    )}
+                  </div>
+                  <h3 className="text-sm font-semibold text-[#1e1a2e] mb-2">{card.title}</h3>
+                  <p className="text-xs text-[#5c5470] leading-relaxed">{card.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ====== SECTION 8: SUITABLE FOR ====== */}
-        <section className="py-20 md:py-28">
+        {/* ════════════════════════════════════════════
+           SECTION 8 — SUITABLE FOR
+           ════════════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-white">
           <div className="max-w-5xl mx-auto px-4 md:px-8 lg:px-12 text-center">
-            <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Suitable For</p>
-            <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] mb-10">
+            <p className="text-xs font-semibold text-[#6f3fc4] tracking-[0.18em] uppercase mb-3">Suitable For</p>
+            <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#1e1a2e] leading-tight mb-4">
               Designed For Different Skin Concerns
             </h2>
+            <p className="text-sm text-[#5c5470] mb-10 max-w-lg mx-auto">
+              Gentle yet effective — suitable for a wide range of skin types and conditions.
+            </p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              {suitableConcerns.map((item) => (
-                <div key={item} className="p-5 rounded-xl bg-[#f8f4ff] border border-[#e8d9ff]">
-                  <p className="text-sm font-semibold text-[#21133d]">{item}</p>
+              {[
+                { title: "Acne & Congestion", desc: "Helps clear clogged pores", icon: "M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" },
+                { title: "Fine Lines & Loss of Firmness", desc: "Softens visible aging signs", icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" },
+                { title: "Enlarged Pores", desc: "Refines skin texture", icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" },
+                { title: "Uneven Skin Tone", desc: "Balances skin complexion", icon: "M5 5l14 14M5 19L19 5" },
+                { title: "Dullness", desc: "Restores natural radiance", icon: "M12 8v4l3 3" },
+                { title: "Sensitive Skin", desc: "Gentle enzyme formula", icon: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" },
+              ].map((item) => (
+                <div key={item.title} className="rounded-xl bg-[#faf9fc] border border-[#e8e2f0] p-5 text-center transition-all duration-300 hover:bg-[#f7f3ff] hover:border-[#d4c4f0] hover:-translate-y-0.5 shadow-luxe-sm">
+                  <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-white border border-[#e8e2f0] flex items-center justify-center text-[#6f3fc4]">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4.5 h-4.5">
+                      <path d={item.icon} />
+                    </svg>
+                  </div>
+                  <h3 className="text-sm font-semibold text-[#1e1a2e] mb-1">{item.title}</h3>
+                  <p className="text-[11px] text-[#5c5470]">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ====== SECTION 9: FAQ ====== */}
-        <section className="py-20 md:py-28 bg-[#f8f4ff]">
+        {/* ════════════════════════════════════════════
+           SECTION 9 — FAQ
+           ════════════════════════════════════════════ */}
+        <section className="py-20 md:py-28 bg-[#f7f3ff]">
           <div className="max-w-3xl mx-auto px-4 md:px-8 lg:px-12">
-            <h2 className="font-heading text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-[#21133d] text-center mb-10">
+            <p className="text-xs font-semibold text-[#6f3fc4] tracking-[0.18em] uppercase mb-3 text-center">FAQ</p>
+            <h2 className="font-heading text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-[#1e1a2e] text-center mb-10">
               Frequently Asked Questions
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {faqItems.map((faq, i) => (
-                <details key={i} className="group p-5 rounded-xl bg-white border border-[#e8d9ff] open:border-[#7c4bd5] transition-colors">
-                  <summary className="text-sm font-semibold text-[#21133d] cursor-pointer list-none flex items-center justify-between">
+                <details key={i} className="group rounded-xl bg-white border border-[#e8e2f0] overflow-hidden transition-all duration-300 open:shadow-luxe-sm open:border-[#6f3fc4]/30">
+                  <summary className="flex items-center justify-between px-6 py-5 text-sm font-semibold text-[#1e1a2e] cursor-pointer list-none select-none">
                     {faq.q}
-                    <span className="text-[#7c4bd5] group-open:rotate-180 transition-transform">▼</span>
+                    <span className="text-[#6f3fc4] text-xl font-light leading-none transition-transform duration-300 group-open:rotate-45">+</span>
                   </summary>
-                  <p className="mt-3 text-sm text-[#6b706a] leading-relaxed">{faq.a}</p>
+                  <div className="px-6 pb-5">
+                    <p className="text-sm text-[#5c5470] leading-relaxed">{faq.a}</p>
+                  </div>
                 </details>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ====== RELATED PRODUCTS ====== */}
+        {/* ════════════════════════════════════════════
+           RELATED PRODUCTS
+           ════════════════════════════════════════════ */}
         {(() => {
           const others = ALL_PRODUCTS.filter((op) => op.slug !== p.slug && op.isActive).slice(0, 2);
           if (others.length === 0) return null;
           return (
-            <section className="py-20 md:py-28">
+            <section className="py-20 md:py-28 bg-white">
               <div className="max-w-4xl mx-auto px-4 md:px-8 lg:px-12">
-                <h2 className="font-heading text-2xl font-bold text-[#21133d] mb-8 text-center">Complete Your Routine</h2>
+                <h2 className="font-heading text-2xl font-bold text-[#1e1a2e] mb-3 text-center">Complete Your Routine</h2>
+                <p className="text-sm text-[#5c5470] text-center mb-8 max-w-md mx-auto">Pair with complementary products for optimal results.</p>
                 <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
                   {others.map((op) => (
                     <Link key={op.slug} href={"/products/" + op.slug} className="group">
-                      <div className="aspect-square rounded-2xl overflow-hidden bg-[#f8f4ff] mb-3 relative border border-[#e8d9ff]">
+                      <div className="aspect-square rounded-2xl overflow-hidden bg-[#f7f3ff] mb-3 relative border border-[#e8e2f0] shadow-luxe-sm group-hover:shadow-luxe-md transition-all duration-300">
                         <Image src={op.images[0]} alt={op.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="200px" />
                       </div>
-                      <p className="text-sm font-heading font-semibold text-[#21133d]">{op.name}</p>
-                      <p className="text-sm font-bold text-[#7c4bd5]">{formatCurrency(op.price)}</p>
+                      <p className="text-sm font-heading font-semibold text-[#1e1a2e] group-hover:text-[#6f3fc4] transition-colors">{op.name}</p>
+                      <p className="text-sm font-bold text-[#6f3fc4]">{formatCurrency(op.price)}</p>
                     </Link>
                   ))}
                 </div>

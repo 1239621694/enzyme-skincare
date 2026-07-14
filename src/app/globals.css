@@ -46,6 +46,18 @@
   --font-heading: "Playfair Display", serif;
   --font-body: "Montserrat", sans-serif;
 
+  /* ── Purple / Luxe (Protease page) ── */
+  --color-luxe-900: #1e1040;
+  --color-luxe-800: #2b1a5e;
+  --color-luxe-700: #4a2d8a;
+  --color-luxe-600: #6f3fc4;
+  --color-luxe-500: #8b5cf6;
+  --color-luxe-200: #d4c4f0;
+  --color-luxe-100: #ede4ff;
+  --color-luxe-50: #f7f3ff;
+  --color-gold: #c9a96e;
+  --color-gold-light: #f5ecd6;
+
   /* ── Spacing ── */
   --spacing-section: 7.5rem;
   --spacing-section-sm: 4rem;
@@ -156,6 +168,45 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* ─── Protease Luxe utilities ─── */
+  .bg-luxe-gradient {
+    background: linear-gradient(165deg, #1e1040 0%, #2b1a5e 30%, #3a2370 55%, #4a2d8a 100%);
+  }
+  .bg-luxe-gradient::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 20%, rgba(139,92,246,0.15), transparent 70%),
+      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(201,169,110,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .bg-luxe-card {
+    background: linear-gradient(135deg, #faf9fc, #ffffff);
+  }
+  .bg-luxe-soft {
+    background: linear-gradient(180deg, #f7f3ff 0%, #ffffff 100%);
+  }
+  .text-luxe-heading {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .shadow-luxe-sm { box-shadow: 0 4px 24px rgba(111, 63, 196, 0.08); }
+  .shadow-luxe-md { box-shadow: 0 12px 48px rgba(111, 63, 196, 0.10); }
+  .shadow-luxe-lg { box-shadow: 0 24px 80px rgba(111, 63, 196, 0.12); }
+  .border-luxe-card { border-color: #e8e2f0; }
+  .gradient-luxe-top {
+    position: relative;
+    overflow: hidden;
+  }
+  .gradient-luxe-top::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, #8b5cf6, #d4c4f0);
   }
 
   .text-text-primary {
