@@ -7,7 +7,12 @@
         "build": "next build",
         "start": "next start",
         "lint": "eslint",
-        "postinstall": "npx prisma generate || true"
+        "postinstall": "npx prisma generate || true",
+        "db:generate": "prisma generate",
+        "db:validate": "prisma validate",
+        "db:status": "prisma migrate status",
+        "db:deploy": "prisma migrate deploy",
+        "db:verify": "npx ts-node scripts/verify-database.ts"
     },
     "dependencies": {
         "@prisma/client": "^5.4.0",

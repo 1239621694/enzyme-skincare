@@ -58,6 +58,16 @@
   --color-gold: #c9a96e;
   --color-gold-light: #f5ecd6;
 
+  /* ── Cobalt Blue / Copper Peptide ── */
+  --color-cp-900: #0f2840;
+  --color-cp-800: #1a3a5c;
+  --color-cp-700: #2c5f8a;
+  --color-cp-600: #3a7ab5;
+  --color-cp-500: #5a9ad0;
+  --color-cp-200: #b0cce8;
+  --color-cp-100: #d8e6f4;
+  --color-cp-50: #eef4fa;
+
   /* ── Spacing ── */
   --spacing-section: 7.5rem;
   --spacing-section-sm: 4rem;
@@ -208,6 +218,21 @@
     width: 100%; height: 3px;
     background: linear-gradient(90deg, #8b5cf6, #d4c4f0);
   }
+
+  /* ─── Copper Peptide utilities ─── */
+  .bg-cp-gradient {
+    background: linear-gradient(165deg, #0f2840 0%, #1a3a5c 40%, #2c5f8a 100%);
+  }
+  .bg-cp-soft {
+    background: linear-gradient(180deg, #eef4fa 0%, #ffffff 100%);
+  }
+  .bg-cp-ice { background-color: #eef4fa; }
+  .text-cp-primary { color: #1a3a5c; }
+  .text-cp-secondary { color: #5a6a7a; }
+  .border-cp-card { border-color: #d0dce8; }
+  .shadow-cp-sm { box-shadow: 0 4px 24px rgba(26, 58, 92, 0.06); }
+  .shadow-cp-md { box-shadow: 0 12px 40px rgba(26, 58, 92, 0.08); }
+  .shadow-cp-lg { box-shadow: 0 24px 64px rgba(26, 58, 92, 0.10); }
 
   .text-text-primary {
     color: var(--color-neutral-800);
