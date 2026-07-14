@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = getProductBySlug(slug);
   if (!p) return { title: "Not Found" };
 
-  const name = p.slug === "dna-sodium-firming-v-face-spray" ? "BELOYAN DNA Sodium Instant Firming V-Face Spray" : p.name;
+  const name = p.slug === "dna-sodium-firming-v-face-spray" ? "BELOYAN DNA Sodium Instant Firming V-Face Spray" : p.slug === "active-protease-anti-wrinkle-kit" ? "Active Protease Anti-Wrinkle Kit | Enzyme Skincare" : p.name;
   return {
     title: name + " | Enzyme Skincare",
     description: "Instant lift, long-lasting firmness and 4-week skin renewal with DNA Sodium active technology.",
@@ -59,8 +59,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </div>
     );
 
-  // Only apply the premium layout to the firming spray product
-  const isPremiumPage = p.slug === "dna-sodium-firming-v-face-spray";
+  // Only apply the premium layout to the firming spray or protease product
+  const isPremiumPage = p.slug === "dna-sodium-firming-v-face-spray" || p.slug === "active-protease-anti-wrinkle-kit";
 
   if (!isPremiumPage) {
     return (
@@ -124,7 +124,290 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     );
   }
 
-  // ── PREMIUM LAYOUT for Firming Spray ──
+  // ── PREMIUM LAYOUT for Firming Spray or Protease ──
+  const isProtease = p.slug === "active-protease-anti-wrinkle-kit";
+
+  if (isProtease) {
+    const proteaseSteps = [
+      { step: "1", title: "Cleanse", desc: "Cleanse your face." },
+      { step: "2", title: "Mix", desc: "Mix enzyme lotion with enzyme powder." },
+      { step: "3", title: "Apply", desc: "Apply evenly with silicone brush." },
+      { step: "4", title: "Wait", desc: "Leave on for 10–20 minutes." },
+      { step: "5", title: "Rinse", desc: "Rinse thoroughly." },
+    ];
+
+    const aftercareCards = [
+      { title: "Recovery Hydration Care", desc: "Supports skin hydration after treatment." },
+      { title: "Daily Repair Routine", desc: "Helps maintain smoother-looking skin." },
+    ];
+
+    const suitableConcerns = [
+      "Acne & Congestion", "Fine Lines & Loss of Firmness", "Enlarged Pores",
+      "Uneven Skin Tone", "Dullness", "Sensitive Skin",
+    ];
+
+    const faqItems = [
+      { q: "Why are there two boxes?", a: "Each purchase includes two complete treatment kits, designed to provide approximately one month's supply." },
+      { q: "How often should I use the enzyme treatment?", a: "Use once a week during the initial care period. Once your skin reaches a visibly improved and balanced condition, reduce to once every two weeks for maintenance." },
+      { q: "Can I use other skincare products after treatment?", a: "Yes. We recommend applying a hydrating or recovery mask after rinsing. Avoid masks containing exfoliating acids or other intensive active ingredients immediately after treatment." },
+      { q: "How should I store the product?", a: "Store in a cool, dry place away from direct sunlight. For external use only. Avoid contact with eyes." },
+    ];
+
+    return (
+      <div className="bg-white">
+        {/* ====== SECTION 1: HERO ====== */}
+        <section className="bg-gradient-to-br from-[#f5f0ff] via-white to-[#f5f0ff]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 min-h-[80vh] items-center">
+              <div className="order-2 md:order-1 py-12 md:py-0">
+                <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Professional Enzyme Brush Treatment</p>
+                <h1 className="font-heading text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.08] font-bold text-[#21133d] mb-5">
+                  ACTIVE PROTEASE ANTI-WRINKLE SKIN REJUVENATION KIT
+                </h1>
+                <p className="text-base md:text-lg text-[#555954] leading-relaxed mb-6 max-w-lg">
+                  Restore the look of smoother, brighter and healthier-looking skin with a professional enzyme treatment designed for home skincare routines.
+                </p>
+                <div className="space-y-2 mb-8">
+                  {["✓ Helps improve dull-looking skin", "✓ Supports smoother skin texture", "✓ Helps soften the appearance of fine lines", "✓ Refreshes and revitalizes skin"].map((b) => (
+                    <p key={b} className="text-sm text-[#555954]">{b}</p>
+                  ))}
+                </div>
+                <AddToCartButton product={p} />
+              </div>
+              <div className="order-1 md:order-2">
+                <Image src={p.images[0]} alt="Active Protease Anti-Wrinkle Kit" width={800} height={800} className="w-full h-auto object-contain" priority />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 2: SKIN CONCERNS ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div className="order-2 md:order-1">
+                <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Skin Concerns</p>
+                <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] leading-tight mb-8">
+                  Reveal Your Skin&apos;s Natural Radiance
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { title: "Dull Skin", desc: "Helps restore a brighter-looking complexion." },
+                    { title: "Uneven Texture", desc: "Supports smoother-looking skin texture." },
+                    { title: "Fine Lines & Loss of Firmness", desc: "Helps improve the appearance of aging concerns." },
+                    { title: "Enlarged Pores", desc: "Helps refine the appearance of uneven skin texture." },
+                  ].map((item) => (
+                    <div key={item.title} className="p-5 rounded-xl bg-[#f8f4ff] border border-[#e8d9ff]">
+                      <p className="text-sm font-semibold text-[#21133d] mb-1">{item.title}</p>
+                      <p className="text-xs text-[#6b706a]">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="order-1 md:order-2">
+                <Image src={p.images[1]} alt="Skin concerns" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 3: TECHNOLOGY / ENZYME SYSTEM ====== */}
+        <section className="py-20 md:py-28 bg-[#f8f4ff]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div>
+                <Image src={p.images[2]} alt="Enzyme technology" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Technology</p>
+                <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] leading-tight mb-6">
+                  Professional Enzyme Care, Inspired by Clinical Treatments
+                </h2>
+                <p className="text-[#6b706a] leading-relaxed mb-8">
+                  Unlike traditional exfoliating products, this enzyme treatment is activated by mixing the enzyme lotion with enzyme powder immediately before use, creating a fresh formula for every application.
+                </p>
+                <div className="grid grid-cols-1 gap-4">
+                  {["Freshly Activated Formula", "Professional Enzyme Technology", "Silicone Brush Application"].map((item) => (
+                    <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-white border border-[#e8d9ff]">
+                      <span className="w-2 h-2 rounded-full bg-[#7c4bd5]" />
+                      <span className="text-sm font-medium text-[#21133d]">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 4: KEY INGREDIENTS ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center mb-14">
+              <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Ingredients</p>
+              <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d]">
+                Powered By Carefully Selected Active Ingredients
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {[
+                { name: "Papain (Protease)", desc: "A natural enzyme extracted from papaya." },
+                { name: "Superoxide Dismutase (SOD)", desc: "A powerful antioxidant supporting skin protection." },
+                { name: "Niacinamide", desc: "Helps improve uneven skin tone and supports the skin barrier." },
+              ].map((ing) => (
+                <div key={ing.name} className="p-6 rounded-xl bg-[#f8f4ff] border border-[#e8d9ff] text-center">
+                  <p className="text-sm font-semibold text-[#21133d] mb-2">{ing.name}</p>
+                  <p className="text-xs text-[#6b706a] leading-relaxed">{ing.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-10">
+              <Image src={p.images[3]} alt="Key ingredients" width={1200} height={600} className="w-full h-auto object-contain rounded-2xl" />
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 5: PRODUCT SHOWCASE ====== */}
+        <section className="py-20 md:py-28 bg-[#f8f4ff]">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center mb-12">
+              <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] mb-4">
+                Everything You Need For A Professional Enzyme Treatment At Home
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
+              <div>
+                <Image src={p.images[4]} alt="Product showcase" width={800} height={800} className="w-full h-auto object-contain" />
+              </div>
+              <div className="space-y-6">
+                <div className="p-6 rounded-xl bg-white border border-[#e8d9ff]">
+                  <p className="text-sm font-semibold text-[#7c4bd5] mb-3">Each order includes</p>
+                  <p className="text-lg font-bold text-[#21133d]">2 Complete Treatment Kits</p>
+                </div>
+                <div className="p-6 rounded-xl bg-white border border-[#e8d9ff]">
+                  <p className="text-sm font-semibold text-[#7c4bd5] mb-3">Each kit contains</p>
+                  <ul className="space-y-2 text-sm text-[#555954]">
+                    <li>• Active Protease Lotion (10g)</li>
+                    <li>• Active Protease Powder (5g)</li>
+                    <li>• Silicone Application Brush</li>
+                  </ul>
+                </div>
+                <div className="p-6 rounded-xl bg-[#21133d] text-white text-center">
+                  <p className="text-sm font-semibold">Two Boxes = Approximately One Month Supply</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 6: HOW TO USE ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+            <div className="text-center mb-14">
+              <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">How To Use</p>
+              <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d]">
+                Simple Professional Treatment At Home
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-5xl mx-auto mb-8">
+              {proteaseSteps.map((s) => (
+                <div key={s.step} className="p-5 rounded-xl bg-[#f8f4ff] border border-[#e8d9ff] text-center">
+                  <div className="w-8 h-8 rounded-full bg-[#7c4bd5] text-white flex items-center justify-center mx-auto mb-3 text-sm font-bold">{s.step}</div>
+                  <p className="text-sm font-semibold text-[#21133d] mb-1">{s.title}</p>
+                  <p className="text-xs text-[#6b706a]">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
+              <Image src={p.images[6]} alt="How to use" width={1000} height={500} className="w-full h-auto object-contain rounded-2xl mx-auto" />
+            </div>
+            <p className="text-center text-sm text-[#6b706a] mt-6">Follow with a hydrating recovery mask after treatment.</p>
+          </div>
+        </section>
+
+        {/* ====== SECTION 7: AFTERCARE & ROUTINE ====== */}
+        <section className="py-20 md:py-28 bg-[#f8f4ff]">
+          <div className="max-w-4xl mx-auto px-4 md:px-8 lg:px-12 text-center">
+            <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Aftercare</p>
+            <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] mb-4">
+              Complete Your Post-Treatment Skincare Routine
+            </h2>
+            <p className="text-[#6b706a] mb-10 max-w-xl mx-auto">
+              Pair with hydrating and repairing skincare products to maintain skin comfort after enzyme treatment.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
+              {aftercareCards.map((card) => (
+                <div key={card.title} className="p-6 rounded-xl bg-white border border-[#e8d9ff] text-center">
+                  <p className="text-sm font-semibold text-[#21133d] mb-2">{card.title}</p>
+                  <p className="text-xs text-[#6b706a]">{card.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 8: SUITABLE FOR ====== */}
+        <section className="py-20 md:py-28">
+          <div className="max-w-5xl mx-auto px-4 md:px-8 lg:px-12 text-center">
+            <p className="text-sm font-semibold text-[#7c4bd5] tracking-[0.25em] uppercase mb-4">Suitable For</p>
+            <h2 className="font-heading text-[clamp(1.8rem,3.5vw,3rem)] font-bold text-[#21133d] mb-10">
+              Designed For Different Skin Concerns
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {suitableConcerns.map((item) => (
+                <div key={item} className="p-5 rounded-xl bg-[#f8f4ff] border border-[#e8d9ff]">
+                  <p className="text-sm font-semibold text-[#21133d]">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== SECTION 9: FAQ ====== */}
+        <section className="py-20 md:py-28 bg-[#f8f4ff]">
+          <div className="max-w-3xl mx-auto px-4 md:px-8 lg:px-12">
+            <h2 className="font-heading text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-[#21133d] text-center mb-10">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqItems.map((faq, i) => (
+                <details key={i} className="group p-5 rounded-xl bg-white border border-[#e8d9ff] open:border-[#7c4bd5] transition-colors">
+                  <summary className="text-sm font-semibold text-[#21133d] cursor-pointer list-none flex items-center justify-between">
+                    {faq.q}
+                    <span className="text-[#7c4bd5] group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <p className="mt-3 text-sm text-[#6b706a] leading-relaxed">{faq.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ====== RELATED PRODUCTS ====== */}
+        {(() => {
+          const others = ALL_PRODUCTS.filter((op) => op.slug !== p.slug && op.isActive).slice(0, 2);
+          if (others.length === 0) return null;
+          return (
+            <section className="py-20 md:py-28">
+              <div className="max-w-4xl mx-auto px-4 md:px-8 lg:px-12">
+                <h2 className="font-heading text-2xl font-bold text-[#21133d] mb-8 text-center">Complete Your Routine</h2>
+                <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
+                  {others.map((op) => (
+                    <Link key={op.slug} href={"/products/" + op.slug} className="group">
+                      <div className="aspect-square rounded-2xl overflow-hidden bg-[#f8f4ff] mb-3 relative border border-[#e8d9ff]">
+                        <Image src={op.images[0]} alt={op.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="200px" />
+                      </div>
+                      <p className="text-sm font-heading font-semibold text-[#21133d]">{op.name}</p>
+                      <p className="text-sm font-bold text-[#7c4bd5]">{formatCurrency(op.price)}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })()}
+      </div>
+    );
+  }
   return (
     <div className="bg-white">
       {/* ====== SECTION 1: HERO ====== */}

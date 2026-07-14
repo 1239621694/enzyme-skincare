@@ -23,15 +23,15 @@
 export const ALL_PRODUCTS: ProductData[] = [
   {
     id: "1", slug: "active-protease-anti-wrinkle-kit",
-    name: "Active Protease Anti-Wrinkle Kit",
-    tagline: "Professional enzyme brush treatment for skin rejuvenation",
+    name: "ACTIVE PROTEASE ANTI-WRINKLE SKIN REJUVENATION KIT",
+    tagline: "Professional Enzyme Brush Treatment",
     description: "Restore the look of smoother, brighter, and healthier-looking skin with a professional enzyme treatment designed for home skincare routines.\n\nProfessional Enzyme Care, Inspired by Clinical Treatments. Unlike traditional exfoliating products, this enzyme treatment is activated by mixing the enzyme lotion with the enzyme powder immediately before use, creating a fresh formula for every application. The included silicone brush helps distribute the product evenly across the skin while providing a comfortable massage experience.\n\nWhy You'll Love It:\n• Helps improve the appearance of dull skin\n• Supports smoother-looking skin texture\n• Helps soften the appearance of fine lines\n• Leaves skin feeling refreshed and revitalized\n• Supports a brighter-looking complexion\n• Suitable for regular professional skincare routines\n\nKey Ingredients: Papain (Protease) - A natural enzyme extracted from papaya. Superoxide Dismutase (SOD) - A powerful antioxidant. Niacinamide - Helps improve uneven skin tone and supports the skin barrier.\n\nWhat's Inside: Each order includes 2 Complete Treatment Kits. Each kit contains Active Protease Lotion (10g), Active Protease Powder (5g), Silicone Application Brush.\n\nRecommended Frequency: Use once a week during the initial care period. Once your skin reaches a visibly improved and balanced condition, the treatment can be reduced to once every two weeks for maintenance.\n\nSuitable For: Dull appearance, Uneven skin texture, Dryness, Lack of radiance, Early visible signs of aging.",
     ingredients: "Papain (Protease), Superoxide Dismutase (SOD), Niacinamide",
     howToUse: "1. Cleanse your face. 2. Mix one bottle of lotion with one bottle of powder. 3. Apply evenly with the silicone brush. 4. Leave on for 10-20 minutes. 5. Rinse thoroughly. Apply a medical-grade recovery mask or a hydrating sheet mask immediately after the treatment. Avoid masks containing exfoliating acids or other intensive active ingredients.\n\nFor a complete post-treatment skincare routine, we recommend pairing with BELOYAN Copper Peptide Repair Freeze-Dried Powder and BELOYAN Rose Brightening Fermented Mask. These products are designed to complement the enzyme treatment and help maintain skin hydration and comfort after use.",
     price: 78, comparePrice: 98, category: "TREATMENT",
     skinConcerns: ["AGING", "DRYNESS"], badge: "NEW",
     rating: 4.9, reviewsCount: 568, size: "2 Kits (10g + 5g each) / 1 Month Supply",
-    images: ["/images/protease/main.png", "/images/protease/inside.png", "/images/protease/info.png", "/images/protease/skin-problems.png", "/images/protease/enzyme-cp.png", "/images/protease/usage-steps.png", "/images/protease/test-report.png"],
+    images: ["/images/protease-page/hero.png", "/images/protease-page/problem.png", "/images/protease-page/technology.png", "/images/protease-page/ingredients.png", "/images/protease-page/showcase.png", "/images/protease-page/clinical.png", "/images/protease-page/howtouse.png"],
     isActive: true, sortOrder: 1,
     variants: [{ id: "v12", name: "1 Month Supply", size: "2 Kits", price: 78, sku: "APK-001", stock: 50 }],
   },
