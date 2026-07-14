@@ -12,7 +12,9 @@
         "db:validate": "prisma validate",
         "db:status": "prisma migrate status",
         "db:deploy": "prisma migrate deploy",
-        "db:verify": "npx ts-node scripts/verify-database.ts"
+        "db:verify": "npx ts-node scripts/verify-database.ts",
+        "seed-admin": "npx ts-node prisma/seed.ts",
+        "seed-demo": "npx ts-node prisma/seed-demo.ts"
     },
     "dependencies": {
         "@prisma/client": "^5.4.0",
@@ -46,6 +48,5 @@
         "typescript": "^5.9.3"
     },
     "prisma": {
-        "seed": "ts-node prisma/seed.ts"
     }
 }

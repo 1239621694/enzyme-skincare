@@ -68,9 +68,20 @@ export default function OrderDetailPage() {
         <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
           <h2 className="font-semibold text-green-800 mb-3">💳 Payment Required</h2>
           <p className="text-sm text-green-700 mb-4">Complete your bank transfer to confirm your order.</p>
-          <a href={process.env.NEXT_PUBLIC_XTRANSFER_URL || "#"} target="_blank" rel="noopener noreferrer" onClick={(e) => { if (!process.env.NEXT_PUBLIC_XTRANSFER_URL) { e.preventDefault(); alert("Payment link not configured."); } }}>
-            <Button className="w-full">Pay via XTransfer</Button>
-          </a>
+          {(() => {
+            const rawUrl = process.env.NEXT_PUBLIC_XTRANSFER_URL;
+            const paymentUrl =
+              rawUrl && /^https?:\/\//i.test(rawUrl)
+                ? rawUrl
+                : rawUrl
+                  ? `https://${rawUrl}`
+                  : null;
+            return (
+              <a href={paymentUrl ?? "#"} target="_blank" rel="noopener noreferrer" onClick={(e) => { if (!paymentUrl) { e.preventDefault(); alert("Payment link not configured."); } }}>
+                <Button className="w-full">Pay via XTransfer</Button>
+              </a>
+            );
+          })()}
           <div className="mt-3 text-xs text-green-600 space-y-1">
             <p>1. Click the button above to go to the XTransfer payment page.</p>
             <p>2. Complete the bank transfer as instructed.</p>
