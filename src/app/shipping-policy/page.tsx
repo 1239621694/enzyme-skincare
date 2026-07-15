@@ -14,10 +14,13 @@ export default function ShippingPolicyPage() {
         <p className="text-sm text-neutral-500">Effective Date: {getEffectiveDate()}</p>
 
         <h2>Order Processing Time</h2>
-        <p>Orders are typically processed and dispatched within <strong>{BUSINESS_INFO.processingTime}</strong> of payment confirmation. Processing time may be longer during promotional periods or public holidays.</p>
+        <p>Orders are typically processed and dispatched within <strong>{BUSINESS_INFO.processingTime}</strong>. Processing time may be longer during promotional periods or public holidays.</p>
 
-        <h2>Estimated Dispatch</h2>
-        <p>{BUSINESS_INFO.estimatedDispatch}.</p>
+        <h2>International Transit Time</h2>
+        <p>Once dispatched, international orders typically arrive within <strong>{BUSINESS_INFO.internationalTransitTime}</strong> depending on the destination country, carrier route and customs processing.</p>
+
+        <h2>Estimated Total Delivery Time</h2>
+        <p>The estimated total delivery time from order placement to arrival is <strong>{BUSINESS_INFO.totalDeliveryEstimate}</strong>. This combines the order processing period and the international transit time. Please note that this is an estimate and actual delivery times may vary.</p>
 
         <h2>Shipping Countries</h2>
         <p>We currently ship to the following countries: {BUSINESS_INFO.shippingCountries.join(", ")}.</p>

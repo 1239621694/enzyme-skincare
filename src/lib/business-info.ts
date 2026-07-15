@@ -27,8 +27,10 @@ export const BUSINESS_INFO = {
   website: "https://www.enzymeskincare.com",
 
   // Shipping & delivery
-  processingTime: "14–30 business days",
-  shippingCountries: ["Mexico", "United Kingdom", "Germany", "France", "Italy", "Spain"],
+  processingTime: "1–3 business days after payment confirmation",
+  internationalTransitTime: "14–30 business days",
+  totalDeliveryEstimate: "Approximately 15–33 business days",
+  shippingCountries: ["United Kingdom", "Germany", "France", "Italy", "Spain", "Mexico"],
   estimatedDispatch: "Orders dispatched within 3 working days",
 
   // Returns
