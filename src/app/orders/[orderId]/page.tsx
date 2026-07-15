@@ -67,26 +67,15 @@ export default function OrderDetailPage() {
       {order.status === "PENDING_PAYMENT" && (
         <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
           <h2 className="font-semibold text-green-800 mb-3">💳 Payment Required</h2>
-          <p className="text-sm text-green-700 mb-4">Complete your bank transfer to confirm your order.</p>
-          {(() => {
-            const rawUrl = process.env.NEXT_PUBLIC_XTRANSFER_URL;
-            const paymentUrl =
-              rawUrl && /^https?:\/\//i.test(rawUrl)
-                ? rawUrl
-                : rawUrl
-                  ? `https://${rawUrl}`
-                  : null;
-            return (
-              <a href={paymentUrl ?? "#"} target="_blank" rel="noopener noreferrer" onClick={(e) => { if (!paymentUrl) { e.preventDefault(); alert("Payment link not configured."); } }}>
-                <Button className="w-full">Pay via XTransfer</Button>
-              </a>
-            );
-          })()}
+          <p className="text-sm text-green-700 mb-4">Your order is awaiting secure payment.</p>
+          <div className="flex flex-col gap-3">
+            <Button className="w-full bg-green-600 hover:bg-green-700" disabled>
+              Pay Now
+            </Button>
+            <p className="text-[11px] text-green-600 text-center">Secure payment will be available shortly.</p>
+          </div>
           <div className="mt-3 text-xs text-green-600 space-y-1">
-            <p>1. Click the button above to go to the XTransfer payment page.</p>
-            <p>2. Complete the bank transfer as instructed.</p>
-            <p>3. Include order number <strong>{order.orderNumber}</strong> as payment reference.</p>
-            <p>4. Payment confirmation takes 1-3 business days.</p>
+            <p>Your order <strong>#{order.orderNumber}</strong> has been created. We will notify you once payment is confirmed.</p>
           </div>
         </div>
       )}

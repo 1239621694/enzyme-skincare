@@ -14,11 +14,7 @@ export default function PaymentPolicyPage() {
         <p className="text-sm text-neutral-500">Effective Date: {getEffectiveDate()}</p>
 
         <h2>Accepted Payment Methods</h2>
-        <p>We accept the following payment methods on {BUSINESS_INFO.website}:</p>
-        <ul>
-          <li>XTransfer (Bank Transfer)</li>
-        </ul>
-        <p>Additional payment methods may be added and displayed at checkout.</p>
+        <p>We accept secure payment methods available at checkout. Payment is processed through authorised payment-service providers using industry-standard security controls.</p>
 
         <h2>Currency</h2>
         <p>All prices on our Website are listed in United States Dollars (USD). Your bank or payment provider may apply currency conversion fees, which are your responsibility.</p>

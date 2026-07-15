@@ -39,7 +39,7 @@ export const BUSINESS_INFO = {
   refundProcessingTime: "3 working days after returned goods received",
 
   // Payment
-  paymentMethods: ["XTransfer"],
+  paymentMethods: ["Secure Payment"],
   currency: "USD",
 
   // Legal

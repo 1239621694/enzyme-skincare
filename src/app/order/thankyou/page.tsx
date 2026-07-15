@@ -28,10 +28,9 @@ export default function ThankYouPage() {
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-6 text-left">
         <h3 className="font-semibold text-amber-800 mb-2">⏳ Payment Pending</h3>
         <ul className="text-sm text-amber-700 space-y-2 list-disc list-inside">
-          <li>Complete the bank transfer to the account shown on XTransfer</li>
-          <li>Include your order number as payment reference</li>
-          <li>Funds arrive in 1-3 business days</li>
-          <li>We will email you once payment is confirmed</li>
+          <li>Your order has been submitted successfully.</li>
+          <li>We will process your payment securely.</li>
+          <li>We will email you once payment is confirmed.</li>
         </ul>
       </div>
       <a href="https://wa.me/8613980551004?text=Hi!%20I%20just%20placed%20an%20order%20and%20have%20a%20payment%20question." target="_blank" rel="noopener noreferrer"
