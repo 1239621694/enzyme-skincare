@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { BUSINESS_INFO, getOperatorDisclosure } from "@/lib/business-info";
 
 const footerLinks = {
   Shop: [
@@ -8,11 +9,18 @@ const footerLinks = {
     { href: "/products?badge=new", label: "New Arrivals" },
   ],
   Learn: [
-        { href: "/cases", label: "Case Studies" },
+    { href: "/cases", label: "Case Studies" },
     { href: "/about", label: "Our Story" },
   ],
-  Support: [
+  "Legal & Support": [
     { href: "/contact", label: "Contact Us" },
+    { href: "/about", label: "About Us" },
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/terms-and-conditions", label: "Terms & Conditions" },
+    { href: "/shipping-policy", label: "Shipping Policy" },
+    { href: "/refund-policy", label: "Refund & Return Policy" },
+    { href: "/payment-policy", label: "Payment Policy" },
+    { href: "/cookie-policy", label: "Cookie Policy" },
   ],
 };
 
@@ -50,30 +58,28 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Newsletter */}
+        {/* Business Info Block */}
         <div className="mt-10 pt-8 border-t border-neutral-800">
-          <div className="max-w-md">
-            <h3 className="text-sm font-semibold text-white mb-3">Stay in touch</h3>
-            <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-              />
-              <button
-                type="submit"
-                className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
+          <div className="max-w-4xl">
+            <h3 className="text-sm font-semibold text-white mb-3">Business Information</h3>
+            <div className="text-xs text-neutral-400 space-y-1 leading-relaxed">
+              <p><strong className="text-neutral-300">Legal Name:</strong> {BUSINESS_INFO.legalNameEN} ({BUSINESS_INFO.legalNameCN})</p>
+              <p><strong className="text-neutral-300">Registration Number:</strong> {BUSINESS_INFO.registrationNumber}</p>
+              <p><strong className="text-neutral-300">Registered Address:</strong> {BUSINESS_INFO.registeredAddress}</p>
+              <p><strong className="text-neutral-300">Customer Support:</strong> <a href={`mailto:${BUSINESS_INFO.supportEmail}`} className="text-neutral-400 hover:text-white transition-colors">{BUSINESS_INFO.supportEmail}</a></p>
+              <p><strong className="text-neutral-300">Phone:</strong> <a href={`tel:${BUSINESS_INFO.phone.replace(/\s/g, "")}`} className="text-neutral-400 hover:text-white transition-colors">{BUSINESS_INFO.phone}</a></p>
+              <p><strong className="text-neutral-300">Business Hours:</strong> {BUSINESS_INFO.businessHours}</p>
+              <p className="pt-1 text-neutral-500">{getOperatorDisclosure()}</p>
+            </div>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
-          <p>&copy; {new Date().getFullYear()} Enzyme Skincare. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {BUSINESS_INFO.legalNameEN}. All rights reserved.</p>
           <div className="flex gap-4">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms</Link>
           </div>
         </div>
       </div>

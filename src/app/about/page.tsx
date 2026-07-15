@@ -1,119 +1,110 @@
+import { BUSINESS_INFO, getEffectiveDate, getOperatorDisclosure } from "@/lib/business-info";
 import type { Metadata } from "next";
-import Image from "next/image";
-import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 
 export const metadata: Metadata = {
-  title: "About Enzyme Therapy | Enzyme Skincare",
-  description:
-    "Learn what enzyme therapy is, understand the temporary plasmatic effect, and discover how long a personalised enzyme treatment programme may take.",
+  title: "About Us | Enzyme Skincare",
+  description: `Enzyme Skincare is the online store operated by ${BUSINESS_INFO.legalNameEN}, offering BELOYAN professional skincare products.`,
 };
-
-const sections = [
-  {
-    question: "What Is Enzyme Therapy?",
-    answer: [
-      "Enzyme Therapy is a professional skin treatment designed to support the skin's natural renewal processes rather than focusing only on temporary surface-level changes.",
-      "The treatment is intended to encourage healthy circulation, oxygen delivery and lymphatic movement, helping create a more supportive environment for normal skin function. It may also assist with the removal of surface buildup and help the skin appear smoother, clearer and more balanced.",
-      "Depending on the individual treatment plan, Enzyme Therapy may be used to support concerns such as congestion, uneven-looking skin tone, dullness, visible pores, blemish-prone skin and early signs of ageing.",
-    ],
-  },
-  {
-    question: "What Is the Plasmatic Effect?",
-    answer: [
-      "During some enzyme-based facial treatments, a temporary network-like pattern may become visible across the skin. This appearance is commonly referred to as the Plasmatic Effect.",
-      "It can occur when circulation near the surface of the skin becomes more noticeable during treatment. Fine vascular patterns may temporarily appear around areas such as the cheeks, forehead, neck or upper chest.",
-      "The visible pattern usually fades naturally after the treatment, often within approximately 15 to 30 minutes, although the duration may vary between individuals.",
-    ],
-  },
-  {
-    question: "How Long Does Enzyme Therapy Take to Work?",
-    answer: [
-      "The treatment timeline depends on the client's skin condition, goals, lifestyle, home-care routine and response to treatment.",
-      "Some clients may notice that their skin feels smoother or appears more refreshed after the first session. More visible and lasting changes generally require a consistent treatment plan completed over several weeks or months.",
-    ],
-  },
-];
 
 export default function AboutPage() {
   return (
-    <>
-      <BreadcrumbSchema items={[{ name: "Home", url: "/" }, { name: "About", url: "/about" }]} />
+    <div className="container mx-auto px-4 py-12 md:py-20">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="font-heading text-[clamp(2rem,4vw,3.5rem)] font-bold text-neutral-800 mb-6">
+          Professional Skincare, Thoughtfully Delivered
+        </h1>
+        <p className="text-lg text-neutral-600 leading-relaxed mb-12">
+          {getOperatorDisclosure()} We offer {BUSINESS_INFO.brandName} skincare products designed
+          around professional beauty concepts, carefully selected ingredients and convenient home
+          skincare routines.
+        </p>
 
-      {/* ── Hero Image ── */}
-      <Image
-        src="/images/about-hero-skincare.png"
-        alt="Woman applying a facial mask in front of a mirror"
-        width={1920}
-        height={800}
-        className="w-full h-auto"
-        priority
-        sizes="100vw"
-      />
+        <hr className="border-neutral-200 mb-12" />
 
-      {/* ── Content Sections ── */}
-      <section className="pb-16 md:pb-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto space-y-20 md:space-y-28">
-            {sections.map((item, index) => (
-              <div
-                key={index}
-                className="opacity-0 animate-fadeInUp"
-                style={{ animationDelay: `${index * 150}ms`, animationFillMode: "forwards" }}
-              >
-                <h2 className="font-heading text-[clamp(2rem,5vw,3.75rem)] font-bold text-neutral-800 leading-tight mb-8 md:mb-10">
-                  {item.question}
-                </h2>
-                <div className="space-y-5 max-w-prose">
-                  {item.answer.map((paragraph, pIdx) => (
-                    <p key={pIdx} className="text-neutral-600 leading-[1.8] text-base md:text-lg">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-                {index < sections.length - 1 && (
-                  <hr className="mt-16 md:mt-20 border-neutral-200/60" />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        {/* Who We Are */}
+        <section className="mb-12">
+          <h2 className="font-heading text-2xl font-bold text-neutral-800 mb-4">Who We Are</h2>
+          <p className="text-neutral-600 leading-relaxed">
+            {BUSINESS_INFO.legalNameEN} ({BUSINESS_INFO.legalNameCN}) is a registered company based
+            in Chengdu, China. We manage the online retail operations of Enzyme Skincare and the
+            {BUSINESS_INFO.brandName} product brand.
+          </p>
+        </section>
 
-      {/* ── Disclaimer ── */}
-      <section className="py-14 md:py-18 bg-neutral-50/80 border-t border-neutral-200">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-neutral-800 mb-5">
-              Disclaimer
-            </h2>
-            <div className="max-w-prose space-y-4">
-              <p className="text-neutral-500 leading-relaxed">
-                Results may vary from person to person.
-              </p>
-              <p className="text-neutral-500 leading-relaxed">
-                This treatment is intended for cosmetic skincare purposes only and is not intended to diagnose, treat, cure, or prevent any medical condition.
-              </p>
+        {/* What We Sell */}
+        <section className="mb-12">
+          <h2 className="font-heading text-2xl font-bold text-neutral-800 mb-4">What We Sell</h2>
+          <p className="text-neutral-600 leading-relaxed">
+            We offer {BUSINESS_INFO.brandName} professional skincare products including enzyme
+            treatments, peptide sets, facial masks and firming sprays. Each product listing
+            includes ingredient information, usage instructions and available package sizes.
+          </p>
+        </section>
+
+        {/* Our Approach */}
+        <section className="mb-12">
+          <h2 className="font-heading text-2xl font-bold text-neutral-800 mb-4">Our Approach to Product Information</h2>
+          <p className="text-neutral-600 leading-relaxed">
+            We present product details, ingredient lists and usage instructions based on
+            manufacturer information. Skincare results may vary between individuals. Product
+            descriptions are not medical claims and our products are not intended to diagnose,
+            treat, cure or prevent any medical condition.
+          </p>
+        </section>
+
+        {/* Quality & Customer Care */}
+        <section className="mb-12">
+          <h2 className="font-heading text-2xl font-bold text-neutral-800 mb-4">Quality and Customer Care</h2>
+          <p className="text-neutral-600 leading-relaxed">
+            We are committed to providing accurate product information, responsive customer support
+            and reliable order fulfilment. If you have questions about a product, your order or
+            your account, please contact our customer care team.
+          </p>
+        </section>
+
+        {/* Business Identification */}
+        <section className="mb-12 p-6 bg-neutral-50 rounded-xl border border-neutral-200">
+          <h2 className="font-heading text-2xl font-bold text-neutral-800 mb-4">Business Identification</h2>
+          <dl className="space-y-3 text-sm text-neutral-600">
+            <div className="flex flex-col sm:flex-row sm:gap-2">
+              <dt className="font-semibold text-neutral-800 min-w-40">Legal Business Name:</dt>
+              <dd>{BUSINESS_INFO.legalNameEN} ({BUSINESS_INFO.legalNameCN})</dd>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── fadeInUp animation ── */}
-      <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeInUp {
-          animation: fadeInUp 700ms ease both;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .animate-fadeInUp {
-            animation: none;
-            opacity: 1;
-          }
-        }
-      `}</style>
-    </>
+            <div className="flex flex-col sm:flex-row sm:gap-2">
+              <dt className="font-semibold text-neutral-800 min-w-40">Registration Number:</dt>
+              <dd>{BUSINESS_INFO.registrationNumber}</dd>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:gap-2">
+              <dt className="font-semibold text-neutral-800 min-w-40">Registered Address:</dt>
+              <dd>{BUSINESS_INFO.registeredAddress}</dd>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:gap-2">
+              <dt className="font-semibold text-neutral-800 min-w-40">Customer Support:</dt>
+              <dd>
+                <a href={`mailto:${BUSINESS_INFO.supportEmail}`} className="text-primary-600 hover:text-primary-700">
+                  {BUSINESS_INFO.supportEmail}
+                </a>
+              </dd>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:gap-2">
+              <dt className="font-semibold text-neutral-800 min-w-40">Phone:</dt>
+              <dd>
+                <a href={`tel:${BUSINESS_INFO.phone.replace(/\s/g, "")}`} className="text-primary-600 hover:text-primary-700">
+                  {BUSINESS_INFO.phone}
+                </a>
+              </dd>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:gap-2">
+              <dt className="font-semibold text-neutral-800 min-w-40">Website:</dt>
+              <dd>
+                <a href={BUSINESS_INFO.website} className="text-primary-600 hover:text-primary-700" target="_blank" rel="noopener noreferrer">
+                  {BUSINESS_INFO.website}
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </section>
+      </div>
+    </div>
   );
 }

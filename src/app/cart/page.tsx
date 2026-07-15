@@ -103,8 +103,17 @@ export default function CartPage() {
             </div>
 
             <div className="flex items-center justify-center gap-3 mt-4">
-              <span className="text-xs text-neutral-500">We accept:</span>
-              {["Visa", "Mastercard", "Apple Pay", "PayPal"].map((p) => (<span key={p} className="text-xs font-semibold text-neutral-500">{p}</span>))}
+              <span className="text-xs text-neutral-500">Pay via:</span>
+              <span className="text-xs font-semibold text-neutral-500">XTransfer Bank Transfer</span>
+            </div>
+            <div className="text-[10px] text-neutral-400 text-center mt-3">
+              By placing this order, you agree to the{" "}
+              <Link href="/terms-and-conditions" className="underline hover:text-neutral-600" target="_blank">Terms &amp; Conditions</Link>{" "}
+              and acknowledge the{" "}
+              <Link href="/privacy-policy" className="underline hover:text-neutral-600" target="_blank">Privacy Policy</Link>,{" "}
+              <Link href="/shipping-policy" className="underline hover:text-neutral-600" target="_blank">Shipping Policy</Link>{" "}
+              and{" "}
+              <Link href="/refund-policy" className="underline hover:text-neutral-600" target="_blank">Refund Policy</Link>.
             </div>
             <p className="text-xs text-neutral-500 text-center mt-2">⚡ No account needed · Guest checkout available</p>
           </div>

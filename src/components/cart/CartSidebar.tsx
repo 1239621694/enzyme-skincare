@@ -141,6 +141,17 @@ export function CartSidebar() {
               <span className="text-xs text-neutral-500">Pay via:</span>
               <span className="text-xs font-semibold text-neutral-500">XTransfer Bank Transfer</span>
             </div>
+            <div className="text-xs text-neutral-500 text-center mt-3 space-y-1">
+              <p className="text-[10px] text-neutral-400">
+                By placing this order, you agree to the{" "}
+                <Link href="/terms-and-conditions" className="underline hover:text-neutral-600" target="_blank">Terms &amp; Conditions</Link>{" "}
+                and acknowledge the{" "}
+                <Link href="/privacy-policy" className="underline hover:text-neutral-600" target="_blank">Privacy Policy</Link>,{" "}
+                <Link href="/shipping-policy" className="underline hover:text-neutral-600" target="_blank">Shipping Policy</Link>{" "}
+                and{" "}
+                <Link href="/refund-policy" className="underline hover:text-neutral-600" target="_blank">Refund Policy</Link>.
+              </p>
+            </div>
             <p className="text-xs text-neutral-500 text-center mt-2">⚡ No account needed · Guest checkout available</p>
             <button onClick={toggleCart} className="block w-full text-center text-sm text-neutral-500 hover:text-neutral-700 transition-colors">Continue Shopping</button>
           </div>
