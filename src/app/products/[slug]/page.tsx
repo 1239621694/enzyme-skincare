@@ -459,7 +459,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 <div className="space-y-2">
                   {[
                     { label: "Product Name", value: "Rose Brightening Fermented Face Mask" },
-                    { label: "Net Weight", value: "100g / 3.53 oz" },
+                    { label: "Net Weight", value: "25 mL per sheet" },
                     { label: "Shelf Life", value: "3 years (unopened)" },
                     { label: "Skin Type", value: "All skin types, including sensitive" },
                     { label: "Storage", value: "Cool, dry place away from direct sunlight" },
@@ -494,7 +494,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                     { title: "Cleanse", desc: "Start with clean, dry skin." },
                     { title: "Apply", desc: "Take an appropriate amount and apply evenly to face, avoiding the eye area." },
                     { title: "Wait", desc: "Leave on for 15–20 minutes." },
-                    { title: "Rinse", desc: "Rinse thoroughly with lukewarm water and continue with your skincare routine." },
+                    { title: "Remove", desc: "Remove the mask and gently pat the remaining essence into your skin until fully absorbed. No rinsing required." },
                   ].map((s, i) => (
                     <div key={s.title} className="flex items-center gap-4 p-4 rounded-xl bg-white border border-[#e8e0d8] transition-all duration-300 hover:shadow-md">
                       <div className="w-9 h-9 min-w-[36px] rounded-full bg-[#b8a07a] text-white flex items-center justify-center text-sm font-bold font-heading">
@@ -700,7 +700,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       { q: "How do I activate the freeze-dried powder?", a: "Pour one vial of activating solution into one vial of powder and shake gently until fully dissolved." },
       { q: "How many treatments are included?", a: "Each box contains 10 complete powder and activating solution sets." },
       { q: "What does the texture feel like?", a: "The freshly mixed solution has a lightweight, watery texture that absorbs quickly without a heavy feel." },
-      { q: "Is it suitable for sensitive-looking skin?", a: "The formula is designed for skin needing gentle barrier, hydration and soothing care. A patch test is recommended before first use." },
+      { q: "Is it suitable for sensitive-looking skin?", a: "Yes. This blue copper peptide freeze-dried powder is suitable for sensitive skin and skin with a weakened moisture barrier. Its gentle formula helps support the skin barrier, boost hydration, and soothe dryness and discomfort." },
       { q: "Can I use it with other skincare products?", a: "Yes. Apply the freshly activated solution after cleansing, then follow with moisturizer or other gentle skincare products." },
     ];
 
@@ -960,7 +960,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 <h2 className="font-heading text-[clamp(1.6rem,3.2vw,2.8rem)] font-bold text-[#0f2840] leading-tight mb-6">Everything You Need for a Freshly Activated Peptide Ritual</h2>
                 <div className="space-y-2">
                   {[
-                    { label: "Freeze-Dried Powder", value: "60 mg per vial" },
+                    { label: "Freeze-Dried Powder", value: "100 mg per vial" },
                     { label: "Activating Solution", value: "3 ml per vial" },
                     { label: "Quantity", value: "10 complete sets per box" },
                     { label: "Package Contents", value: "10 Powder + 10 Solution vials" },
@@ -1188,7 +1188,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     ];
 
     const faqItems = [
-      { q: "Why are there two boxes?", a: "Each purchase includes two complete treatment kits, designed to provide approximately one month's supply." },
+      { q: "Why does my skin feel warm and appear red after application?", a: "Within 3–5 minutes of application, you may notice a mild warming sensation and temporary redness. This is known as the Plasmatic Effect and is a normal part of the product's activation process.\n\nDuring this process, the exchange between endogenous and exogenous enzymes generates heat, similar to the warming effect of aerobic exercise. The skin may also develop a slightly flushed appearance, much like the natural glow that appears after drinking alcohol.\n\nThere is no need to worry. The warmth and redness will gradually fade on their own within 30–40 minutes." },
+      { q: "Why are there two boxes?", a: "Each purchase includes two complete treatment kits, designed to provide approximately one month’s supply." },
       { q: "How often should I use the enzyme treatment?", a: "Use once a week during the initial care period. Once your skin reaches a visibly improved and balanced condition, reduce to once every two weeks for maintenance." },
       { q: "Can I use other skincare products after treatment?", a: "Yes. We recommend applying a hydrating or recovery mask after rinsing. Avoid masks containing exfoliating acids or other intensive active ingredients immediately after treatment." },
       { q: "How should I store the product?", a: "Store in a cool, dry place away from direct sunlight. For external use only. Avoid contact with eyes." },
@@ -1318,7 +1319,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <div className="rounded-2xl overflow-hidden shadow-luxe-md"><Image src={p.images[4]} alt="Product showcase" width={800} height={800} className="w-full h-auto object-contain" /></div>
               <div className="space-y-4">
                 <div className="rounded-xl bg-white border border-[#e8e2f0] p-5 shadow-luxe-sm hover:shadow-luxe-md transition-all duration-300"><h3 className="text-xs font-semibold text-[#6f3fc4] tracking-[0.06em] uppercase mb-2">Each Order Includes</h3><p className="text-lg font-bold text-[#1e1a2e]">2 Complete Treatment Kits</p></div>
-                <div className="rounded-xl bg-white border border-[#e8e2f0] p-5 shadow-luxe-sm hover:shadow-luxe-md transition-all duration-300"><h3 className="text-xs font-semibold text-[#6f3fc4] tracking-[0.06em] uppercase mb-3">Each Kit Contains</h3><div className="flex flex-wrap gap-x-4 gap-y-1.5">{["Active Protease Lotion (10g)","Active Protease Powder (5g)","Silicone Application Brush"].map((item) => (<span key={item} className="text-sm text-[#1e1a2e] flex items-center gap-1.5"><span className="text-[#c9a96e] font-bold">·</span> {item}</span>))}</div></div>
+                <div className="rounded-xl bg-white border border-[#e8e2f0] p-5 shadow-luxe-sm hover:shadow-luxe-md transition-all duration-300"><h3 className="text-xs font-semibold text-[#6f3fc4] tracking-[0.06em] uppercase mb-3">Each Kit Contains</h3><div className="flex flex-wrap gap-x-4 gap-y-1.5">{["Active Protease Lotion (10 g × 2)","Active Protease Powder (5 g × 2)","Silicone Application Brush"].map((item) => (<span key={item} className="text-sm text-[#1e1a2e] flex items-center gap-1.5"><span className="text-[#c9a96e] font-bold">·</span> {item}</span>))}</div></div>
                 <div className="rounded-xl bg-[#1e1040] text-white p-5 text-center shadow-luxe-md"><p className="text-sm font-semibold flex items-center justify-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Two Boxes = Approximately One Month Supply</p></div>
               </div>
             </div>
