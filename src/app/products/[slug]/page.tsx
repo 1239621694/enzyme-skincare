@@ -746,7 +746,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="order-1">
                 <div className="rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(26,58,92,0.08)]">
-                  <Image src={p.images[1]} alt="Skin concerns showing barrier stress signs" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src="/images/blue-copper-product-info-new.webp" alt="Blue Copper Peptide Freeze-Dried Powder Set product information" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
               <div className="order-2">
@@ -978,7 +978,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="order-1 lg:order-2">
                 <div className="rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(26,58,92,0.08)]">
-                  <Image src="/images/blue-copper-product-info-new.webp" alt="Blue Copper Peptide Freeze-Dried Powder Set product information" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[8]} alt="Product details and packaging" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
             </div>
