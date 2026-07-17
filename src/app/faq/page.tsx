@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: `Find answers to frequently asked questions about ordering, shipping, returns, payment, skincare usage and customer support at ${BUSINESS_INFO.website}.`,
   openGraph: {
     title: "FAQ | Enzyme Skincare",
-    description: "Find answers to frequently asked questions about BELOYAN skincare products, ordering, shipping and returns.",
+    description: "Find answers to frequently asked questions about Enzyme Skincare skincare products, ordering, shipping and returns.",
   },
 };
 
@@ -19,7 +19,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "What is Enzyme Skincare?",
-      acceptedAnswer: { "@type": "Answer", text: "Enzyme Skincare is the online store operated by Sichuan Shidai Yineng Culture Media Co., Ltd., offering BELOYAN professional skincare products including enzyme treatments, peptide sets, facial masks and firming sprays." }
+      acceptedAnswer: { "@type": "Answer", text: "Enzyme Skincare is the online store operated by Sichuan Shidai Yineng Culture Media Co., Ltd., offering Enzyme Skincare professional skincare products including enzyme treatments, peptide sets, facial masks and firming sprays." }
     },
     {
       "@type": "Question",
@@ -64,9 +64,9 @@ const categories = [
 
 const faqData: Record<string, { q: string; a: string | string[] }[]> = {
   general: [
-    { q: "What is Enzyme Skincare?", a: "Enzyme Skincare is the online store operated by Sichuan Shidai Yineng Culture Media Co., Ltd. We offer BELOYAN professional skincare products, including enzyme treatments, peptide freeze-dried powder sets, facial masks and firming sprays — all designed around professional beauty concepts and convenient home skincare routines." },
+    { q: "What is Enzyme Skincare?", a: "Enzyme Skincare is the online store operated by Sichuan Shidai Yineng Culture Media Co., Ltd. We offer Enzyme Skincare professional skincare products, including enzyme treatments, peptide freeze-dried powder sets, facial masks and firming sprays — all designed around professional beauty concepts and convenient home skincare routines." },
     { q: "Who are your products designed for?", a: "Our products are designed for adults interested in professional-quality skincare at home. Our range includes formulations suitable for various skin types, including sensitive, dry, combination and aging-prone skin. Each product page includes detailed ingredient information and usage guidance to help you choose the right product for your needs." },
-    { q: "Where are your products manufactured?", a: "Our BELOYAN products are manufactured in facilities that follow quality manufacturing standards. For specific manufacturing inquiries, please contact our customer service team." },
+    { q: "Where are your products manufactured?", a: "Our Enzyme Skincare products are manufactured in facilities that follow quality manufacturing standards. For specific manufacturing inquiries, please contact our customer service team." },
     { q: "Are your products cruelty free?", a: "We are committed to ethical skincare practices. Our products are not tested on animals. We believe in responsible beauty that respects both your skin and the environment." },
     { q: "Are your products vegan?", a: "Many of our products are formulated with plant-based and synthetic ingredients. For specific vegan status of a particular product, please refer to the ingredient list on the product page or contact our customer service team." },
   ],
