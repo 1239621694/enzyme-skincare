@@ -138,8 +138,8 @@ export function CartSidebar() {
             <input type="email" placeholder="Email for confirmation" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-full border border-neutral-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20" />
             <button onClick={handleCheckout} disabled={loading} className="block w-full text-center px-6 py-3 rounded-full bg-primary-600 text-white text-lg font-semibold hover:bg-primary-700 transition-colors">{loading ? "Processing..." : "Proceed to Checkout"}</button>
             <div className="flex items-center justify-center gap-3 mt-3">
-              <span className="text-xs text-neutral-500">Pay via:</span>
-              <span className="text-xs font-semibold text-neutral-500">Secure Payment</span>
+              <span className="text-xs text-neutral-500">Secure Checkout</span>
+              <span className="text-[10px] text-neutral-400">🔒 SSL Encrypted</span>
             </div>
             <div className="text-xs text-neutral-500 text-center mt-3 space-y-1">
               <p className="text-[10px] text-neutral-400">

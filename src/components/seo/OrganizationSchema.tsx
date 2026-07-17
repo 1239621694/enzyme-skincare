@@ -1,19 +1,29 @@
-﻿export function OrganizationSchema() {
+import { BUSINESS_INFO } from "@/lib/business-info";
+
+export function OrganizationSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Enzyme Skincare",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://enzymeskincare.com",
-    logo: (process.env.NEXT_PUBLIC_SITE_URL || "https://enzymeskincare.com") + "/logo.png",
-    description: "Science-backed enzyme skincare that activates your skin natural renewal. Dermatologist tested, cruelty-free.",
-    sameAs: [
-      "https://wa.me/8613980551004",
-    ],
+    name: BUSINESS_INFO.storeName,
+    alternateName: BUSINESS_INFO.brandName,
+    legalName: BUSINESS_INFO.legalNameEN,
+    url: BUSINESS_INFO.website,
+    logo: BUSINESS_INFO.website + "/logo.png",
+    description: "Professional enzyme skincare by BELOYAN. Science-backed formulations for healthier-looking skin.",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "No. 69, Bldg 2, 118 Weijianian 1st Rd, Jinniu District",
+      addressLocality: "Chengdu",
+      addressCountry: "CN",
+    },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer service",
-      email: "hello@enzymeskincare.com",
+      email: BUSINESS_INFO.supportEmail,
+      telephone: BUSINESS_INFO.phone,
+      availableLanguage: "English",
     },
+    sameAs: BUSINESS_INFO.socialProfiles,
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }

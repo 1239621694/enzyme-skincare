@@ -103,8 +103,8 @@ export default function CartPage() {
             </div>
 
             <div className="flex items-center justify-center gap-3 mt-4">
-              <span className="text-xs text-neutral-500">Pay via:</span>
-              <span className="text-xs font-semibold text-neutral-500">Secure Checkout</span>
+              <span className="text-xs text-neutral-500">Secure Checkout</span>
+              <span className="text-[10px] text-neutral-400">🔒 SSL Encrypted</span>
             </div>
             <div className="text-[10px] text-neutral-400 text-center mt-3">
               By placing this order, you agree to the{" "}

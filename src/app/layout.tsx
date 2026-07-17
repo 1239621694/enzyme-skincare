@@ -12,14 +12,24 @@ import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import { TikTokPixel } from "@/components/tracking/TikTokPixel";
 import { MetaPixel } from "@/components/tracking/MetaPixel";
 import { ClarityAnalytics } from "@/components/tracking/ClarityAnalytics";
+import { OrganizationSchema } from "@/components/seo/OrganizationSchema";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.enzymeskincare.com"),
   verification: {
     google: "YOUR_GOOGLE_SITE_VERIFICATION_CODE",
   },
-  title: "Enzyme Skincare — Professional Enzyme-Based Skincare",
+  title: {
+    default: "Enzyme Skincare — Professional Enzyme-Based Skincare by BELOYAN",
+    template: "%s | Enzyme Skincare",
+  },
   description:
-    "Science-backed enzyme skincare that activates your skin's natural renewal. Dermatologist tested, cruelty-free.",
+    "Enzyme Skincare offers BELOYAN professional enzyme-based skincare products. Science-backed formulations for healthier-looking skin. Worldwide shipping.",
+  openGraph: {
+    siteName: "Enzyme Skincare",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -30,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
+        <OrganizationSchema />
         <CartProvider>
         <WishlistProvider>
           <Header />
