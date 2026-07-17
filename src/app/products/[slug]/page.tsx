@@ -20,10 +20,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = getProductBySlug(slug);
   if (!p) return { title: "Not Found" };
 
-  const name = p.slug === "dna-sodium-firming-v-face-spray" ? "BELOYAN DNA Sodium Instant Firming V-Face Spray" : p.slug === "active-protease-anti-wrinkle-kit" ? "Active Protease Anti-Wrinkle Kit | Enzyme Skincare" : p.slug === "blue-copper-peptide-freeze-dried-powder-set" ? "BELOYAN Blue Copper Peptide Freeze-Dried Powder Set" : p.name;
+  const name = p.slug === "dna-sodium-firming-v-face-spray" ? "DNA Sodium Instant Firming V-Face Spray | Enzyme Skincare" : p.slug === "active-protease-anti-wrinkle-kit" ? "Active Protease Anti-Wrinkle Kit | Enzyme Skincare" : p.slug === "blue-copper-peptide-freeze-dried-powder-set" ? "Blue Copper Peptide Freeze-Dried Powder Set | Enzyme Skincare" : p.name;
   return {
     title: name + " | Enzyme Skincare",
-    description: p.slug === "blue-copper-peptide-freeze-dried-powder-set" ? "Discover BELOYAN Blue Copper Peptide Freeze-Dried Powder Set, a two-part peptide treatment designed to support skin barrier repair, firmness, hydration and smoother-looking skin." : p.slug === "rose-brightening-fermented-mask" ? "Discover BELOYAN Rose Brightening Fermented Face Mask, a plant fermented mask designed to hydrate, brighten and support healthier-looking skin." : p.slug === "active-protease-anti-wrinkle-kit" ? "Professional enzyme treatment for smoother, brighter and healthier-looking skin at home." : "Instant lift, long-lasting firmness and 4-week skin renewal with DNA Sodium active technology.",
+    description: p.slug === "blue-copper-peptide-freeze-dried-powder-set" ? "Discover Blue Copper Peptide Freeze-Dried Powder Set, a two-part peptide treatment designed to support skin barrier repair, firmness, hydration and smoother-looking skin." : p.slug === "rose-brightening-fermented-mask" ? "Discover Rose Brightening Fermented Face Mask, a plant fermented mask designed to hydrate, brighten and support healthier-looking skin." : p.slug === "active-protease-anti-wrinkle-kit" ? "Professional enzyme treatment for smoother, brighter and healthier-looking skin at home." : "Instant lift, long-lasting firmness and 4-week skin renewal with DNA Sodium active technology.",
     openGraph: { images: [p.images[0]] },
   };
 }
@@ -163,7 +163,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 min-h-[80vh] items-center">
               <div className="order-2 md:order-1 py-12 md:py-0">
-                <p className="text-xs font-semibold text-[#b8a07a] tracking-[0.22em] uppercase mb-4">BELOYAN</p>
+                <p className="text-xs font-semibold text-[#b8a07a] tracking-[0.22em] uppercase mb-4">Enzyme Skincare</p>
                 <h1 className="font-heading text-[clamp(2rem,4.5vw,3.8rem)] leading-[1.08] font-bold text-[#4a3028] mb-3">
                   Rose Brightening<br />Fermented Face Mask
                 </h1>
@@ -189,7 +189,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="order-1 md:order-2 flex items-center justify-center">
                 <div className="w-full max-w-lg">
-                  <Image src={p.images[0]} alt="BELOYAN Rose Brightening Fermented Face Mask" width={800} height={800} className="w-full h-auto object-contain drop-shadow-2xl" priority />
+                  <Image src={p.images[0]} alt="Enzyme Skincare Rose Brightening Fermented Face Mask" width={800} height={800} className="w-full h-auto object-contain drop-shadow-2xl" priority />
                 </div>
               </div>
             </div>
@@ -224,7 +224,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="order-1 lg:order-2">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[1]} alt="Skin concerns addressed by BELOYAN Rose Mask" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[1]} alt="Skin concerns addressed by Enzyme Skincare Rose Mask" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
             </div>
@@ -237,7 +237,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="order-1">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[2]} alt="BELOYAN Rose Mask product benefits" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[2]} alt="Enzyme Skincare Rose Mask product benefits" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
               <div className="order-2">
@@ -293,7 +293,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="order-1 lg:order-2">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[3]} alt="BELOYAN Rose Mask fermentation technology illustration" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[3]} alt="Enzyme Skincare Rose Mask fermentation technology illustration" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
             </div>
@@ -336,7 +336,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="order-1">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[6]} alt="BELOYAN Biomembrane Radiance Technology diagram" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[6]} alt="Enzyme Skincare Biomembrane Radiance Technology diagram" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
               <div className="order-2">
@@ -389,7 +389,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="order-1 lg:order-2">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[7]} alt="BELOYAN Rose Mask texture and material" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[7]} alt="Enzyme Skincare Rose Mask texture and material" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
             </div>
@@ -407,7 +407,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <p className="text-sm text-[#6b706a] max-w-xl mx-auto">The formula combines plant fermentation with active ingredients to support hydration, brightness and barrier health.</p>
             </div>
             <div className="rounded-2xl overflow-hidden shadow-md mb-10">
-              <Image src={p.images[8]} alt="BELOYAN Rose Mask effectiveness test results" width={1400} height={700} className="w-full h-auto object-contain" />
+              <Image src={p.images[8]} alt="Enzyme Skincare Rose Mask effectiveness test results" width={1400} height={700} className="w-full h-auto object-contain" />
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
               {[["Deep Hydration","Helps moisturize and improve dryness"],["Brightening","Supports a more radiant-looking complexion"],["Barrier Support","Helps strengthen the skin barrier"],["Gentle Care","Suitable for sensitive-looking skin"]].map(([t, d]) => (
@@ -427,7 +427,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="order-1">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[9]} alt="BELOYAN Rose Mask free-from formula claims" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[9]} alt="Enzyme Skincare Rose Mask free-from formula claims" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
               <div className="order-2">
@@ -477,7 +477,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="order-1 lg:order-2">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[10]} alt="BELOYAN Rose Mask product information and specifications" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[10]} alt="Enzyme Skincare Rose Mask product information and specifications" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
             </div>
@@ -517,7 +517,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="order-1 lg:order-2">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[11]} alt="How to use BELOYAN Rose Mask step by step" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[11]} alt="How to use Enzyme Skincare Rose Mask step by step" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
             </div>
@@ -530,7 +530,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="order-1">
                 <div className="rounded-2xl overflow-hidden shadow-md">
-                  <Image src={p.images[12]} alt="BELOYAN Rose Mask product packaging design" width={800} height={800} className="w-full h-auto object-contain" />
+                  <Image src={p.images[12]} alt="Enzyme Skincare Rose Mask product packaging design" width={800} height={800} className="w-full h-auto object-contain" />
                 </div>
               </div>
               <div className="order-2">
@@ -604,7 +604,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         {/* SECTION 16 — BRAND ENDING */}
         <section className="py-20 bg-white">
           <div className="max-w-lg mx-auto px-4 text-center">
-            <p className="text-[clamp(28px,4vw,44px)] font-heading font-bold text-[#4a3028] tracking-[0.1em] mb-2">BELOYAN</p>
+            <p className="text-[clamp(28px,4vw,44px)] font-heading font-bold text-[#4a3028] tracking-[0.1em] mb-2">Enzyme Skincare</p>
             <p className="text-xs font-semibold text-[#b8a07a] tracking-[0.2em] uppercase mb-4">Professional Beauty Technology</p>
             <p className="text-sm text-[#6b706a] leading-relaxed">Advanced skincare formulas inspired by professional beauty science and created to support healthier-looking, more resilient skin.</p>
           </div>
@@ -719,7 +719,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <div className="order-2 md:order-1 py-12 md:py-0">
                 <p className="text-xs font-semibold text-[#8ab4c8] tracking-[0.22em] uppercase mb-4">ADVANCED BLUE COPPER PEPTIDE CARE</p>
                 <h1 className="font-heading text-[clamp(1.8rem,4.2vw,3.5rem)] leading-[1.08] font-bold text-white mb-3">
-                  BELOYAN Blue Copper Peptide<br />Repair &amp; Anti-Wrinkle<br />Freeze-Dried Powder Set
+                  Enzyme Skincare Blue Copper Peptide<br />Repair &amp; Anti-Wrinkle<br />Freeze-Dried Powder Set
                 </h1>
                 <p className="text-lg md:text-xl font-heading italic text-[#8ab4c8] mb-5">Reawaken Firmer, Calmer and More Resilient-Looking Skin</p>
                 <p className="text-base text-white/75 leading-relaxed mb-6 max-w-lg">
@@ -739,7 +739,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="order-1 md:order-2 flex items-center justify-center">
                 <div className="w-full max-w-lg">
-                  <Image src={p.images[0]} alt="BELOYAN Blue Copper Peptide Freeze-Dried Powder Set" width={800} height={800} className="w-full h-auto object-contain drop-shadow-2xl" priority />
+                  <Image src={p.images[0]} alt="Enzyme Skincare Blue Copper Peptide Freeze-Dried Powder Set" width={800} height={800} className="w-full h-auto object-contain drop-shadow-2xl" priority />
                 </div>
               </div>
             </div>
@@ -1141,7 +1141,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         {/* SECTION 17 — BRAND ENDING */}
         <section className="py-20 bg-white">
           <div className="max-w-lg mx-auto px-4 text-center">
-            <p className="text-[clamp(28px,4vw,44px)] font-heading font-bold text-[#1a3a5c] tracking-[0.1em] mb-2">BELOYAN</p>
+            <p className="text-[clamp(28px,4vw,44px)] font-heading font-bold text-[#1a3a5c] tracking-[0.1em] mb-2">Enzyme Skincare</p>
             <p className="text-xs font-semibold text-[#8ab4c8] tracking-[0.2em] uppercase mb-4">Professional Beauty Technology</p>
             <p className="text-sm text-[#5a6a7a] leading-relaxed">Advanced skincare formulas inspired by professional beauty science and created to support healthier-looking, more resilient skin.</p>
           </div>
@@ -1209,7 +1209,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 min-h-[80vh] items-center">
               <div className="order-2 md:order-1 py-12 md:py-0">
-                <p className="text-xs font-semibold text-[#c9a96e] tracking-[0.2em] uppercase mb-4">BELOYAN</p>
+                <p className="text-xs font-semibold text-[#c9a96e] tracking-[0.2em] uppercase mb-4">Enzyme Skincare</p>
                 <h1 className="font-heading text-[clamp(2rem,4.5vw,3.8rem)] leading-[1.08] font-bold text-white mb-3">ACTIVE PROTEASE<br />ANTI-WRINKLE SKIN<br />REJUVENATION KIT</h1>
                 <p className="text-lg md:text-xl font-heading italic text-[#f5ecd6] mb-5">Professional Enzyme Brush Treatment</p>
                 <p className="text-base text-white/80 leading-relaxed mb-6 max-w-lg">Restore the look of smoother, brighter and healthier-looking skin with a professional enzyme treatment designed for home skincare routines.</p>
@@ -1437,14 +1437,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 min-h-[80vh] items-center">
             {/* Left: Text */}
             <div className="order-2 md:order-1 py-12 md:py-0">
-              <p className="text-sm font-semibold text-[#b8a07a] tracking-[0.25em] uppercase mb-5">BELOYAN Advanced Anti-Aging Beauty Technology</p>
+              <p className="text-sm font-semibold text-[#b8a07a] tracking-[0.25em] uppercase mb-5">Enzyme Skincare Advanced Anti-Aging Beauty Technology</p>
               <h1 className="font-heading text-[clamp(2.2rem,4.5vw,3.8rem)] leading-[1.08] font-bold text-[#2e3a33] mb-5">DNA Sodium Instant Firming V-Face Spray</h1>
               <p className="text-base md:text-lg text-[#6b706a] leading-relaxed mb-8 max-w-lg">A lightweight DNA Sodium firming spray designed to support hydration, skin elasticity, and a smoother-looking facial contour.</p>
               <div className="space-y-3 mb-8">{["✓ Instant Firming Appearance","✓ Helps Improve Skin Elasticity","✓ Supports V-Face Contour"].map((b) => (<p key={b} className="text-sm text-[#555954] font-medium">{b}</p>))}</div>
               <div className="flex items-center gap-6"><AddToCartButton product={p} /><span className="text-sm text-[#a4a8a0]">{p.size}</span></div>
             </div>
             {/* Right: Image */}
-            <div className="order-1 md:order-2"><Image src={p.images[0]} alt="BELOYAN DNA Sodium Instant Firming V-Face Spray" width={800} height={800} className="w-full h-auto object-contain" priority /></div>
+            <div className="order-1 md:order-2"><Image src={p.images[0]} alt="Enzyme Skincare DNA Sodium Instant Firming V-Face Spray" width={800} height={800} className="w-full h-auto object-contain" priority /></div>
           </div>
         </div>
       </section>

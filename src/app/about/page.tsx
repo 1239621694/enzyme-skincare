@@ -2,7 +2,7 @@ import { BUSINESS_INFO, getEffectiveDate, getOperatorDisclosure } from "@/lib/bu
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us | Enzyme Skincare | BELOYAN",
+  title: "About Us | Enzyme Skincare",
   description: `Learn about ${BUSINESS_INFO.storeName}, operated by ${BUSINESS_INFO.legalNameEN}. We offer ${BUSINESS_INFO.brandName} professional enzyme skincare products worldwide.`,
 };
 
