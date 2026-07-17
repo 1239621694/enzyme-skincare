@@ -82,7 +82,7 @@ export default function HomePage() {
       <section className="py-20 md:py-28 bg-[#faf7f3]">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-14">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-neutral-800 mb-4">Why Choose BELOYAN Skincare</h2>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-neutral-800 mb-4">Why Choose Enzyme Skincare</h2>
             <p className="text-neutral-500 text-lg">Professional skincare, thoughtfully formulated and delivered worldwide.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">

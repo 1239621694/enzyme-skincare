@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     google: "YOUR_GOOGLE_SITE_VERIFICATION_CODE",
   },
   title: {
-    default: "Enzyme Skincare — Professional Enzyme-Based Skincare by BELOYAN",
+    default: "Enzyme Skincare — Professional Enzyme-Based Skincare",
     template: "%s | Enzyme Skincare",
   },
   description:
-    "Enzyme Skincare offers BELOYAN professional enzyme-based skincare products. Science-backed formulations for healthier-looking skin. Worldwide shipping.",
+    "Enzyme Skincare offers professional enzyme-based skincare products. Science-backed formulations for healthier-looking skin. Worldwide shipping.",
   openGraph: {
     siteName: "Enzyme Skincare",
     locale: "en_US",

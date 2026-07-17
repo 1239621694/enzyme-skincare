@@ -5,11 +5,9 @@ export function OrganizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: BUSINESS_INFO.storeName,
-    alternateName: BUSINESS_INFO.brandName,
-    legalName: BUSINESS_INFO.legalNameEN,
     url: BUSINESS_INFO.website,
     logo: BUSINESS_INFO.website + "/logo.png",
-    description: "Professional enzyme skincare by BELOYAN. Science-backed formulations for healthier-looking skin.",
+    description: "Professional enzyme skincare. Science-backed formulations for healthier-looking skin.",
     address: {
       "@type": "PostalAddress",
       streetAddress: "No. 69, Bldg 2, 118 Weijianian 1st Rd, Jinniu District",

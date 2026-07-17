@@ -10,7 +10,7 @@ export function ProductSchema({ product, sku }: { product: { name: string; tagli
     description: product.tagline || product.name,
     image: imageFull,
     sku: sku || product.slug,
-    brand: { "@type": "Brand", name: BUSINESS_INFO.brandName },
+    brand: { "@type": "Brand", name: BUSINESS_INFO.storeName },
     offers: {
       "@type": "Offer",
       price: product.price,

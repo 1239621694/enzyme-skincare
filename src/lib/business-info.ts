@@ -26,7 +26,7 @@ export const BUSINESS_INFO = {
 
   // Online presence
   storeName: "Enzyme Skincare",
-  brandName: "BELOYAN",
+  brandName: "Enzyme Skincare",
   website: "https://www.enzymeskincare.com",
 
   // Shipping & delivery
@@ -54,7 +54,7 @@ export const BUSINESS_INFO = {
   // Mission & Vision
   mission: "To make professional enzyme skincare accessible worldwide through science-backed formulations and thoughtful customer care.",
   vision: "To become a trusted global destination for innovative, results-oriented skincare that respects both your skin and your time.",
-  brandStory: "BELOYAN was founded on the belief that professional-grade skincare should not be limited to clinical settings. Our formulations combine carefully selected active ingredients with practical home-use designs, making it easier to maintain a consistent, effective skincare routine.",
+  brandStory: "Enzyme Skincare was founded on the belief that professional-grade skincare should not be limited to clinical settings. Our formulations combine carefully selected active ingredients with practical home-use designs, making it easier to maintain a consistent, effective skincare routine.",
 
   // Social profiles
   socialProfiles: [
@@ -64,7 +64,7 @@ export const BUSINESS_INFO = {
 
 /** Helper: full operator disclosure sentence */
 export function getOperatorDisclosure(): string {
-  return `EnzymeSkincare.com is operated by ${BUSINESS_INFO.legalNameEN} and offers ${BUSINESS_INFO.brandName} skincare products through its official online store.`;
+  return `EnzymeSkincare.com is operated by ${BUSINESS_INFO.legalNameEN} and offers skincare products through its official online store.`;
 }
 
 /** Helper: effective date for policies */
