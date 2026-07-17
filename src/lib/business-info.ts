@@ -41,11 +41,14 @@ export const BUSINESS_INFO = {
   returnRequestWindow: "3 working days after delivery",
   damageNotificationWindow: "1 working day after delivery",
   refundProcessingTime: "3 working days after returned goods received",
+  returnAddressFull: "Huirong Mingzhu C, Chenghua District, Chengdu, China",
 
   // Payment
-  paymentMethods: ["Secure Payment"],
+  paymentRecipient: "Sichuan Shidai Yineng Culture Media Co., Ltd.",
+  paymentMethods: ["XTransfer (Bank Transfer)"],
   currency: "USD",
   acceptedPayments: ["Secure Checkout"],
+  paymentDisclosure: "Payments for orders placed on EnzymeSkincare.com are collected by Sichuan Shidai Yineng Culture Media Co., Ltd., the legal operator of Enzyme Skincare.",
 
   // Legal
   governingCountry: "People's Republic of China",
@@ -64,7 +67,7 @@ export const BUSINESS_INFO = {
 
 /** Helper: full operator disclosure sentence */
 export function getOperatorDisclosure(): string {
-  return `EnzymeSkincare.com is operated by ${BUSINESS_INFO.legalNameEN} and offers skincare products through its official online store.`;
+  return `EnzymeSkincare.com is operated by ${BUSINESS_INFO.legalNameEN}. Payments for orders placed on this website are collected by ${BUSINESS_INFO.legalNameEN}.`;
 }
 
 /** Helper: effective date for policies */

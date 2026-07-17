@@ -84,7 +84,8 @@ export default function CartPage() {
             <h2 className="font-semibold mb-4">Order Summary</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between"><span className="text-neutral-500">Subtotal</span><span className="font-medium">${Number(total).toFixed(2)}</span></div>
-              <div className="flex justify-between"><span className="text-neutral-500">Shipping</span><span className="text-green-600">Free</span></div>
+              <div className="flex justify-between"><span className="text-neutral-500">Shipping</span><span className="text-neutral-500">Calculated at checkout</span></div>
+              <div className="flex justify-between"><span className="text-neutral-500">Tax</span><span className="text-neutral-500">$0.00</span></div>
             </div>
             <div className="border-t border-neutral-200 mt-4 pt-4 flex justify-between font-semibold"><span>Total</span><span>${Number(total).toFixed(2)}</span></div>
 

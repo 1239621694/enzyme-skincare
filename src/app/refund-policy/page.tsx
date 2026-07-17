@@ -42,7 +42,7 @@ export default function RefundPolicyPage() {
         <p>All returns require prior authorisation from our customer service team. Please <strong>do not</strong> send any item back to us without first contacting us and receiving a return authorisation. Unauthorised returns may not be accepted or refunded.</p>
 
         <h2>Return Address</h2>
-        <p>Our return address is located in Chengdu, China. The specific return address will be provided when we issue a return authorisation.</p>
+        <p>Our return address is located in Chengdu, China. The specific return shipping address will be provided when we issue a return authorisation. We recommend keeping a record of your tracking number when returning items, as we cannot be responsible for lost return parcels.</p>
 
         <h2>Return Shipping Costs</h2>
         <ul>

@@ -16,8 +16,11 @@ export default function PaymentPolicyPage() {
         <p>This Payment Policy outlines the payment methods, security practices and billing procedures for purchases made on <strong>{BUSINESS_INFO.website}</strong>, operated by {BUSINESS_INFO.legalNameEN}.</p>
 
         <h2>Accepted Payment Methods</h2>
-        <p>We accept secure payment methods available at checkout. Payment is processed through authorised third-party payment service providers using industry-standard security controls.</p>
-        <p>Payment methods may include credit cards, debit cards and other secure digital payment options, depending on your country of residence and the options displayed at checkout.</p>
+        <p>We accept <strong>XTransfer (Bank Transfer)</strong> as the payment method on {BUSINESS_INFO.website}. Payment is processed through authorised third-party payment service providers using industry-standard security controls.</p>
+        <p>When you proceed to checkout, you will be redirected to the XTransfer payment page to complete your bank transfer. Your order will be confirmed once payment is received and verified.</p>
+
+        <h2>Payment Recipient</h2>
+        <p>Payments for orders placed on {BUSINESS_INFO.website} are collected by <strong>{BUSINESS_INFO.paymentRecipient}</strong>, the legal operator of Enzyme Skincare.</p>
 
         <h2>Currency</h2>
         <p>All prices on our Website are listed in <strong>United States Dollars (USD)</strong>. If your payment method or bank account is denominated in a different currency, your bank or payment provider may apply a currency conversion fee. We are not responsible for any such fees.</p>

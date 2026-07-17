@@ -125,6 +125,14 @@ export function CartSidebar() {
               <span className="text-neutral-600">Subtotal</span>
               <span className="font-semibold text-neutral-800">${Number(total).toFixed(2)}</span>
             </div>
+            <div className="flex items-center justify-between text-xs text-neutral-500">
+              <span>Shipping</span>
+              <span>{Number(total) >= 50 ? "$0.00" : "Calculated at checkout"}</span>
+            </div>
+            <div className="flex items-center justify-between text-xs text-neutral-500">
+              <span>Tax</span>
+              <span>$0.00</span>
+            </div>
             {couponDiscount > 0 && (
               <div className="flex items-center justify-between text-sm">
                 <span className="text-green-600">Discount ({appliedCoupon?.code})</span>
