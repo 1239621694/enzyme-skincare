@@ -90,9 +90,9 @@ const faqData: Record<string, { q: string; a: string | string[] }[]> = {
   payment: [
     { q: "What payment methods do you accept?", a: "We accept secure payment methods available at checkout. Payment is processed through authorised third-party payment service providers using industry-standard security controls." },
     { q: "Is my payment secure?", a: "Yes, absolutely. All payment transactions on our website are processed using SSL/TLS encryption. We do not directly store full credit card or debit card numbers on our servers. Your payment data is handled securely by our authorised payment partners." },
-    { q: "Do you support PayPal?", a: "We are in the process of expanding our payment options. Please check the checkout page for currently available payment methods." },
-    { q: "Can I pay with Visa or Mastercard?", a: "We support secure card payments where available at checkout. The payment methods displayed during checkout are those currently supported." },
-    { q: "Can I pay with Apple Pay or Google Pay?", a: "We are working to offer additional payment options including digital wallets. Please check the checkout page for currently available methods." },
+    { q: "Do you support PayPal?", a: "We currently accept XTransfer (Bank Transfer) as our payment method. Please check the checkout page for currently available options." },
+    { q: "Can I pay with Visa or Mastercard?", a: "We process payments through XTransfer (Bank Transfer). Please check the checkout page for currently available payment methods." },
+    { q: "Can I pay with Apple Pay or Google Pay?", a: "We currently process payments through XTransfer (Bank Transfer). Please check the checkout page for currently available options." },
     { q: "Do you offer payment plans?", a: "We do not currently offer payment plans or installment options. Full payment is required at the time of ordering." },
   ],
   shipping: [
