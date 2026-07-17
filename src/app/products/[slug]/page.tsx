@@ -6,6 +6,8 @@ import { Stars } from "@/components/ui/Stars";
 import { AddToCartButton } from "@/components/products/AddToCartButton";
 import { formatCurrency } from "@/lib/utils";
 import { ALL_PRODUCTS, getProductBySlug, getAllSlugs } from "@/lib/products";
+import { ProductSchema } from "@/components/seo/ProductSchema";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -154,6 +156,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
     return (
       <div className="bg-white font-body">
+        <BreadcrumbSchema items={[{ name: "Home", url: "/" }, { name: "Products", url: "/products" }, { name: p.name, url: "/products/" + p.slug }]} />
+        <ProductSchema product={{ name: p.name, tagline: p.tagline, price: p.price, images: p.images, rating: p.rating, reviewsCount: p.reviewsCount, slug: p.slug }} sku={p.variants[0]?.sku} />
         {/* SECTION 1 — HERO */}
         <section className="bg-[#faf7f3] relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
@@ -706,6 +710,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
     return (
       <div className="bg-white font-body">
+        <BreadcrumbSchema items={[{ name: "Home", url: "/" }, { name: "Products", url: "/products" }, { name: p.name, url: "/products/" + p.slug }]} />
+        <ProductSchema product={{ name: p.name, tagline: p.tagline, price: p.price, images: p.images, rating: p.rating, reviewsCount: p.reviewsCount, slug: p.slug }} sku={p.variants[0]?.sku} />
         {/* SECTION 1 — HERO */}
         <section className="bg-cp-gradient relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10 min-h-[80vh] flex items-center">
@@ -1197,6 +1203,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
     return (
       <div className="bg-white font-body">
+        <BreadcrumbSchema items={[{ name: "Home", url: "/" }, { name: "Products", url: "/products" }, { name: p.name, url: "/products/" + p.slug }]} />
+        <ProductSchema product={{ name: p.name, tagline: p.tagline, price: p.price, images: p.images, rating: p.rating, reviewsCount: p.reviewsCount, slug: p.slug }} sku={p.variants[0]?.sku} />
         <section className="bg-luxe-gradient relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 min-h-[80vh] items-center">
