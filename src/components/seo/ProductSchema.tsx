@@ -1,6 +1,6 @@
 import { BUSINESS_INFO } from "@/lib/business-info";
 
-export function ProductSchema({ product, sku }: { product: { name: string; tagline?: string | null; price: number; images: string[]; rating: number; reviewsCount: number; slug: string }; sku?: string }) {
+export function ProductSchema({ product, sku }: { product: { name: string; tagline?: string | null; price: number; images: string[]; slug: string }; sku?: string }) {
   const siteUrl = BUSINESS_INFO.website;
   const imageFull = product.images.map((i) => i.startsWith("http") ? i : siteUrl + i);
   const schema = {
@@ -9,7 +9,7 @@ export function ProductSchema({ product, sku }: { product: { name: string; tagli
     name: product.name,
     description: product.tagline || product.name,
     image: imageFull,
-    sku: sku || product.slug,
+    ...(sku ? { sku } : {}),
     brand: { "@type": "Brand", name: BUSINESS_INFO.storeName },
     offers: {
       "@type": "Offer",
@@ -24,7 +24,7 @@ export function ProductSchema({ product, sku }: { product: { name: string; tagli
         returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
         merchantReturnDays: 3,
         returnMethod: "https://schema.org/ReturnByMail",
-        returnFees: "https://schema.org/FreeReturn",
+        returnFees: "https://schema.org/ReturnShippingFeesCustomerResponsibility",
       },
       shippingDetails: {
         "@type": "OfferShippingDetails",
@@ -36,13 +36,6 @@ export function ProductSchema({ product, sku }: { product: { name: string; tagli
         },
       },
     },
-    ...(product.reviewsCount > 0 ? {
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewsCount,
-      },
-    } : {}),
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }

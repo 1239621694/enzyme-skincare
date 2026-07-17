@@ -81,10 +81,6 @@ export function ProductCard({ product }: { product: any }) {
           <h3 className="text-sm font-semibold leading-snug line-clamp-2 mb-1 text-neutral-800 hover:text-primary-600">{product.name}</h3>
         </Link>
         <p className="text-xs text-neutral-500 mb-1.5">{product.tagline || product.size || ""}</p>
-        <div className="flex items-center gap-1 mb-2">
-          <Stars rating={Number(product.rating)} size="sm" />
-          <span className="text-xs text-neutral-400">({product.reviewsCount})</span>
-        </div>
         <div className="flex items-baseline gap-2">
           <span className="text-base font-bold text-neutral-800">{formatCurrency(Number(product.price))}</span>
           {product.comparePrice && (
