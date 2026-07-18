@@ -961,6 +961,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                     { label: "Activating Solution", value: "3 ml per vial" },
                     { label: "Quantity", value: "10 complete sets per box" },
                     { label: "Package Contents", value: "10 Powder + 10 Solution vials" },
+                    { label: "Shelf Life", value: "4 years (unopened)" },
                   ].map(row => (
                     <div key={row.label} className="flex justify-between p-3.5 rounded-lg bg-[#f5f8fc] border border-[#d0dce8]">
                       <span className="text-sm text-[#5a6a7a]">{row.label}</span>
