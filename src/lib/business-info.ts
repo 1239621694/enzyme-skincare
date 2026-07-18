@@ -12,10 +12,10 @@ export const BUSINESS_INFO = {
   // Addresses
   registeredAddress: "成都市金牛区韦家碾一路118号2幢1103号附69号",
   registeredAddressEN: "No. 69, Bldg 2, 118 Weijianian 1st Rd, Jinniu District, Chengdu, China",
-  operatingAddress: "成都市金牛区韦家碾一路118号2幢1103号",
-  operatingAddressEN: "Bldg 2, 118 Weijianian 1st Rd, Jinniu District, Chengdu, China",
-  returnAddress: "成都市成华区汇融名城C区",
-  returnAddressEN: "Huirong Mingzhu C, Chenghua District, Chengdu, China",
+  operatingAddress: "成都市金牛区西希北城大厦1903室",
+  operatingAddressEN: "Room 1903, Xixi Beicheng Building, Jinniu District, Chengdu, Sichuan Province, China",
+  returnAddress: "成都市金牛区西希北城大厦1903室",
+  returnAddressEN: "Room 1903, Xixi Beicheng Building, Jinniu District, Chengdu, Sichuan Province, China",
 
   // Contact
   supportEmail: "support@enzymeskincare.com",
@@ -41,7 +41,7 @@ export const BUSINESS_INFO = {
   returnRequestWindow: "3 working days after delivery",
   damageNotificationWindow: "1 working day after delivery",
   refundProcessingTime: "3 working days after returned goods received",
-  returnAddressFull: "Huirong Mingzhu C, Chenghua District, Chengdu, China",
+  returnAddressFull: "Room 1903, Xixi Beicheng Building, Jinniu District, Chengdu, Sichuan Province, China",
 
   // Payment
   paymentRecipient: "Sichuan Shidai Yineng Culture Media Co., Ltd.",
