@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getPayPalAccessToken, isPayPalConfigured } from "@/lib/paypal";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/**
- * POST /api/paypal/create-order
- * Creates a PayPal order from an existing internal order.
- * Body: { orderId, token }
- */
 export async function POST(req: NextRequest) {
   try {
     const { orderId, token } = await req.json();
     if (!orderId || !token) {
       return NextResponse.json({ error: "Missing orderId or token" }, { status: 400 });
+    }
+
+    if (!isPayPalConfigured()) {
+      return NextResponse.json({ error: "PayPal not configured" }, { status: 503 });
     }
 
     // Find the order with token verification
@@ -30,37 +30,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Create PayPal order
-    const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-    const secret = process.env.PAYPAL_CLIENT_SECRET;
     const env = process.env.PAYPAL_ENVIRONMENT || "sandbox";
     const baseUrl = env === "production"
       ? "https://api-m.paypal.com"
       : "https://api-m.sandbox.paypal.com";
 
-    if (!clientId || !secret) {
-      return NextResponse.json({ error: "PayPal not configured" }, { status: 503 });
-    }
-
-    // Get access token
-    const auth = Buffer.from(`${clientId}:${secret}`).toString("base64");
-    const tokenRes = await fetch(`${baseUrl}/v1/oauth2/token`, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${auth}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "grant_type=client_credentials",
-    });
-
-    if (!tokenRes.ok) {
-      console.error("PayPal auth failed:", await tokenRes.text());
-      return NextResponse.json({ error: "PayPal auth failed" }, { status: 500 });
-    }
-
-    const tokenData = await tokenRes.json();
-    const accessTokenPayPal = tokenData.access_token;
-
-    // Create PayPal order
+    const accessTokenPayPal = await getPayPalAccessToken();
     const orderRes = await fetch(`${baseUrl}/v2/checkout/orders`, {
       method: "POST",
       headers: {
@@ -90,14 +65,14 @@ export async function POST(req: NextRequest) {
 
     if (!orderRes.ok) {
       const errBody = await orderRes.text();
-      console.error("PayPal order creation failed:", errBody);
+      console.error("PayPal order creation failed");
       return NextResponse.json({ error: "PayPal order creation failed" }, { status: 500 });
     }
 
     const paypalOrder = await orderRes.json();
     return NextResponse.json({ id: paypalOrder.id });
   } catch (err) {
-    console.error("create-order error:", err);
+    console.error("create-order error");
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }

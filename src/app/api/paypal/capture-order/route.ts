@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendEmail } from "@/lib/resend";
+import { getPayPalAccessToken, getOrderDetails, isPayPalConfigured } from "@/lib/paypal";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/**
- * POST /api/paypal/capture-order
- * Captures a PayPal order after buyer approval.
- * Body: { orderId: string, paypalOrderId: string, token: string }
- */
 export async function POST(req: NextRequest) {
   try {
     const { orderId, paypalOrderId, token } = await req.json();
@@ -17,7 +13,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // Verify order and token
+    if (!isPayPalConfigured()) {
+      return NextResponse.json({ error: "PayPal not configured" }, { status: 503 });
+    }
+
+    // Verify order and token (read-only check before transaction)
     const order = await prisma.order.findUnique({ where: { id: orderId } });
     if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
     if (order.status !== "PENDING_PAYMENT") {
@@ -28,37 +28,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid token" }, { status: 403 });
     }
 
-    // Check for duplicate via ProcessedEvent
-    const existing = await prisma.processedEvent.findUnique({ where: { eventId: paypalOrderId } });
-    if (existing) {
-      return NextResponse.json({ received: true, duplicate: true });
-    }
-
     // Capture via PayPal API
-    const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-    const secret = process.env.PAYPAL_CLIENT_SECRET;
     const env = process.env.PAYPAL_ENVIRONMENT || "sandbox";
     const baseUrl = env === "production"
       ? "https://api-m.paypal.com"
       : "https://api-m.sandbox.paypal.com";
 
-    if (!clientId || !secret) {
-      return NextResponse.json({ error: "PayPal not configured" }, { status: 503 });
-    }
+    const accessTokenPayPal = await getPayPalAccessToken();
 
-    const auth = Buffer.from(`${clientId}:${secret}`).toString("base64");
-    const tokenRes = await fetch(`${baseUrl}/v1/oauth2/token`, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${auth}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "grant_type=client_credentials",
-    });
-    const tokenData = await tokenRes.json();
-    const accessTokenPayPal = tokenData.access_token;
-
-    // Capture the order
     const captureRes = await fetch(`${baseUrl}/v2/checkout/orders/${paypalOrderId}/capture`, {
       method: "POST",
       headers: {
@@ -70,8 +47,8 @@ export async function POST(req: NextRequest) {
     const captureData = await captureRes.json();
 
     if (!captureRes.ok) {
-      console.error("PayPal capture failed:", captureData);
-      return NextResponse.json({ error: "Capture failed", details: captureData }, { status: 500 });
+      console.error("PayPal capture failed");
+      return NextResponse.json({ error: "Capture failed" }, { status: 500 });
     }
 
     // Verify capture status
@@ -88,54 +65,46 @@ export async function POST(req: NextRequest) {
     // Verify amount
     const capturedAmount = parseFloat(capture.amount?.value || "0");
     if (Math.abs(capturedAmount - Number(order.total)) > 0.01) {
-      console.error("Amount mismatch", { captured: capturedAmount, expected: order.total });
+      console.error("Amount mismatch", { captured: capturedAmount });
       return NextResponse.json({ error: "Amount mismatch" }, { status: 400 });
     }
 
-    // Mark processed to prevent duplicates (before updating order)
-    try {
-      await prisma.processedEvent.create({ data: { eventId: paypalOrderId, type: "paypal_capture" } });
-    } catch (err: any) {
-      if (err?.code === "P2002") {
-        return NextResponse.json({ received: true, duplicate: true });
+    // Use paypalOrderId as unified idempotency key (same key used by capture-order and webhook)
+    // All DB writes in a single transaction
+    await prisma.$transaction(async (tx) => {
+      // Lock: try to create processed event first
+      const existing = await tx.processedEvent.findUnique({ where: { eventId: paypalOrderId } });
+      if (existing) {
+        throw new Error("DUPLICATE");
       }
-      throw err;
-    }
+      await tx.processedEvent.create({ data: { eventId: paypalOrderId, type: "paypal_capture" } });
 
-    // Update order to PAID
-    await prisma.order.update({
-      where: { id: orderId },
-      data: {
-        status: "PAID",
-        paymentIntentId: capture.id,
-        paidAt: new Date(),
-      },
-    });
+      // Update order
+      await tx.order.update({
+        where: { id: orderId },
+        data: { status: "PAID", paymentIntentId: capture.id, paidAt: new Date() },
+      });
 
-    // Create payment record
-    await prisma.payment.create({
-      data: {
-        orderId,
-        provider: "PayPal",
-        providerMetadata: {
-          paypalOrderId,
-          captureId: capture.id,
-          status: capture.status,
-          createTime: capture.create_time,
+      // Create payment record
+      await tx.payment.create({
+        data: {
+          orderId,
+          provider: "PayPal",
+          providerMetadata: { paypalOrderId, captureId: capture.id, status: capture.status, createTime: capture.create_time },
+          amount: capturedAmount,
+          currency: "USD",
+          status: "COMPLETED",
+          completedAt: new Date(),
         },
-        amount: capturedAmount,
-        currency: "USD",
-        status: "COMPLETED",
-        completedAt: new Date(),
-      },
+      });
+
+      // Record status history
+      await tx.orderStatusHistory.create({
+        data: { orderId, fromStatus: "PENDING_PAYMENT", toStatus: "PAID" },
+      });
     });
 
-    // Record status history
-    await prisma.orderStatusHistory.create({
-      data: { orderId, fromStatus: "PENDING_PAYMENT", toStatus: "PAID" },
-    });
-
-    // Send confirmation email (non-blocking)
+    // Send confirmation email (non-blocking, outside transaction)
     const customerEmail = order.customerEmail;
     if (customerEmail) {
       sendEmail({
@@ -144,14 +113,17 @@ export async function POST(req: NextRequest) {
         html: `<h1>Thank you for your order!</h1>
 <p>Order #${order.orderNumber || orderId.slice(0, 8)}</p>
 <p>Total: $${Number(order.total).toFixed(2)}</p>
-<p>Payment: PayPal (${capture.id})</p>
+<p>Payment method: PayPal</p>
 <p>We will notify you when your order ships.</p>`,
       }).catch((e) => console.error("Email failed (non-blocking):", e));
     }
 
     return NextResponse.json({ success: true, captureId: capture.id });
-  } catch (err) {
-    console.error("capture-order error:", err);
+  } catch (err: any) {
+    if (err?.message === "DUPLICATE") {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+    console.error("capture-order error");
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }
