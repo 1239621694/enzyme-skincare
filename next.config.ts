@@ -2,13 +2,13 @@
 
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://js.stripe.com https://www.googletagmanager.com",
+  "script-src 'self' 'unsafe-inline' https://js.stripe.com https://www.googletagmanager.com https://*.paypal.com https://*.paypalobjects.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "img-src 'self' data: https://images.unsplash.com https://*.supabase.co https://*.stripe.com",
+  "img-src 'self' data: https://images.unsplash.com https://*.supabase.co https://*.stripe.com https://*.paypal.com https://*.paypalobjects.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "frame-src https://js.stripe.com https://hooks.stripe.com",
-  "connect-src 'self' https://api.stripe.com https://*.supabase.co https://www.google-analytics.com",
-  "form-action 'self' https://checkout.stripe.com",
+  "frame-src https://js.stripe.com https://hooks.stripe.com https://*.paypal.com https://*.paypalobjects.com",
+  "connect-src 'self' https://api.stripe.com https://*.supabase.co https://www.google-analytics.com https://*.paypal.com",
+  "form-action 'self' https://checkout.stripe.com https://*.paypal.com",
 ].join("; ");
 
 const nextConfig: NextConfig = {
