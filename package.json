@@ -17,6 +17,7 @@
         "seed-demo": "npx ts-node prisma/seed-demo.ts"
     },
     "dependencies": {
+        "@paypal/react-paypal-js": "^10.1.2",
         "@prisma/client": "^5.4.0",
         "@stripe/stripe-js": "^9.8.0",
         "@tailwindcss/forms": "^0.5.11",
@@ -47,6 +48,5 @@
         "tailwindcss": "^4",
         "typescript": "^5.9.3"
     },
-    "prisma": {
-    }
+    "prisma": {}
 }

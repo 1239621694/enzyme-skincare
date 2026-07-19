@@ -1,8 +1,9 @@
-﻿"use client";
+"use client";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 interface TrackingEvent {
   id: string; status: string; location: string | null; description: string | null;
@@ -13,9 +14,10 @@ interface OrderData {
   id: string; orderNumber: string; status: string; total: number; currency: string;
   subtotal: number | null; shippingFee: number | null; discountAmount: number | null;
   customerEmail: string; customerName: string | null;
-  couponCode: string | null; salesCode: string | null;
+  couponCode?: string | null;
+  salesCode?: string | null;
+  shippingAddress?: { name: string | null; address1: string | null; city: string | null; province: string | null } | null;
   items: { productName: string; productImage: string | null; quantity: number; unitPrice: number }[];
-  shippingAddress: { name: string | null; address1: string | null; address2: string | null; city: string | null; province: string | null; postal: string | null; country: string | null };
   payment: { provider: string; status: string; invoiceUrl: string | null } | null;
   trackingNumber: string | null; shippingCompany: string | null;
   deliveryStatus: string | null; shippedAt: string | null; deliveredAt: string | null;
@@ -29,12 +31,18 @@ export default function OrderDetailPage() {
   const [order, setOrder] = useState<OrderData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [paypalError, setPaypalError] = useState("");
+  const [paypalProcessing, setPaypalProcessing] = useState(false);
 
   const orderId = params?.orderId as string;
   const token = searchParams?.get("token") ?? "";
 
   useEffect(() => {
     if (!orderId || !token) { setLoading(false); setError("Missing order ID or token"); return; }
+    loadOrder();
+  }, [orderId, token]);
+
+  const loadOrder = () => {
     fetch("/api/orders/" + orderId + "?token=" + token)
       .then((r) => r.json())
       .then((data) => {
@@ -43,7 +51,41 @@ export default function OrderDetailPage() {
       })
       .catch(() => setError("Failed to load order"))
       .finally(() => setLoading(false));
-  }, [orderId, token]);
+  };
+
+  const paypalClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+  const paypalEnabled = !!paypalClientId;
+
+  const createPayPalOrder = async (): Promise<string> => {
+    const res = await fetch("/api/paypal/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderId, token }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Failed to create PayPal order");
+    return data.id;
+  };
+
+  const onApprove = async (paypalData: { orderID: string }) => {
+    setPaypalProcessing(true);
+    setPaypalError("");
+    try {
+      const res = await fetch("/api/paypal/capture-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId, paypalOrderId: paypalData.orderID, token }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Payment capture failed");
+      // Reload order to show updated status
+      loadOrder();
+    } catch (err: any) {
+      setPaypalError(err.message || "Payment failed. Please try again.");
+    } finally {
+      setPaypalProcessing(false);
+    }
+  };
 
   if (loading) return <div className="max-w-2xl mx-auto px-4 py-20 text-center text-neutral-500">Loading...</div>;
   if (error) return <div className="max-w-2xl mx-auto px-4 py-20 text-center"><p className="text-red-500 mb-4">{error}</p><Link href="/" className="text-primary-600 hover:text-primary-700 font-medium">&larr; Back to Home</Link></div>;
@@ -65,23 +107,45 @@ export default function OrderDetailPage() {
 
       {/* Payment Section */}
       {order.status === "PENDING_PAYMENT" && (
-        <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
-          <h2 className="font-semibold text-green-800 mb-3">💳 Payment Required</h2>
-          <p className="text-sm text-green-700 mb-4">Your order is awaiting secure payment.</p>
-          <div className="flex flex-col gap-3">
-            <Button className="w-full bg-green-600 hover:bg-green-700" disabled>
-              Pay Now
-            </Button>
-            <p className="text-[11px] text-green-600 text-center">Secure payment will be available shortly.</p>
-          </div>
-          <div className="mt-3 text-xs text-green-600 space-y-1">
-            <p>Your order <strong>#{order.orderNumber}</strong> has been created. We will notify you once payment is confirmed.</p>
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-6">
+          <h2 className="font-semibold text-amber-800 mb-3">💳 Payment Required</h2>
+          <p className="text-sm text-amber-700 mb-4">Complete your payment to confirm this order.</p>
+
+          {paypalEnabled ? (
+            <PayPalScriptProvider options={{ clientId: paypalClientId, currency: "USD" }}>
+              <PayPalButtons
+                style={{ layout: "vertical", color: "gold", shape: "rect", label: "pay" }}
+                createOrder={createPayPalOrder}
+                onApprove={onApprove}
+                onCancel={() => setPaypalError("Payment was cancelled. You can try again.")}
+                onError={(err) => setPaypalError("A payment error occurred. Please try again.")}
+                disabled={paypalProcessing}
+              />
+            </PayPalScriptProvider>
+          ) : (
+            <div className="bg-white border border-amber-200 rounded-lg p-4 text-center">
+              <p className="text-sm text-neutral-500">PayPal is temporarily unavailable.</p>
+            </div>
+          )}
+
+          {paypalError && (
+            <p className="text-sm text-red-600 mt-3">{paypalError}</p>
+          )}
+
+          <div className="mt-4 text-xs text-amber-700 space-y-1">
+            <p>• Secure payment via PayPal</p>
+            <p>• Your order will be confirmed after payment</p>
           </div>
         </div>
       )}
-      {order.payment?.status === "COMPLETED" && (
+      {order.status === "PAID" && (
         <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
-          <p className="font-semibold text-green-700">✅ Payment Confirmed</p>
+          <h2 className="font-semibold text-green-700 mb-2">✅ Payment Confirmed</h2>
+          {order.payment && (
+            <div className="text-sm text-green-600 space-y-1">
+              <p>Payment via {order.payment.provider || "PayPal"}</p>
+            </div>
+          )}
         </div>
       )}
 
@@ -154,7 +218,7 @@ export default function OrderDetailPage() {
         </div>
       )}
 
-      <div className="text-center">
+      <div className="text-center space-x-3">
         <Link href="/products" className="text-primary-600 hover:text-primary-700 text-sm font-medium">&larr; Continue Shopping</Link>
       </div>
     </div>
