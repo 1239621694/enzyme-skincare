@@ -57,17 +57,25 @@ export default function OrderDetailPage() {
   const paypalEnabled = !!paypalClientId;
 
   const createPayPalOrder = async (): Promise<string> => {
+    console.log("[PayPal] createOrder called for order:", orderId);
     const res = await fetch("/api/paypal/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderId, token }),
     });
     const data = await res.json();
+    console.log("[PayPal] createOrder response:", res.status, data);
     if (!res.ok) throw new Error(data.error || "Failed to create PayPal order");
+    // Must return the PayPal order ID as a plain string
+    if (!data.id) {
+      console.error("[PayPal] No order ID returned from server");
+      throw new Error("No PayPal order ID returned");
+    }
     return data.id;
   };
 
   const onApprove = async (paypalData: { orderID: string }) => {
+    console.log("[PayPal] onApprove called, orderID:", paypalData.orderID);
     setPaypalProcessing(true);
     setPaypalError("");
     try {
@@ -77,10 +85,11 @@ export default function OrderDetailPage() {
         body: JSON.stringify({ orderId, paypalOrderId: paypalData.orderID, token }),
       });
       const data = await res.json();
+      console.log("[PayPal] capture response:", res.status, data);
       if (!res.ok) throw new Error(data.error || "Payment capture failed");
-      // Reload order to show updated status
       loadOrder();
     } catch (err: any) {
+      console.error("[PayPal] capture error:", err);
       setPaypalError(err.message || "Payment failed. Please try again.");
     } finally {
       setPaypalProcessing(false);
