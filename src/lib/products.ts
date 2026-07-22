@@ -77,6 +77,20 @@ export const ALL_PRODUCTS: ProductData[] = [
     isActive: true, sortOrder: 4,
     variants: [{ id: "v15", name: "Standard Box", size: "10 Sets", price: 149, sku: "CPR-010", stock: 35 }],
   },
+  {
+    id: "test", slug: "internal-payment-test",
+    name: "Internal Payment Test",
+    tagline: "For internal payment testing only — do not purchase if you see this",
+    description: "This product is used only for internal payment flow testing. Not for public purchase.",
+    ingredients: "N/A — Internal test product only.",
+    howToUse: "Add to cart, proceed to checkout, complete PayPal payment to test the full payment flow.",
+    price: 1, comparePrice: null, category: "TREATMENT",
+    skinConcerns: [], badge: null,
+    rating: 0, reviewsCount: 0, size: "1 Unit",
+    images: [],
+    isActive: true, sortOrder: 99,
+    variants: [{ id: "v-test", name: "Standard", size: "1 Unit", price: 1, sku: "TEST-PAYPAL-001", stock: 9999 }],
+  },
 ];
 
 export function getProductBySlug(slug: string): ProductData | undefined {

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
-  const products = ALL_PRODUCTS.filter((p) => p.isActive);
+  const products = ALL_PRODUCTS.filter((p) => p.isActive && p.slug !== "internal-payment-test");
 
   return (
     <>
