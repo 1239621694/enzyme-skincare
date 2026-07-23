@@ -10,7 +10,7 @@ export function OrganizationSchema() {
     description: "Professional enzyme skincare. Science-backed formulations for healthier-looking skin.",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "No. 69, Bldg 2, 118 Weijianian 1st Rd, Jinniu District",
+      streetAddress: "No. 22 Xinma Road, 1st Floor, Wuhou District",
       addressLocality: "Chengdu",
       addressCountry: "CN",
     },

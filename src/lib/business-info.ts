@@ -5,17 +5,17 @@
  */
 export const BUSINESS_INFO = {
   // Legal identity
-  legalNameCN: "四川时代艺能文化传媒有限公司",
-  legalNameEN: "Sichuan Shidai Yineng Culture Media Co., Ltd.",
-  registrationNumber: "91510106MA6CTPMD1K",
+  legalNameCN: "云达思科技（四川）有限公司",
+  legalNameEN: "Yundasi Technology (Sichuan) Co., Ltd.",
+  registrationNumber: "91510107MABXUMEP42",
 
   // Addresses
-  registeredAddress: "成都市金牛区韦家碾一路118号2幢1103号附69号",
-  registeredAddressEN: "No. 69, Bldg 2, 118 Weijianian 1st Rd, Jinniu District, Chengdu, China",
-  operatingAddress: "成都市金牛区西希北城大厦1903室",
-  operatingAddressEN: "Room 1903, Xixi Beicheng Building, Jinniu District, Chengdu, Sichuan Province, China",
-  returnAddress: "成都市金牛区西希北城大厦1903室",
-  returnAddressEN: "Room 1903, Xixi Beicheng Building, Jinniu District, Chengdu, Sichuan Province, China",
+  registeredAddress: "成都市武侯区新马路22号1楼",
+  registeredAddressEN: "No. 22 Xinma Road, 1st Floor, Wuhou District, Chengdu, Sichuan, China",
+  operatingAddress: "成都市武侯区新马路22号1楼",
+  operatingAddressEN: "No. 22 Xinma Road, 1st Floor, Wuhou District, Chengdu, Sichuan, China",
+  returnAddress: "成都市武侯区新马路22号1楼",
+  returnAddressEN: "No. 22 Xinma Road, 1st Floor, Wuhou District, Chengdu, Sichuan, China",
 
   // Contact
   supportEmail: "support@enzymeskincare.com",
@@ -41,14 +41,14 @@ export const BUSINESS_INFO = {
   returnRequestWindow: "3 working days after delivery",
   damageNotificationWindow: "1 working day after delivery",
   refundProcessingTime: "3 working days after returned goods received",
-  returnAddressFull: "Room 1903, Xixi Beicheng Building, Jinniu District, Chengdu, Sichuan Province, China",
+  returnAddressFull: "No. 22 Xinma Road, 1st Floor, Wuhou District, Chengdu, Sichuan, China",
 
   // Payment
-  paymentRecipient: "Sichuan Shidai Yineng Culture Media Co., Ltd.",
+  paymentRecipient: "Yundasi Technology (Sichuan) Co., Ltd.",
   paymentMethods: ["XTransfer (Bank Transfer)"],
   currency: "USD",
   acceptedPayments: ["Secure Checkout"],
-  paymentDisclosure: "Payments for orders placed on EnzymeSkincare.com are collected by Sichuan Shidai Yineng Culture Media Co., Ltd., the legal operator of Enzyme Skincare.",
+  paymentDisclosure: "Payments for orders placed on EnzymeSkincare.com are collected by Yundasi Technology (Sichuan) Co., Ltd., the legal operator of Enzyme Skincare.",
 
   // Legal
   governingCountry: "People's Republic of China",
