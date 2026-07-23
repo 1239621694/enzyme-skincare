@@ -39,6 +39,7 @@ export async function PUT(req: NextRequest) {
     const allowedFields = [
       "customerName", "customerEmail", "customerPhone",
       "shippingName", "shippingPhone", "shippingAddress1", "shippingAddress2",
+      "shippingFirstName", "shippingLastName",
       "shippingCity", "shippingProvince", "shippingPostal", "shippingCountry",
       "adminNote", "customerNote",
     ];

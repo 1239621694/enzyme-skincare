@@ -6,7 +6,33 @@ import { randomUUID } from "crypto";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { items, customerEmail, customerName, customerPhone, shippingAddress, couponCode, discountAmount, salesRepCode } = body;
+const { items, customerEmail, customerName, customerPhone, shippingAddress, couponCode, discountAmount, salesRepCode } = body;
+    // Validate shipping address fields
+    if (!shippingAddress || typeof shippingAddress !== "object") {
+      return NextResponse.json({ success: false, error: "Shipping address is required" }, { status: 400 });
+    }
+    const { firstName, lastName, phone, country, state, city, address1, address2, postalCode } = shippingAddress;
+    if (!firstName || !lastName) {
+      return NextResponse.json({ success: false, error: "First name and last name are required" }, { status: 400 });
+    }
+    if (!phone) {
+      return NextResponse.json({ success: false, error: "Phone number is required" }, { status: 400 });
+    }
+    if (!country) {
+      return NextResponse.json({ success: false, error: "Country is required" }, { status: 400 });
+    }
+    if (!state) {
+      return NextResponse.json({ success: false, error: "State/Province is required" }, { status: 400 });
+    }
+    if (!city) {
+      return NextResponse.json({ success: false, error: "City is required" }, { status: 400 });
+    }
+    if (!address1) {
+      return NextResponse.json({ success: false, error: "Address line 1 is required" }, { status: 400 });
+    }
+    if (!postalCode) {
+      return NextResponse.json({ success: false, error: "ZIP/Postal code is required" }, { status: 400 });
+    }
 
     // Validate required fields
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -96,8 +122,8 @@ export async function POST(req: NextRequest) {
         });
         customerId = customer.id;
       } else {
-        customer = await prisma.customer.create({
-          data: { email: customerEmail, firstName: customerName?.split(" ")[0] ?? null, lastName: customerName?.split(" ").slice(1).join(" ") ?? null, totalOrders: 1, totalSpent: total, firstOrderAt: new Date(), lastOrderAt: new Date(), lastVisitAt: new Date() },
+      customer = await prisma.customer.create({
+          data: { email: customerEmail, firstName, lastName, totalOrders: 1, totalSpent: total, firstOrderAt: new Date(), lastOrderAt: new Date(), lastVisitAt: new Date() },
         });
         customerId = customer.id;
       }
@@ -125,14 +151,16 @@ export async function POST(req: NextRequest) {
           tax,
           total,
           currency: "USD",
-          shippingName: shippingAddress?.name ?? null,
-          shippingPhone: shippingAddress?.phone ?? null,
-          shippingAddress1: shippingAddress?.address1 ?? null,
-          shippingAddress2: shippingAddress?.address2 ?? null,
-          shippingCity: shippingAddress?.city ?? null,
-          shippingProvince: shippingAddress?.province ?? null,
-          shippingPostal: shippingAddress?.postal ?? null,
-          shippingCountry: shippingAddress?.country ?? "US",
+          shippingName: `${firstName} ${lastName}`,
+          shippingFirstName: firstName,
+          shippingLastName: lastName,
+          shippingPhone: phone,
+          shippingAddress1: address1,
+          shippingAddress2: address2 || null,
+          shippingCity: city,
+          shippingProvince: state,
+          shippingPostal: postalCode,
+          shippingCountry: country,
           metadata: { accessToken },
         },
       });

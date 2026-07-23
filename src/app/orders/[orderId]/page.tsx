@@ -16,7 +16,7 @@ interface OrderData {
   customerEmail: string; customerName: string | null;
   couponCode?: string | null;
   salesCode?: string | null;
-  shippingAddress?: { name: string | null; address1: string | null; city: string | null; province: string | null } | null;
+  shippingAddress?: { firstName: string | null; lastName: string | null; name: string | null; phone: string | null; address1: string | null; address2: string | null; city: string | null; province: string | null; state: string | null; postal: string | null; postalCode: string | null; country: string | null } | null;
   items: { productName: string; productImage: string | null; quantity: number; unitPrice: number }[];
   payment: { provider: string; status: string; invoiceUrl: string | null } | null;
   trackingNumber: string | null; shippingCompany: string | null;
@@ -188,12 +188,14 @@ export default function OrderDetailPage() {
       {/* Shipping & Tracking */}
       <div className="border border-neutral-200 rounded-xl p-6 mb-6">
         <h2 className="font-semibold mb-2">Shipping</h2>
-        {order.shippingAddress?.name ? (
-          <>
-            <p className="text-sm text-neutral-600">{order.shippingAddress.name}</p>
-            <p className="text-sm text-neutral-600">{order.shippingAddress.address1}</p>
-            <p className="text-sm text-neutral-600">{order.shippingAddress.city}, {order.shippingAddress.province}</p>
-          </>
+       {order.shippingAddress?.name ? (
+          <div className="text-sm text-neutral-600 space-y-1">
+            <p>{order.shippingAddress.firstName || order.shippingAddress.name || ""} {order.shippingAddress.lastName || ""}</p>
+            {order.shippingAddress.phone && <p>{order.shippingAddress.phone}</p>}
+            {order.shippingAddress.address1 && <p>{order.shippingAddress.address1}{order.shippingAddress.address2 ? ", " + order.shippingAddress.address2 : ""}</p>}
+            <p>{[order.shippingAddress.city, order.shippingAddress.province || order.shippingAddress.state, order.shippingAddress.postal || order.shippingAddress.postalCode].filter(Boolean).join(", ")}</p>
+            {order.shippingAddress.country && <p>{order.shippingAddress.country}</p>}
+          </div>
         ) : <p className="text-sm text-neutral-400">No address collected</p>}
         {order.trackingNumber && (
           <div className="mt-4 pt-4 border-t border-neutral-200">

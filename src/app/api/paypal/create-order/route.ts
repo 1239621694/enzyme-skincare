@@ -66,11 +66,22 @@ export async function POST(req: NextRequest) {
             value: amount,
           },
           custom_id: orderId,
+          shipping: {
+            name: { full_name: order.shippingName || `${order.shippingFirstName || ""} ${order.shippingLastName || ""}`.trim() || "Customer" },
+            address: {
+              address_line_1: order.shippingAddress1 || "",
+              address_line_2: order.shippingAddress2 || "",
+              admin_area_2: order.shippingCity || "",
+              admin_area_1: order.shippingProvince || "",
+              postal_code: order.shippingPostal || "",
+              country_code: order.shippingCountry || "US",
+            },
+          },
         },
       ],
       application_context: {
         brand_name: "Enzyme Skincare",
-        shipping_preference: "NO_SHIPPING",
+        shipping_preference: "SET_PROVIDED_ADDRESS",
         user_action: "PAY_NOW",
       },
     };

@@ -12,6 +12,8 @@ interface OrderDetail {
   customerName: string | null;
   customerEmail: string | null;
   customerPhone: string | null;
+  shippingFirstName: string | null;
+  shippingLastName: string | null;
   subtotal: number | null;
   shippingFee: number | null;
   discountAmount: number | null;
@@ -174,6 +176,8 @@ export default function AdminOrderDetailPage() {
       customerName: order.customerName,
       customerEmail: order.customerEmail,
       customerPhone: order.customerPhone,
+      shippingFirstName: order.shippingFirstName,
+      shippingLastName: order.shippingLastName,
       shippingName: order.shippingName,
       shippingPhone: order.shippingPhone,
       shippingAddress1: order.shippingAddress1,
@@ -210,36 +214,53 @@ export default function AdminOrderDetailPage() {
         <div className="lg:col-span-2 space-y-4">
           {/* Customer Info */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">{t("OrderCustomer")}</h2>
+            <h2 className="font-semibold mb-3">Customer Information</h2>
             {editing ? (
               <div className="space-y-2 text-sm">
+                <input value={editForm.shippingFirstName || ""} onChange={(e) => setEditForm({ ...editForm, shippingFirstName: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="First Name" />
+                <input value={editForm.shippingLastName || ""} onChange={(e) => setEditForm({ ...editForm, shippingLastName: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Last Name" />
                 <input value={editForm.customerName || ""} onChange={(e) => setEditForm({ ...editForm, customerName: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Name" />
                 <input value={editForm.customerEmail || ""} onChange={(e) => setEditForm({ ...editForm, customerEmail: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Email" />
                 <input value={editForm.customerPhone || ""} onChange={(e) => setEditForm({ ...editForm, customerPhone: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Phone" />
               </div>
             ) : (
               <div className="text-sm space-y-1 text-neutral-600">
-                <p><span className="font-medium">Name:</span> {order.customerName || "—"}</p>
+                <p><span className="font-medium">Name:</span> {[order.shippingFirstName, order.shippingLastName].filter(Boolean).join(" ") || order.customerName || "—"}</p>
                 <p><span className="font-medium">Email:</span> {order.customerEmail || "—"}</p>
                 <p><span className="font-medium">Phone:</span> {order.customerPhone || "—"}</p>
+                <button
+                  onClick={() => {
+                    const copyText = [
+                      `Name: ${[order.shippingFirstName, order.shippingLastName].filter(Boolean).join(" ") || order.customerName || ""}`,
+                      `Email: ${order.customerEmail || ""}`,
+                      `Phone: ${order.customerPhone || order.shippingPhone || ""}`,
+                    ].filter(Boolean).join("\n");
+                    navigator.clipboard.writeText(copyText);
+                  }}
+                  className="text-xs text-primary-600 hover:text-primary-700 mt-2 inline-block"
+                >
+                  Copy Customer Info
+                </button>
               </div>
             )}
           </div>
 
           {/* Shipping Address */}
           <div className="rounded-xl border bg-white p-6">
-            <h2 className="font-semibold mb-3">{t("Shipping Address")}</h2>
+            <h2 className="font-semibold mb-3">Shipping Address</h2>
             {editing ? (
               <div className="space-y-2 text-sm">
+                <input value={editForm.shippingFirstName || ""} onChange={(e) => setEditForm({ ...editForm, shippingFirstName: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="First Name" />
+                <input value={editForm.shippingLastName || ""} onChange={(e) => setEditForm({ ...editForm, shippingLastName: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Last Name" />
                 <input value={editForm.shippingName || ""} onChange={(e) => setEditForm({ ...editForm, shippingName: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Recipient name" />
                 <input value={editForm.shippingPhone || ""} onChange={(e) => setEditForm({ ...editForm, shippingPhone: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Phone" />
                 <input value={editForm.shippingAddress1 || ""} onChange={(e) => setEditForm({ ...editForm, shippingAddress1: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Address line 1" />
                 <input value={editForm.shippingAddress2 || ""} onChange={(e) => setEditForm({ ...editForm, shippingAddress2: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="Address line 2" />
-                <div className="grid grid-cols-2 gap-2">
-                  <input value={editForm.shippingCity || ""} onChange={(e) => setEditForm({ ...editForm, shippingCity: e.target.value })} className="px-3 py-2 border rounded-lg" placeholder="City" />
-                  <input value={editForm.shippingProvince || ""} onChange={(e) => setEditForm({ ...editForm, shippingProvince: e.target.value })} className="px-3 py-2 border rounded-lg" placeholder="State/Province" />
-                </div>
-                <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2">
+                <input value={editForm.shippingCity || ""} onChange={(e) => setEditForm({ ...editForm, shippingCity: e.target.value })} className="px-3 py-2 border rounded-lg" placeholder="City" />
+                <input value={editForm.shippingProvince || ""} onChange={(e) => setEditForm({ ...editForm, shippingProvince: e.target.value })} className="px-3 py-2 border rounded-lg" placeholder="State/Province" />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
                   <input value={editForm.shippingPostal || ""} onChange={(e) => setEditForm({ ...editForm, shippingPostal: e.target.value })} className="px-3 py-2 border rounded-lg" placeholder="Postal code" />
                   <input value={editForm.shippingCountry || ""} onChange={(e) => setEditForm({ ...editForm, shippingCountry: e.target.value })} className="px-3 py-2 border rounded-lg" placeholder="Country" />
                 </div>
@@ -250,10 +271,27 @@ export default function AdminOrderDetailPage() {
               </div>
             ) : (
               <div className="text-sm space-y-1 text-neutral-600">
-                {order.shippingName ? <p>{order.shippingName}{order.shippingPhone ? " | " + order.shippingPhone : ""}</p> : <p>{t("No address collected")}</p>}
+                <p>{[order.shippingFirstName, order.shippingLastName].filter(Boolean).join(" ") || order.shippingName || "—"}</p>
+                {order.shippingPhone && <p>{order.shippingPhone}</p>}
                 {order.shippingAddress1 && <p>{order.shippingAddress1}{order.shippingAddress2 ? ", " + order.shippingAddress2 : ""}</p>}
                 {order.shippingCity && <p>{order.shippingCity}{order.shippingProvince ? ", " + order.shippingProvince : ""} {order.shippingPostal || ""}</p>}
                 {order.shippingCountry && <p>{order.shippingCountry}</p>}
+                <button
+                  onClick={() => {
+                    const addrLines = [
+                      [order.shippingFirstName, order.shippingLastName].filter(Boolean).join(" ") || order.shippingName,
+                      order.shippingPhone,
+                      order.shippingAddress1,
+                      order.shippingAddress2,
+                      [order.shippingCity, order.shippingProvince, order.shippingPostal].filter(Boolean).join(" "),
+                      order.shippingCountry,
+                    ].filter(Boolean).join("\n");
+                    navigator.clipboard.writeText(addrLines);
+                  }}
+                  className="text-xs text-primary-600 hover:text-primary-700 mt-2 inline-block"
+                >
+                  Copy Address
+                </button>
               </div>
             )}
           </div>
