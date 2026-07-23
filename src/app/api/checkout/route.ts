@@ -12,25 +12,25 @@ const { items, customerEmail, customerName, customerPhone, shippingAddress, coup
       return NextResponse.json({ success: false, error: "Shipping address is required" }, { status: 400 });
     }
     const { firstName, lastName, phone, country, state, city, address1, address2, postalCode } = shippingAddress;
-    if (!firstName || !lastName) {
+    if (!firstName?.trim() || !lastName?.trim()) {
       return NextResponse.json({ success: false, error: "First name and last name are required" }, { status: 400 });
     }
-    if (!phone) {
+    if (!phone?.trim()) {
       return NextResponse.json({ success: false, error: "Phone number is required" }, { status: 400 });
     }
-    if (!country) {
+    if (!country?.trim()) {
       return NextResponse.json({ success: false, error: "Country is required" }, { status: 400 });
     }
-    if (!state) {
+    if (!state?.trim()) {
       return NextResponse.json({ success: false, error: "State/Province is required" }, { status: 400 });
     }
-    if (!city) {
+    if (!city?.trim()) {
       return NextResponse.json({ success: false, error: "City is required" }, { status: 400 });
     }
-    if (!address1) {
+    if (!address1?.trim()) {
       return NextResponse.json({ success: false, error: "Address line 1 is required" }, { status: 400 });
     }
-    if (!postalCode) {
+    if (!postalCode?.trim()) {
       return NextResponse.json({ success: false, error: "ZIP/Postal code is required" }, { status: 400 });
     }
 
