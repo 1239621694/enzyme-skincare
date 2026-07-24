@@ -12,7 +12,7 @@ interface TrackingEvent {
 
 interface OrderData {
   id: string; orderNumber: string; status: string; total: number; currency: string;
-  subtotal: number | null; shippingFee: number | null; discountAmount: number | null;
+  subtotal: number | null; shippingFee: number | null; shippingMethod: string | null; discountAmount: number | null;
   customerEmail: string; customerName: string | null;
   couponCode?: string | null;
   salesCode?: string | null;
@@ -171,7 +171,7 @@ export default function OrderDetailPage() {
         </div>
         <div className="border-t border-neutral-200 mt-3 pt-3 space-y-1 text-sm text-right">
           <p>Subtotal: ${(order.subtotal || order.total).toFixed(2)}</p>
-          {order.shippingFee ? <p>Shipping: ${order.shippingFee.toFixed(2)}</p> : null}
+          <p>Shipping: {order.shippingMethod === "FREE SHIPPING" ? <span className="text-green-600 font-medium">FREE</span> : order.shippingFee ? `$${order.shippingFee.toFixed(2)}` : "$0.00"}</p>
           {order.discountAmount ? <p className="text-green-600">Discount: -${order.discountAmount.toFixed(2)}</p> : null}
           <div className="flex justify-between font-semibold text-base pt-1 border-t border-neutral-200">
             <span>Total</span><span>${order.total.toFixed(2)} {order.currency}</span>

@@ -19,7 +19,7 @@ const skinConcerns = [
 
 const trustIndicators = [
   { icon: "🔒", label: "Secure Checkout", desc: "SSL-encrypted transactions" },
-  { icon: "🌍", label: "Worldwide Shipping", desc: "UK, Germany, France, Italy, Spain & Mexico" },
+  { icon: "🌍", label: "Worldwide Shipping", desc: "Selected destinations across 7 regions" },
   { icon: "🌿", label: "Cruelty-Free", desc: "Never tested on animals" },
   { icon: "🧪", label: "Professional Skincare", desc: "Inspired by clinical beauty concepts" },
   { icon: "⭐", label: "Customer Support", desc: "Available within 24 hours" },
@@ -28,7 +28,7 @@ const trustIndicators = [
 
 const whyChooseUs = [
   { icon: "🧪", title: "Professional Formulations", desc: "Our products are developed around professional beauty concepts, combining carefully selected active ingredients with practical home-use designs." },
-  { icon: "🌍", title: "International Shipping", desc: "We deliver to customers across the United Kingdom, Germany, France, Italy, Spain and Mexico with reliable tracking." },
+  { icon: "🌍", title: "International Shipping", desc: "We deliver to customers across North America, South America, Europe, East Asia, Southeast Asia, the Middle East, and Oceania with reliable tracking." },
   { icon: "🔒", title: "Secure Payments", desc: "All transactions are processed through secure, encrypted payment channels. Your financial information is protected." },
   { icon: "💬", title: "Dedicated Support", desc: "Our customer care team is available to assist with product questions, order support and skincare guidance." },
 ];

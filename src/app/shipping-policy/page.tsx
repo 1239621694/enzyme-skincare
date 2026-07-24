@@ -1,9 +1,9 @@
-import { BUSINESS_INFO, getEffectiveDate } from "@/lib/business-info";
+import { BUSINESS_INFO, SHIPPING_CONFIG, getEffectiveDate } from "@/lib/business-info";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Shipping Policy | Enzyme Skincare",
-  description: `Review order processing times, international shipping estimates, delivery charges, customs information and tracking for orders from ${BUSINESS_INFO.website}.`,
+  description: `Review our worldwide shipping policy. FREE shipping on orders over $${SHIPPING_CONFIG.freeThreshold}. Flat rate $${SHIPPING_CONFIG.flatRate} for orders below the threshold. Processing times, customs and tracking information.`,
 };
 
 export default function ShippingPolicyPage() {
@@ -15,6 +15,14 @@ export default function ShippingPolicyPage() {
 
         <p>This Shipping Policy applies to all orders placed on <strong>{BUSINESS_INFO.website}</strong>, operated by {BUSINESS_INFO.legalNameEN}. Please read this policy carefully before placing your order.</p>
 
+        <h2>Shipping Fees</h2>
+        <p>We offer worldwide standard shipping to selected destinations.</p>
+        <ul>
+          <li><strong>FREE Worldwide Shipping</strong> on orders of <strong>USD ${SHIPPING_CONFIG.freeThreshold}</strong> or more.</li>
+          <li>Orders below <strong>USD ${SHIPPING_CONFIG.freeThreshold}</strong> are charged a flat shipping fee of <strong>USD ${SHIPPING_CONFIG.flatRate}</strong>.</li>
+        </ul>
+        <p>Shipping fees are calculated and displayed at checkout. The applicable fee will be clearly shown before you complete your purchase.</p>
+
         <h2>Order Processing Time</h2>
         <p>Orders are processed and dispatched within <strong>{BUSINESS_INFO.processingTime}</strong>. Processing time may be longer during promotional periods, public holidays or unexpected circumstances. You will receive an order confirmation email once your payment is confirmed.</p>
 
@@ -25,13 +33,10 @@ export default function ShippingPolicyPage() {
         <p><strong>{BUSINESS_INFO.totalDeliveryEstimate}</strong>, depending on destination, customs clearance, carrier operations, weather, holidays and other circumstances beyond our control.</p>
 
         <h2>Shipping Countries</h2>
-        <p>We currently ship to the following countries: {BUSINESS_INFO.shippingCountries.join(", ")}.</p>
-
-        <h2>Shipping Fees</h2>
-        <p>Shipping fees are calculated at checkout based on the destination country and selected shipping method. The applicable fee will be clearly displayed before you complete your purchase.</p>
+        <p>We ship to selected destinations across North America, South America, Europe, East Asia, Southeast Asia, the Middle East, and Oceania. Shipping availability and rates are confirmed during checkout. We do not ship to Africa or destinations not listed during checkout.</p>
 
         <h2>Free Shipping</h2>
-        <p>Free shipping may be offered on orders that meet a minimum purchase threshold. When applicable, the current threshold and terms will be displayed at checkout.</p>
+        <p>Orders of USD ${SHIPPING_CONFIG.freeThreshold} or more qualify for <strong>FREE Worldwide Standard Shipping</strong>. The free shipping qualification is based on the merchandise subtotal (product total before any coupons, discounts, or taxes are applied). Coupons and discounts do not affect shipping qualification.</p>
 
         <h2>Order Tracking</h2>
         <p>Once your order is dispatched, we will provide a tracking number via email where available. Please allow up to 48 hours for tracking information to update after dispatch. If you do not receive tracking information within the expected timeframe, please contact our customer service team.</p>

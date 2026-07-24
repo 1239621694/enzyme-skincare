@@ -33,9 +33,11 @@ export const BUSINESS_INFO = {
   processingTime: "1–3 business days after payment confirmation",
   internationalTransitTime: "14–30 business days",
   totalDeliveryEstimate: "Approximately 15–33 business days",
-  shippingCountries: ["United Kingdom", "Germany", "France", "Italy", "Spain", "Mexico"],
   estimatedDispatch: "Orders dispatched within 3 working days",
-  freeShippingThreshold: 50,
+  freeShippingThreshold: 199,
+  shippingFee: 20,
+  freeShippingLabel: "FREE Worldwide Shipping",
+  standardShippingLabel: "Standard Shipping",
 
   // Returns
   returnRequestWindow: "3 working days after delivery",
@@ -63,6 +65,12 @@ export const BUSINESS_INFO = {
   socialProfiles: [
     "https://wa.me/8613980551004",
   ],
+} as const;
+
+export const SHIPPING_CONFIG = {
+  freeThreshold: 199,
+  flatRate: 20,
+  currency: "USD",
 } as const;
 
 /** Helper: full operator disclosure sentence */

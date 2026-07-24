@@ -37,6 +37,7 @@ export async function GET(req: NextRequest) {
       total: Number(order.total),
       subtotal: order.subtotal ? Number(order.subtotal) : null,
       shippingFee: order.shippingFee ? Number(order.shippingFee) : null,
+      shippingMethod: order.shippingMethod,
       discountAmount: order.discountAmount ? Number(order.discountAmount) : null,
       currency: order.currency ?? "USD",
       customerEmail: order.customerEmail,

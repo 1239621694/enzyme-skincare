@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCartContext } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
+import { SHIPPING_CONFIG } from "@/lib/business-info";
 
 export function CartSidebar() {
   // Cart opens via useCartContext toggleCart
@@ -122,12 +123,12 @@ export function CartSidebar() {
               {couponError && <p className="text-xs text-red-500 px-1">{couponError}</p>}
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-neutral-600">Subtotal</span>
+              <span className="text-neutral-600">Merchandise Subtotal</span>
               <span className="font-semibold text-neutral-800">${Number(total).toFixed(2)}</span>
             </div>
             <div className="flex items-center justify-between text-xs text-neutral-500">
               <span>Shipping</span>
-              <span>{Number(total) >= 50 ? "$0.00" : "Calculated at checkout"}</span>
+              <span>{Number(total) >= SHIPPING_CONFIG.freeThreshold ? <span className="text-green-600 font-medium">FREE</span> : `$${SHIPPING_CONFIG.flatRate.toFixed(2)}`}</span>
             </div>
             <div className="flex items-center justify-between text-xs text-neutral-500">
               <span>Tax</span>

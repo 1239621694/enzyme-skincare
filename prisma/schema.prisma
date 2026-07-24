@@ -114,6 +114,7 @@ model Order {
   customerPhone     String?     @map("customer_phone")
   subtotal          Decimal?    @db.Decimal(10, 2)
   shippingFee       Decimal?    @db.Decimal(10, 2) @map("shipping_fee")
+  shippingMethod    String?     @map("shipping_method")
   tax               Decimal?    @db.Decimal(10, 2)
   currency          String      @default("USD")
  shippingName      String?     @map("shipping_name")

@@ -23,8 +23,18 @@ const faqSchema = {
     },
     {
       "@type": "Question",
+      name: "Do you offer free shipping?",
+      acceptedAnswer: { "@type": "Answer", text: "Yes. We offer FREE Worldwide Shipping on orders over USD $199. Orders below USD $199 are charged a flat shipping fee of USD $20." }
+    },
+    {
+      "@type": "Question",
+      name: "How much is shipping?",
+      acceptedAnswer: { "@type": "Answer", text: "Shipping is a flat USD $20 worldwide unless your order qualifies for free shipping. Orders of USD $199 or more qualify for FREE Worldwide Standard Shipping." }
+    },
+    {
+      "@type": "Question",
       name: "Where do you ship?",
-      acceptedAnswer: { "@type": "Answer", text: "We currently ship to the United Kingdom, Germany, France, Italy, Spain and Mexico." }
+      acceptedAnswer: { "@type": "Answer", text: "We currently ship to selected destinations across North America, South America, Europe, East Asia, Southeast Asia, the Middle East, and Oceania. We do not ship to Africa or destinations not listed during checkout." }
     },
     {
       "@type": "Question",
@@ -96,7 +106,9 @@ const faqData: Record<string, { q: string; a: string | string[] }[]> = {
     { q: "Do you offer payment plans?", a: "We do not currently offer payment plans or installment options. Full payment is required at the time of ordering." },
   ],
   shipping: [
-    { q: "Where do you ship?", a: "We currently ship to the following countries: United Kingdom, Germany, France, Italy, Spain and Mexico." },
+    { q: "Do you offer free shipping?", a: "Yes. We offer FREE Worldwide Shipping on orders over USD $199. Orders below USD $199 are charged a flat shipping fee of USD $20." },
+    { q: "How much is shipping?", a: "Shipping is a flat USD $20 worldwide unless your order qualifies for free shipping. Orders of USD $199 or more qualify for FREE Worldwide Standard Shipping." },
+    { q: "Where do you ship?", a: "We currently ship to selected destinations across North America, South America, Europe, East Asia, Southeast Asia, the Middle East, and Oceania. Shipping availability is confirmed during checkout. We currently do not ship to Africa or destinations not listed during checkout." },
     { q: "How long does order processing take?", a: "Orders are processed and dispatched within 1–3 business days after payment confirmation. Processing time may be longer during promotional periods or public holidays." },
     { q: "How long does international shipping take?", a: "Once dispatched, international orders typically arrive within 14–30 business days, depending on the destination country, carrier route and customs processing." },
     { q: "What is the estimated total delivery time?", a: "Approximately 15–33 business days, depending on destination, customs clearance, carrier operations, weather, holidays and other circumstances beyond our control." },

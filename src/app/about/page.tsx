@@ -44,7 +44,7 @@ export default function AboutPage() {
         <section className="mb-12">
           <h2 className="font-heading text-2xl font-bold text-neutral-800 mb-4">Worldwide Shipping</h2>
           <p className="text-neutral-600 leading-relaxed">
-            We ship internationally to customers in the United Kingdom, Germany, France, Italy, Spain and Mexico. Each order is carefully packaged and dispatched from our fulfillment center in Chengdu, China.
+            We ship to selected destinations across North America, South America, Europe, East Asia, Southeast Asia, the Middle East, and Oceania. Each order is carefully packaged and dispatched from our fulfillment center in Chengdu, China. Shipping availability is confirmed during checkout.
           </p>
         </section>
 

@@ -8,6 +8,7 @@ import { formatCurrency } from "@/lib/utils";
 import { ALL_PRODUCTS, getProductBySlug, getAllSlugs } from "@/lib/products";
 import { ProductSchema } from "@/components/seo/ProductSchema";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { ShippingInfo } from "@/components/shipping/ShippingInfo";
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -88,6 +89,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <span className="text-xs text-neutral-500">{p.size}</span>
             </div>
             <AddToCartButton product={p} />
+            <ShippingInfo compact />
             <div className="flex flex-wrap gap-4 mt-6 pt-6 border-t border-neutral-200 text-sm text-neutral-500">
               <span>🧪 Enzyme-Powered</span>
               <span>✅ Dermatologist Tested</span>
@@ -177,6 +179,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   ))}
                 </div>
                 <AddToCartButton product={p} />
+                <ShippingInfo compact />
                 <div className="flex flex-wrap gap-3 mt-6 pt-5 border-t border-[#e8e0d8]">
                   {["Plant Fermented", "Gentle Formula", "Suitable for Sensitive Skin"].map(b => (
                     <span key={b} className="text-[11px] text-[#8a7a6a] bg-[#f5f0ea] px-3 py-1.5 rounded-full border border-[#e8e0d8]">{b}</span>
@@ -722,6 +725,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   ))}
                 </div>
                 <AddToCartButton product={p} />
+                <ShippingInfo compact />
                 <div className="flex flex-wrap gap-3 mt-6 pt-5 border-t border-white/10">
                   {["Two-Part Fresh Activation", "Peptide-Powered Formula", "Designed for Sensitive-Looking Skin"].map(b => (
                     <span key={b} className="text-[11px] text-white/55 bg-white/6 px-3 py-1.5 rounded-full border border-white/10">{b}</span>
@@ -1211,6 +1215,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   ))}
                 </div>
                 <AddToCartButton product={p} />
+                <ShippingInfo compact />
                 <div className="flex flex-wrap gap-2.5 mt-6 pt-6 border-t border-white/10">
                   {["2 Complete Kits","Professional Brush Included","Approx. One Month Supply"].map((badge) => (
                     <span key={badge} className="text-xs text-white/60 bg-white/6 px-3.5 py-1.5 rounded-full">{badge}</span>
@@ -1434,6 +1439,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <p className="text-base md:text-lg text-[#6b706a] leading-relaxed mb-8 max-w-lg">A lightweight DNA Sodium firming spray designed to support hydration, skin elasticity, and a smoother-looking facial contour.</p>
               <div className="space-y-3 mb-8">{["✓ Instant Firming Appearance","✓ Helps Improve Skin Elasticity","✓ Supports V-Face Contour"].map((b) => (<p key={b} className="text-sm text-[#555954] font-medium">{b}</p>))}</div>
               <div className="flex items-center gap-6"><AddToCartButton product={p} /><span className="text-sm text-[#a4a8a0]">{p.size}</span></div>
+              <ShippingInfo compact />
             </div>
             {/* Right: Image */}
             <div className="order-1 md:order-2"><Image src={p.images[0]} alt="Enzyme Skincare DNA Sodium Instant Firming V-Face Spray" width={800} height={800} className="w-full h-auto object-contain" priority /></div>

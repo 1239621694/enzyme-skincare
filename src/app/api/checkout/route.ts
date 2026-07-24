@@ -2,6 +2,8 @@
 import { prisma } from "@/lib/prisma";
 import { ALL_PRODUCTS } from "@/lib/products";
 import { randomUUID } from "crypto";
+import { isShippingCountrySupported, getCountryByCode } from "@/config/shipping-countries";
+import { SHIPPING_CONFIG } from "@/lib/business-info";
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,11 +20,18 @@ const { items, customerEmail, customerName, customerPhone, shippingAddress, coup
     if (!phone?.trim()) {
       return NextResponse.json({ success: false, error: "Phone number is required" }, { status: 400 });
     }
+    // Country validation against shipping white list
     if (!country?.trim()) {
       return NextResponse.json({ success: false, error: "Country is required" }, { status: 400 });
     }
-    if (!state?.trim()) {
-      return NextResponse.json({ success: false, error: "State/Province is required" }, { status: 400 });
+    const normalizedCountry = country.trim().toUpperCase();
+    if (!isShippingCountrySupported(normalizedCountry)) {
+      return NextResponse.json({ success: false, error: "Shipping is not available for the selected destination." }, { status: 400 });
+    }
+    const countryConfig = getCountryByCode(normalizedCountry);
+    // Conditionally required: state/province
+    if (countryConfig?.requiresRegion && !state?.trim()) {
+      return NextResponse.json({ success: false, error: "State/Province is required for this destination" }, { status: 400 });
     }
     if (!city?.trim()) {
       return NextResponse.json({ success: false, error: "City is required" }, { status: 400 });
@@ -30,8 +39,9 @@ const { items, customerEmail, customerName, customerPhone, shippingAddress, coup
     if (!address1?.trim()) {
       return NextResponse.json({ success: false, error: "Address line 1 is required" }, { status: 400 });
     }
-    if (!postalCode?.trim()) {
-      return NextResponse.json({ success: false, error: "ZIP/Postal code is required" }, { status: 400 });
+    // Conditionally required: postal code
+    if (countryConfig?.requiresPostalCode && !postalCode?.trim()) {
+      return NextResponse.json({ success: false, error: "ZIP/Postal code is required for this destination" }, { status: 400 });
     }
 
     // Validate required fields
@@ -78,7 +88,8 @@ const { items, customerEmail, customerName, customerPhone, shippingAddress, coup
       });
     }
 
-    const shippingFee = subtotal >= 50 ? 0 : 5.95;
+    const shippingFee = subtotal >= SHIPPING_CONFIG.freeThreshold ? 0 : SHIPPING_CONFIG.flatRate;
+    const shippingMethod = shippingFee === 0 ? "FREE SHIPPING" : "STANDARD SHIPPING";
     const tax = 0;
     const discount = Math.min(Math.max(0, Number(discountAmount || 0)), subtotal);
     const total = Math.max(0, subtotal + shippingFee + tax - discount);
@@ -148,6 +159,7 @@ const { items, customerEmail, customerName, customerPhone, shippingAddress, coup
           discountAmount: discount > 0 ? discount : null,
           subtotal,
           shippingFee,
+          shippingMethod,
           tax,
           total,
           currency: "USD",
@@ -160,7 +172,7 @@ const { items, customerEmail, customerName, customerPhone, shippingAddress, coup
           shippingCity: city,
           shippingProvince: state,
           shippingPostal: postalCode,
-          shippingCountry: country,
+          shippingCountry: normalizedCountry,
           metadata: { accessToken },
         },
       });

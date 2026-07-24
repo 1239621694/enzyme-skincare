@@ -1,4 +1,4 @@
-import { BUSINESS_INFO } from "@/lib/business-info";
+import { BUSINESS_INFO, SHIPPING_CONFIG } from "@/lib/business-info";
 
 export function OrganizationSchema() {
   const schema = {
@@ -7,7 +7,7 @@ export function OrganizationSchema() {
     name: BUSINESS_INFO.storeName,
     url: BUSINESS_INFO.website,
     logo: BUSINESS_INFO.website + "/logo.png",
-    description: "Professional enzyme skincare. Science-backed formulations for healthier-looking skin.",
+    description: "Professional enzyme skincare. Science-backed formulations for healthier-looking skin. FREE Worldwide Shipping on orders over $" + SHIPPING_CONFIG.freeThreshold + ".",
     address: {
       "@type": "PostalAddress",
       streetAddress: "No. 22 Xinma Road, 1st Floor, Wuhou District",
@@ -22,6 +22,11 @@ export function OrganizationSchema() {
       availableLanguage: "English",
     },
     sameAs: BUSINESS_INFO.socialProfiles,
+    shippingRate: {
+      "@type": "MonetaryAmount",
+      value: SHIPPING_CONFIG.flatRate,
+      currency: SHIPPING_CONFIG.currency,
+    },
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }

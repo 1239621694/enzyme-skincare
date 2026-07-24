@@ -16,6 +16,7 @@ interface OrderDetail {
   shippingLastName: string | null;
   subtotal: number | null;
   shippingFee: number | null;
+  shippingMethod: string | null;
   discountAmount: number | null;
   total: number;
   tax: number | null;
@@ -315,7 +316,8 @@ export default function AdminOrderDetailPage() {
             <div className="border-t border-neutral-200 mt-3 pt-3 space-y-1 text-sm text-right">
               <p>Subtotal: ${(order.subtotal || order.total).toFixed(2)}</p>
               {order.discountAmount ? <p className="text-red-500">Discount: -${order.discountAmount.toFixed(2)}</p> : null}
-              {order.shippingFee ? <p>Shipping: ${order.shippingFee.toFixed(2)}</p> : null}
+              <p>Shipping Method: {order.shippingMethod || "—"}</p>
+              <p>Shipping Fee: {order.shippingFee !== null && order.shippingFee !== undefined ? (order.shippingFee === 0 ? <span className="text-green-600 font-medium">FREE</span> : `$${order.shippingFee.toFixed(2)}`) : "—"}</p>
               {order.couponCode ? <p className="text-xs text-neutral-400">Coupon: {order.couponCode}</p> : null}
               <p className="font-semibold text-base">Total: ${order.total.toFixed(2)} {order.currency || "USD"}</p>
             </div>

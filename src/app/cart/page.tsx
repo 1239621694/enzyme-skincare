@@ -1,9 +1,10 @@
 ﻿"use client";
 import { useCartContext } from "@/hooks/useCart";
 import { Button } from "@/components/ui/Button";
-import { Stars } from "@/components/ui/Stars";
 import Link from "next/link";
 import Image from "next/image";
+import { ShippingProgressBar } from "@/components/shipping/ShippingInfo";
+import { SHIPPING_CONFIG } from "@/lib/business-info";
 
 export default function CartPage() {
   const { items, itemCount, total, updateQuantity, removeItem } = useCartContext();
@@ -46,12 +47,28 @@ export default function CartPage() {
         <div className="lg:col-span-1 mt-6 lg:mt-0">
           <div className="border border-neutral-200 rounded-xl p-6 sticky top-24">
             <h2 className="font-semibold mb-4">Order Summary</h2>
+
+            {/* Free Shipping Progress Bar — based on merchandise subtotal (before any discounts) */}
+            <div className="mb-4">
+              <ShippingProgressBar merchandiseSubtotal={Number(total)} />
+            </div>
+
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between"><span className="text-neutral-500">Subtotal</span><span className="font-medium">${Number(total).toFixed(2)}</span></div>
-              <div className="flex justify-between"><span className="text-neutral-500">Shipping</span><span className="text-neutral-500">Calculated at checkout</span></div>
+              <div className="flex justify-between"><span className="text-neutral-500">Merchandise Subtotal</span><span className="font-medium">${Number(total).toFixed(2)}</span></div>
+              <div className="flex justify-between">
+                <span className="text-neutral-500">Shipping</span>
+                {Number(total) >= SHIPPING_CONFIG.freeThreshold ? (
+                  <span className="font-medium text-green-600">FREE</span>
+                ) : (
+                  <span className="font-medium text-neutral-700">${SHIPPING_CONFIG.flatRate.toFixed(2)}</span>
+                )}
+              </div>
               <div className="flex justify-between"><span className="text-neutral-500">Tax</span><span className="text-neutral-500">$0.00</span></div>
             </div>
-            <div className="border-t border-neutral-200 mt-4 pt-4 flex justify-between font-semibold"><span>Total</span><span>${Number(total).toFixed(2)}</span></div>
+            <div className="border-t border-neutral-200 mt-4 pt-4 flex justify-between font-semibold">
+              <span>Estimated Total</span>
+              <span>${(Number(total) + (Number(total) >= SHIPPING_CONFIG.freeThreshold ? 0 : SHIPPING_CONFIG.flatRate)).toFixed(2)}</span>
+            </div>
 
             <div className="mt-4 space-y-3">
               <Link href="/checkout">
